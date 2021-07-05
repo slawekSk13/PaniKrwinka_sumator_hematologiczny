@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {
+  HashRouter,
+  Route,
+  Link,
+  Switch,
+  NavLink,
+} from 'react-router-dom';
+import Main from "./components/Main";
+import Main2 from "./components/Main2";
+import Main3 from "./components/Main3";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React Today!
-        </a>
-      </header>
-    </div>
+      <HashRouter>
+   <>
+   <Route exact path='/' component={Main} />
+       <Route path='/button' component={Main2} />
+       <Route path='/buttonznapisem/:text' component={Main3} />
+   </>
+      </HashRouter>
   );
 }
 
