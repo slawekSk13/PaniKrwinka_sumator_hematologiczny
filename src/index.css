@@ -1,14 +1,18 @@
-body {
-  background-color: #F9F9F9;
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background-color: #F9F9F9;
   font-family: 'Playfair Display', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .main {
+  padding: 1rem 4rem;
   margin: 0 auto;
   max-width: 768px;
   background-color: #E5E5E5;
