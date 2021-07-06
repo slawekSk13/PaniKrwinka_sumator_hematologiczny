@@ -1,5 +1,5 @@
 import {InputStyled} from './Input.styles';
-import propTypes from 'prop-types'
+import propTypes from 'prop-types';
 
 const Input = ({placeholder}) => <InputStyled placeholder={placeholder}/>
 
