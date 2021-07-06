@@ -1,5 +1,4 @@
 import {ProgressBarStyled} from "./ProgressBar.styles";
-import {Button} from "../Button/Button";
 import propTypes from "prop-types";
 
 const ProgressBar = ({progress}) => {
