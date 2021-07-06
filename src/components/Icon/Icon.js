@@ -1,5 +1,5 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faPlusSquare, faPrint, faFilePdf} from '@fortawesome/free-solid-svg-icons'
+import {faPlusSquare, faPrint, faFilePdf, faTimes} from '@fortawesome/free-solid-svg-icons'
 import propTypes from "prop-types"
 import {useState} from 'react'
 
@@ -28,6 +28,11 @@ const Icon = ({icon}) => {
             return (
                 <FontAwesomeIcon onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} style={style}
                                  icon={faPrint}/>
+            );
+        case 'exit':
+            return (
+                <FontAwesomeIcon onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} style={style}
+                                 icon={faTimes}/>
             );
         default:
             console.log('Icon props must be either add, pdf or print unless you add another icon');
