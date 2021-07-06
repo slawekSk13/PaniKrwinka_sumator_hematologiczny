@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from "./Button/Button";
+import {Button} from "../components/Button/Button";
 
 const Main2 = () => {
     return (
@@ -10,4 +10,4 @@ const Main2 = () => {
     );
 };
 
-export default Main2;
+export {Main2};

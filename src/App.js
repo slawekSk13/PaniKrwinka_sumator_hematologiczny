@@ -7,10 +7,10 @@ import {
     Switch,
     NavLink,
 } from 'react-router-dom';
-import Main from "./components/Main";
-import Main2 from "./components/Main2";
-import Main3 from "./components/Main3";
-import Header from "./components/Header/Header";
+import {Main} from "./views/Main";
+import {Main2} from "./views/Main2";
+import {Main3} from "./views/Main3";
+import {Header} from "./components/Header/Header";
 
 function App() {
     return (

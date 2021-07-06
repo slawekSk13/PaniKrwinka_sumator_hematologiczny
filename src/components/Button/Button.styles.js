@@ -1,8 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-const ButtonStyled = styled.button.attrs(props => ({
-    color: props.primary === true ? "black": '#951B81',
-}))`
+const ButtonStyled = styled.button`
   margin: 0 1rem;
   border: none;
   padding: .5rem 2.5rem;
@@ -11,12 +9,28 @@ const ButtonStyled = styled.button.attrs(props => ({
   text-align: center;
   box-shadow: 0 4px 4px 0 hsla(0, 0%, 0%, .25);
   border-radius: 11px;
-  color: #E5E5E5;
-  background-color: ${props => props.color};
+  color: ${props => props.theme.color};
+  background-color: ${props => props.theme.backgroundColor};
   transition: .4s;
-  &:hover {
-    background-color: #CD1719;
+  &:hover, &:active {
+    background-color: ${props => props.theme.hoverColor};
+    box-shadow: inset 0 4px 4px 0 hsla(0, 0%, 0%, .25);
   }
 `;
 
-export default ButtonStyled;
+ButtonStyled.defaultProps = {
+    theme: {
+        color: '#E5E5E5',
+        backgroundColor: '#951B81',
+        hoverColor: '#CD1719'
+    }
+}
+
+export {ButtonStyled};
+
+// .attrs(props => ({
+//     color: props.primary === true ? "black": '#951B81',
+// }))
+
+// #E5E5E5
+// #CD1719

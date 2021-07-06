@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from "./Button/Button";
+import {Button} from "../components/Button/Button";
 
 const Main3 = (props) => {
     const text = props.match.params.text;
@@ -11,4 +11,4 @@ const Main3 = (props) => {
     );
 };
 
-export default Main3;
+export {Main3};

@@ -10,4 +10,4 @@ const LogoStyled = styled.img.attrs({
   margin: 0 auto;
 `;
 
-export default LogoStyled;
+export {LogoStyled};

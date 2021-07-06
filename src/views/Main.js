@@ -25,4 +25,4 @@ const Main = () => {
     );
 };
 
-export default Main;
+export {Main};
