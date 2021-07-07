@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
 const ButtonStyled = styled.button`
-  margin: 0 1rem;
+  text-transform: uppercase;
+  width: ${props => props.width === 'big' ? '75%' : '35%'};
+  margin: 1rem;
   border: none;
-  padding: .5rem 2.5rem;
+  padding: ${props => props.width === 'big' ? '1.2rem 2.5rem' : '.5rem 2.5rem'};
   font-size: 1.5em;
   font-weight: 600;
   text-align: center;
@@ -15,6 +17,7 @@ const ButtonStyled = styled.button`
   &:hover, &:active {
     background-color: ${props => props.theme.hoverColor};
     box-shadow: inset 0 4px 4px 0 hsla(0, 0%, 0%, .25);
+    cursor: pointer;
   }
 `;
 

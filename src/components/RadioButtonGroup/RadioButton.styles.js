@@ -34,7 +34,7 @@ const Indicator = styled.div`
   width: 1.2em;
   height: 1.2em;
   position: absolute;
-  top: -.25rem;
+  top: .25rem;
   left: -1.75em;
 
   ${Label}:hover & {
