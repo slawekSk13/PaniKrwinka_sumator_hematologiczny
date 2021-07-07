@@ -9,7 +9,7 @@ Center.propTypes = {
 }
 
 Center.defaultProps = {
-    width: '90%'
+    width: '100%'
     }
 
 export {Center}

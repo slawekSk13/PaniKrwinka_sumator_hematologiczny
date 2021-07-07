@@ -4,6 +4,7 @@ import {ProgressBar} from "../components/ProgressBar/ProgressBar";
 import {Table} from "../components/Table/Table";
 import {TipText} from "../components/TipText/TipText";
 import {Input} from "../components/Input/Input";
+import {Center} from "../components/Center/Center";
 
 const WBC = () => {
     return (
@@ -12,10 +13,10 @@ const WBC = () => {
 
                 <Table/>
                 <ProgressBar progress={100}/>
-                <div style={{textAlign: 'center'}}>
+                <Center>
                 <Input placeholder='WBC (G/l)' up={true}/>
                 <Button text='dalej' size='big'/>
-                </div>
+                </Center>
             </FlexWrapper>
             <TipText text='Dzięki wprowadzeniu WBC będziemy mogli podać Ci wartość bezwzględną i w razie potrzeby wartość skorygowaną WBC
 '/>
