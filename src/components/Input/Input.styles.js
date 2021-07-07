@@ -3,18 +3,19 @@ import styled from 'styled-components';
 const InputStyled = styled.input.attrs({
 type: 'text',
 })`
+  max-width: 100%;
   font-size: 1.5rem;
   text-transform: uppercase;
   text-align: center;
   color: #951B81;
-  padding: 1rem;
+  padding: 1rem 0;
   background: #F9F9F9;
   border: 2px solid #951B81;
   box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
   border-radius: 10px;
   &::placeholder {
     font-size: 1.3rem;
-    text-transform: lowercase;
+    text-transform: ${props => props.up ? 'none' : 'lowercase'};
     color: rgba(149, 27, 129, 0.5);
   }
     &:focus {

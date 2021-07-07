@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 const ButtonStyled = styled.button`
   text-transform: uppercase;
-  width: ${props => props.width === 'big' ? '75%' : '35%'};
+  width: ${props => props.size === 'big' ? '75%' : '35%'};
   margin: 1rem;
   border: none;
-  padding: ${props => props.width === 'big' ? '1.2rem 2.5rem' : '.5rem 2.5rem'};
+  padding: ${props => props.size === 'big' ? '1.2rem 0' : '.5rem 0'};
   font-size: 1.5em;
   font-weight: 600;
   text-align: center;

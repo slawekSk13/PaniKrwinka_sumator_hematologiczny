@@ -3,10 +3,10 @@ import propTypes from "prop-types";
 
 const ProgressBar = ({progress}) => {
     return (
-        <>
+        <div style={{width: '95%', marginBottom: '2rem'}}>
             <ProgressBarStyled width={`${progress}%`} color={'#CD1719'}/>
             <ProgressBarStyled width={`${100 - progress}%`} color={'#F9F9F9'}/>
-        </>
+        </div>
     );
 }
 

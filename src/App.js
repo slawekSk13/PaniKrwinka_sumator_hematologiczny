@@ -7,10 +7,10 @@ import {
     Switch,
     NavLink,
 } from 'react-router-dom';
-import {Main} from "./views/Main";
-import {Main3} from "./views/Main3";
 import {Header} from "./components/Header/Header";
 import {AddNewPatient} from "./views/AddNewPatient";
+import {Leukogram} from "./views/Leukogram";
+import {WBC} from "./views/WBC";
 
 function App() {
     return (
@@ -18,9 +18,9 @@ function App() {
             <>
                 <Header />
                 <Switch>
-                    <Route exact path='/' component={Main}/>
-                    <Route path='/button' component={AddNewPatient}/>
-                    <Route path='/buttonznapisem/:text' component={Main3}/>
+                    <Route exact path='/' component={AddNewPatient}/>
+                    <Route path='/leukogram' component={Leukogram}/>
+                    <Route path='/wbc' component={WBC}/>
                     </Switch>
                 </>
         </HashRouter>

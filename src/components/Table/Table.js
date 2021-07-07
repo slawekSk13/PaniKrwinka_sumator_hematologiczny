@@ -15,24 +15,21 @@ const TableMarkup = ({patient, results, types}) => (
         <tbody>
         <tr>
             <td>właściciel:</td>
-            <td>{patient.owner.name} {patient.owner.surname}</td>
-            <td/>
+            <td colSpan="2">{patient.owner.name} {patient.owner.surname}</td>
+
         </tr>
         <tr>
             <td>pacjent:</td>
-            <td>{patient.species} <strong>{patient.name}</strong></td>
+            <td colSpan="2">{patient.species} <strong>{patient.name}</strong></td>
 
-            <td/>
         </tr>
         <tr>
             <td>data badania:</td>
-            <td>{patient.date}</td>
-            <td/>
+            <td colSpan="2">{patient.date}</td>
         </tr>
         {results && <><tr>
             <td>WBC</td>
-            <td>{results[1].wbc} <strong>G/l</strong></td>
-            <td/>
+            <td colSpan="2">{results[1].wbc} <strong>G/l</strong></td>
         </tr>
         {types.map((item, index) => (
             <tr key={index}>
@@ -43,8 +40,7 @@ const TableMarkup = ({patient, results, types}) => (
             ))}
             <tr>
             <td>nRBC</td>
-            <td>{results[2].nrbc} / 100 WBC</td>
-            <td/>
+            <td colSpan="2">{results[2].nrbc} / 100 WBC</td>
             </tr></>}
         </tbody>
     </StyledTable>
@@ -67,25 +63,26 @@ Table.defaultProps = {
         species: 'pies',
         date: "2021-07-07"
 
-    },
-    results: [
-        {
-            band: 15,
-            seg: 6,
-            lym: 10,
-            mon: 15,
-            eos: 1,
-            bas: 12,
-            pml: 10,
-            mie: 7,
-            met: 12,
-            inne: 2
-        },
-        {wbc: 13.5},
-        {
-            nrbc: 5
-        }
-    ]
+    }
+    // results: [
+    //     {
+    //         band: 15,
+    //         seg: 6,
+    //         lym: 10,
+    //         mon: 15,
+    //         eos: 1,
+    //         bas: 12,
+    //         pml: 10,
+    //         mie: 7,
+    //         met: 12,
+    //         mlb: 2,
+    //         inne: 2
+    //     },
+    //     {wbc: 13.5},
+    //     {
+    //         nrbc: 5
+    //     }
+    // ]
 }
 
 

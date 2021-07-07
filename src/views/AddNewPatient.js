@@ -11,7 +11,7 @@ const AddNewPatient = () => {
             <FlexWrapper justify='around' height='65vh'>
             {data.map((element, i) => <Input key={i} placeholder={element} />)}
             <RadioButtonGroup />
-            <Button width='big' text='dalej' />
+            <Button size='big' text='dalej' />
             </FlexWrapper>
             <TipText text='Wprowadź dane pacjenta'/>
         </FlexWrapper>

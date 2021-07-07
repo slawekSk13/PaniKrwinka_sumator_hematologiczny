@@ -22,7 +22,7 @@ const SingleRadioButton = ({id, onChange, name, label, checked, value}) => {
 const RadioButtonGroup = () => {
     const [radioValue, setRadioValue] = useState('pies');
     return (
-        <div style={{width: '100%', position: 'relative', left: '1.75rem'}}>
+        <div style={{width: '80%', position: 'relative', left: '1.5rem'}}>
             <SingleRadioButton id={1} onChange={() => {
                 setRadioValue('pies');
             }} name="pies" label="pies" checked={radioValue === 'pies'} value={radioValue}/>
