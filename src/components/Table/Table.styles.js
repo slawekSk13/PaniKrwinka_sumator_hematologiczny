@@ -9,6 +9,7 @@ const StyledTable = styled.table`
   /* border-spacing: 5px 10px; */
 
   caption-side: bottom;
+  margin: 2rem;
   /* empty-cell: show | hide;  */
   /* empty-cell is a property of table or the cells themselves */
 

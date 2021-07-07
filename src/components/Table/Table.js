@@ -2,8 +2,9 @@ import {StyledTable} from "./Table.styles";
 import propTypes from "prop-types";
 
 const Table = ({patient, results}) => (
-    <TableMarkup patient={patient} results={results} types={Object.keys(results[0])}/>
+    <TableMarkup patient={patient} results={results} types={results ? Object.keys(results[0]) : null}/>
 );
+
 const TableMarkup = ({patient, results, types}) => (
     <StyledTable>
         <colgroup>
@@ -28,31 +29,31 @@ const TableMarkup = ({patient, results, types}) => (
             <td>{patient.date}</td>
             <td/>
         </tr>
-        <tr>
+        {results && <><tr>
             <td>WBC</td>
             <td>{results[1].wbc} <strong>G/l</strong></td>
             <td/>
         </tr>
         {types.map((item, index) => (
             <tr key={index}>
-                <td>{item}</td>
-                <td>{results[0][item]} %</td>
-                <td>{results[0][item] * results[1].wbc / 100} G/l</td>
+            <td>{item}</td>
+            <td>{results[0][item]} %</td>
+            <td>{results[0][item] * results[1].wbc / 100} G/l</td>
             </tr>
-        ))}
-        <tr>
+            ))}
+            <tr>
             <td>nRBC</td>
             <td>{results[2].nrbc} / 100 WBC</td>
             <td/>
-        </tr>
+            </tr></>}
         </tbody>
     </StyledTable>
 );
 
 Table.propTypes = {
-    /** patient is an object with data describing patient */
-    patient: propTypes.object,
-    /** array with results, wbc MUST be in index 1, nRBC in 2, rest in object in index 1 */
+    /** patient is an object with data describing patient; mandatory props */
+    patient: propTypes.object.isRequired,
+    /** array with results, wbc MUST be in index 1, nRBC in 2, rest in object in index 1; optional props, without it table renders only part showing patient info */
     results: propTypes.array
 }
 
