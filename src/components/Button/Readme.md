@@ -2,6 +2,6 @@
 <>
     <Button/>
     <Button text="NRBC"/>
-    <Button text="NRBC" width='big'/>
+    <Button text="NRBC" size='big'/>
 </>
 ```

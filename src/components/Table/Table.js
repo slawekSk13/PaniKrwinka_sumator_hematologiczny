@@ -64,25 +64,6 @@ Table.defaultProps = {
         date: "2021-07-07"
 
     }
-    // results: [
-    //     {
-    //         band: 15,
-    //         seg: 6,
-    //         lym: 10,
-    //         mon: 15,
-    //         eos: 1,
-    //         bas: 12,
-    //         pml: 10,
-    //         mie: 7,
-    //         met: 12,
-    //         mlb: 2,
-    //         inne: 2
-    //     },
-    //     {wbc: 13.5},
-    //     {
-    //         nrbc: 5
-    //     }
-    // ]
 }
 
 
