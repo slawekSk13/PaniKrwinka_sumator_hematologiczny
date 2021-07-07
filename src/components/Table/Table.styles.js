@@ -46,8 +46,8 @@ const StyledTable = styled.table`
     :nth-of-type(odd) {
       background-color: #F9F9F9;
     }
-    :nth-of-type(3) {
-      border-bottom: 3px solid #951B81;
+    :nth-of-type(4) {
+      border-top: 2px solid #951B81;
     }
     :hover {
       box-shadow: inset 0 4px 4px rgba(0, 0, 0, .25);

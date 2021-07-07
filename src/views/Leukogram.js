@@ -7,7 +7,6 @@ const Leukogram = () => {
     const data = ['band', 'seg', 'lym', 'mon', 'eos', 'bas', 'pml', 'mie', 'met', 'mlb', 'inne', 'nrbc'];
     return (
         <FlexWrapper justify='around'>
-
             <Table />
             <ProgressBar progress={30} />
             <div style={{textAlign: 'center'}}>
