@@ -10,12 +10,14 @@ const createNewPdf = (patient, results) => {
                 table: {
                     // headers are automatically repeated if the table spans over multiple pages
                     // you can declare how many rows should be treated as headers
+                    heights: 30,
                     headerRows: 3,
                     widths: [ 'auto', 'auto', 'auto' ],
                     body: [
                         [ { text: 'Właściciel:', bold: true }, `${patient.owner.name} ${patient.owner.surname}`, ''],
                         [  { text: 'Pacjent:', bold: true }, `${patient.species} ${patient.name}`, ''],
                         [ { text: 'Data badania', bold: true }, `${patient.date}`, ''],
+                        [ '', '', ''],
                         [{ text: 'WBC', bold: true }, `${results.wbc} G/l`, ''],
                         [{ text: 'skor. WBC', bold: true }, `${results.correctedWbc} G/l`, ''],
                         [{ text: 'band', bold: true }, `${results.band} %`, `${(results.band * results.wbc / 100).toFixed(2)} G/l`],

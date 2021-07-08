@@ -27,7 +27,11 @@ const TableMarkup = ({patient, results, types}) => (
             <td>data badania:</td>
             <td colSpan="2">{patient.date}</td>
         </tr>
-        {results && <><tr>
+        {results && <>
+            <tr>
+                <td colSpan="3">&nbsp;</td>
+            </tr>
+            <tr>
             <td>WBC</td>
             <td colSpan="2"><strong>{results.wbc}</strong> G/l</td>
         </tr>
