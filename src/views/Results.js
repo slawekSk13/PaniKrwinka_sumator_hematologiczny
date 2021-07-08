@@ -4,15 +4,16 @@ import {Center} from "../components/Center/Center";
 import {Icon} from "../components/Icon/Icon";
 import {TipText} from "../components/TipText/TipText";
 import {Link} from "react-router-dom";
+import {download, print} from "../components/pdf";
 
-const Results = ({results, reset}) => {
+const Results = ({patient, results, reset}) => {
 
     return (
         <FlexWrapper>
-            <Table results={results} />
+            <Table results={results} patient={patient} />
             <Center>
-                <Icon icon='pdf' />
-                <Icon icon='print' />
+                <Icon onClick={() => download(patient, results)} icon='pdf' />
+                <Icon onClick={() => print(patient, results)} icon='print' />
                 <Link to='/'>
                 <Icon onClick={reset} icon='add' />
                 </Link>

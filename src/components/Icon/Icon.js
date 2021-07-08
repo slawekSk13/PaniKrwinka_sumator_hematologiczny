@@ -15,17 +15,17 @@ const Icon = ({icon, onClick}) => {
     const handleClick = () => {
         if(typeof onClick === 'function') {
             onClick();
-        } else console.warn('onClick must be a function')
+        } else console.warn(`onClick must be a function, current type is ${typeof onClick}`)
     }
     switch (icon) {
         case 'add':
             return (
-                <FontAwesomeIcon onClick={handleClick} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} style={style}
+                <FontAwesomeIcon onClick={() => handleClick()} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} style={style}
                                  icon={faPlusSquare}/>
             );
         case 'pdf':
             return (
-                <FontAwesomeIcon onClick={handleClick} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} style={style}
+                <FontAwesomeIcon onClick={() => handleClick()} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} style={style}
                                  icon={faFilePdf}/>
             );
         case 'print':

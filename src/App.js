@@ -57,8 +57,8 @@ function App() {
     }
 
     useEffect(() => {
-        // setProgress(100);
-        setProgress(Object.values(results).reduce(sum));
+        setProgress(100);
+        // setProgress(Object.values(results).reduce(sum));
     }, [results]);
 
     const reset = () => {
@@ -80,7 +80,7 @@ function App() {
             wbc: 0
         })
     }
-console.log('check');
+
     return (
         <HashRouter>
             <>
@@ -88,7 +88,7 @@ console.log('check');
                 <Switch>
                     <Route exact path='/' render={() => (<AddNewPatient confirmPatient={confirmPatient}/>)}/>
                     <Route path='/leukogram' render={() => (<Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell} results={results}/>)}/>
-                    <Route path='/results' render={() => (<Results results={results} reset={reset}/>)}/>
+                    <Route path='/results' render={() => (<Results results={results} patient={patient} reset={reset}/>)}/>
                     </Switch>
                 </>
         </HashRouter>

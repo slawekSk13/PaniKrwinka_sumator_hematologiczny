@@ -16,7 +16,6 @@ const Leukogram = ({patient, progress, handleAddCell, results}) => {
         const isValid = () => newValue.match(regex);
         setLocalWbc(prevState => {
             if(isValid()) {
-                console.log(isValid())
                 return newValue;
             } return prevState;
         });
