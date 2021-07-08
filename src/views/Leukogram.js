@@ -4,14 +4,17 @@ import {ProgressBar} from "../components/ProgressBar/ProgressBar";
 import {Table} from "../components/Table/Table";
 import {Center} from "../components/Center/Center";
 
-const Leukogram = () => {
-    const data = ['band', 'seg', 'lym', 'mon', 'eos', 'bas', 'pml', 'mie', 'met', 'mlb', 'inne', 'nrbc'];
+const Leukogram = ({patient, progress, handleAddCell, results}) => {
+    const handleClick = e => {
+        typeof handleAddCell === 'function' ? handleAddCell(e.target.innerText.toLowerCase()) : console.warn('handleAddCell must be a function');
+    }
+
     return (
         <FlexWrapper justify='around'>
-            <Table />
-            <ProgressBar progress={30} />
+            <Table patient={patient}/>
+            <ProgressBar progress={progress} />
             <Center>
-            {data.map((element, i) => <Button key={i} text={element} />)}
+            {Object.keys(results).slice(0,-1).map((element, i) => <Button key={i} text={element} name={element} onClick={handleClick} />)}
             </Center>
         </FlexWrapper>
     );

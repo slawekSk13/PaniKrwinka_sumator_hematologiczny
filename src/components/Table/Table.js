@@ -32,7 +32,7 @@ const TableMarkup = ({patient, results, types}) => (
             <td colSpan="2">{results[1].wbc} <strong>G/l</strong></td>
         </tr>
         {types.map((item, index) => (
-            <tr key={index}>
+           item !== 'nrbc' && <tr key={index}>
             <td>{item}</td>
             <td>{results[0][item]} %</td>
             <td>{results[0][item] * results[1].wbc / 100} G/l</td>
@@ -40,7 +40,7 @@ const TableMarkup = ({patient, results, types}) => (
             ))}
             <tr>
             <td>nRBC</td>
-            <td colSpan="2">{results[2].nrbc} / 100 WBC</td>
+            <td colSpan="2">{results[0].nrbc} / 100 WBC</td>
             </tr></>}
         </tbody>
     </StyledTable>
