@@ -80,7 +80,7 @@ function App() {
             wbc: 0
         })
     }
-
+console.log('check');
     return (
         <HashRouter>
             <>
