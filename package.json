@@ -1,5 +1,6 @@
 {
   "name": "pani_krwinka_sumator_hematologiczny",
+  "homepage": "https://panikrwinka.pl/sumator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
