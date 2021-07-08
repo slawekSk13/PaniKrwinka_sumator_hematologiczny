@@ -17,17 +17,17 @@ const createNewPdf = (patient, results) => {
                         [  { text: 'Pacjent:', bold: true }, `${patient.species} ${patient.name}`, ''],
                         [ { text: 'Data badania', bold: true }, `${patient.date}`, ''],
                         [{ text: 'WBC', bold: true }, `${results.wbc} G/l`, ''],
-                        [{ text: 'band', bold: true }, `${results.band} %`, `${results.band * results.wbc / 100} G/l`],
-                        [{ text: 'seg', bold: true }, `${results.seg} %`, `${results.seg * results.wbc / 100} G/l`],
-                        [{ text: 'lym', bold: true }, `${results.lym} %`, `${results.lym * results.wbc / 100} G/l`],
-                        [{ text: 'mon', bold: true }, `${results.mon} %`, `${results.mon * results.wbc / 100} G/l`],
-                        [{ text: 'eos', bold: true }, `${results.eos} %`, `${results.eos * results.wbc / 100} G/l`],
-                        [{ text: 'bas', bold: true }, `${results.bas} %`, `${results.bas * results.wbc / 100} G/l`],
-                        [{ text: 'pml', bold: true }, `${results.pml} %`, `${results.pml * results.wbc / 100} G/l`],
-                        [{ text: 'mie', bold: true }, `${results.mie} %`, `${results.mie * results.wbc / 100} G/l`],
-                        [{ text: 'met', bold: true }, `${results.met} %`, `${results.met * results.wbc / 100} G/l`],
-                        [{ text: 'mlb', bold: true }, `${results.mlb} %`, `${results.mlb * results.wbc / 100} G/l`],
-                        [{ text: 'inne', bold: true }, `${results.inne} %`, `${results.inne * results.wbc / 100} G/l`],
+                        [{ text: 'band', bold: true }, `${results.band} %`, `${(results.band * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'seg', bold: true }, `${results.seg} %`, `${(results.seg * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'lym', bold: true }, `${results.lym} %`, `${(results.lym * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'mon', bold: true }, `${results.mon} %`, `${(results.mon * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'eos', bold: true }, `${results.eos} %`, `${(results.eos * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'bas', bold: true }, `${results.bas} %`, `${(results.bas * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'pml', bold: true }, `${results.pml} %`, `${(results.pml * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'mie', bold: true }, `${results.mie} %`, `${(results.mie * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'met', bold: true }, `${results.met} %`, `${(results.met * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'mlb', bold: true }, `${results.mlb} %`, `${(results.mlb * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'inne', bold: true }, `${results.inne} %`, `${(results.inne * results.wbc / 100).toFixed(2)} G/l`],
                         [{ text: 'nRBC', bold: true }, `${results.nrbc} / 100 WBC`, '']
                     ]
                 }
@@ -40,9 +40,9 @@ const createNewPdf = (patient, results) => {
         },
         defaultStyle: {
             color: '#951B81',
-            fontSize: 30
+            fontSize: 25
         },
-        pageMargins: [80, 60, 60, 40]
+        pageMargins: [100, 100, 60, 40]
     };
  return docDefinition;
 }

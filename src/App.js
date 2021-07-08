@@ -33,11 +33,11 @@ function App() {
 
     const confirmPatient = patientToSave => setPatient(patientToSave);
 
-    const sum = (a, b) => a+b;
+    const sum = (a, b) => a + b;
 
     const handleAddCell = (key, value) => {
-        if(key === 'wbc') {
-            if(results.nrbc < 5) {
+        if (key === 'wbc') {
+            if (results.nrbc < 5) {
                 setResults(prevState => ({
                     ...prevState,
                     [key]: value
@@ -50,11 +50,14 @@ function App() {
                 }));
             }
         } else
-        setResults(prevState =>
-            ({...prevState,
-                [key]: prevState[key] + 1
-            })
-        );
+            setResults(prevState => {
+            navigator.vibrate(100);
+                    return ({
+                        ...prevState,
+                        [key]: prevState[key] + 1
+                    })
+                }
+            );
     }
 
     useEffect(() => {
@@ -85,22 +88,24 @@ function App() {
     return (
         <HashRouter>
             <>
-                <Header />
+                <Header/>
                 <Switch>
                     <Route exact path='/'><AddNewPatient confirmPatient={confirmPatient}/></Route>
                     <Route path='/leukogram'>
-                        {patient ? <Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell} results={results}/> : <Redirect to='/' />}
+                        {patient ? <Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell}
+                                              results={results}/> : <Redirect to='/'/>}
                     </Route>
                     <Route path='/results'>
-                        {results.wbc ? <Results results={results} patient={patient} reset={reset}/> : <Redirect to='/leukogram' />}
+                        {results.wbc ? <Results results={results} patient={patient} reset={reset}/> :
+                            <Redirect to='/leukogram'/>}
                     </Route>
                     <Route>
-                        <Redirect to='/results' />
+                        <Redirect to='/results'/>
                     </Route>
                 </Switch>
-                </>
+            </>
         </HashRouter>
-);
+    );
 }
 
 export default App;
