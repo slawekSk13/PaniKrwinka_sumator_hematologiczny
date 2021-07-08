@@ -35,7 +35,7 @@ const Leukogram = ({patient, progress, handleAddCell, results}) => {
             <Table patient={patient}/>
             <ProgressBar progress={progress} />
             <Center>
-            {progress < 100 ? Object.keys(results).slice(0,-1).map((element, i) => <Button key={i} text={element} name={element} onClick={handleMultiClick} />) : (
+            {progress < 100 ? Object.keys(results).slice(0,-2).map((element, i) => <Button key={i} text={element} name={element} onClick={handleMultiClick} />) : (
                 <FlexWrapper height='40vh'>
                     <Center>
                         <Input onChange={handleLocalWbc} name='wbc' value={localWbc} placeholder='WBC (G/l)' up={true}/>

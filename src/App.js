@@ -27,7 +27,8 @@ function App() {
             mlb: 0,
             inne: 0,
             nrbc: 0,
-            wbc: 0
+            wbc: 0,
+            correctedWbc: 0
         }
     );
 
@@ -46,7 +47,8 @@ function App() {
                 const correctedWbc = ((value * 100) / (100 + results.nrbc)).toFixed(2);
                 setResults(prevState => ({
                     ...prevState,
-                    [key]: correctedWbc
+                    wbc: value,
+                    correctedWbc: correctedWbc
                 }));
             }
         } else

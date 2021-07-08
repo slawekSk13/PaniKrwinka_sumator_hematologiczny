@@ -17,6 +17,7 @@ const createNewPdf = (patient, results) => {
                         [  { text: 'Pacjent:', bold: true }, `${patient.species} ${patient.name}`, ''],
                         [ { text: 'Data badania', bold: true }, `${patient.date}`, ''],
                         [{ text: 'WBC', bold: true }, `${results.wbc} G/l`, ''],
+                        [{ text: 'skor. WBC', bold: true }, `${results.correctedWbc} G/l`, ''],
                         [{ text: 'band', bold: true }, `${results.band} %`, `${(results.band * results.wbc / 100).toFixed(2)} G/l`],
                         [{ text: 'seg', bold: true }, `${results.seg} %`, `${(results.seg * results.wbc / 100).toFixed(2)} G/l`],
                         [{ text: 'lym', bold: true }, `${results.lym} %`, `${(results.lym * results.wbc / 100).toFixed(2)} G/l`],
@@ -40,7 +41,7 @@ const createNewPdf = (patient, results) => {
         },
         defaultStyle: {
             color: '#951B81',
-            fontSize: 25
+            fontSize: 22
         },
         pageMargins: [100, 100, 60, 40]
     };

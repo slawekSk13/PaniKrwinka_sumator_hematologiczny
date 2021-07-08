@@ -31,8 +31,12 @@ const TableMarkup = ({patient, results, types}) => (
             <td>WBC</td>
             <td colSpan="2"><strong>{results.wbc}</strong> G/l</td>
         </tr>
+            {results.correctedWbc !== 0 && <tr>
+                <td>skor. WBC</td>
+                <td colSpan="2"><strong>{results.correctedWbc}</strong> G/l</td>
+            </tr>}
         {types.map((item, index) => (
-           item !== 'nrbc' && item !== 'wbc' && <tr key={index}>
+           item !== 'nrbc' && item !== 'wbc' && item !== 'correctedWbc' && <tr key={index}>
             <td>{item}</td>
                 <td><strong>{results[item]}</strong> %</td>
             <td><strong>{(results[item] * results.wbc / 100).toFixed(2)}</strong> G/l</td>
