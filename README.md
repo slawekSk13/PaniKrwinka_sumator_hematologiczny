@@ -1,3 +1,5 @@
+Designed with [Figma](https://www.figma.com/file/3DvVqJRCrQvF62wlxCZ6lE/Sumator-hematologiczny?node-id=1%3A18)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
