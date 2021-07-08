@@ -59,7 +59,7 @@ function App() {
 
     useEffect(() => {
         // setProgress(100);
-        setProgress(Object.values(results).reduce(sum));
+        setProgress(Object.values(results).splice(0, 11).reduce(sum));
     }, [results]);
 
     const reset = () => {
@@ -81,7 +81,7 @@ function App() {
             wbc: 0
         })
     }
-    
+
     return (
         <HashRouter>
             <>
