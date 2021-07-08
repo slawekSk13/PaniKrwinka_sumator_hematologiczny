@@ -2,7 +2,7 @@ import {StyledTable} from "./Table.styles";
 import propTypes from "prop-types";
 
 const Table = ({patient, results}) => (
-    <TableMarkup patient={patient} results={results} types={results ? Object.keys(results[0]) : null}/>
+    <TableMarkup patient={patient} results={results} types={results ? Object.keys(results) : null}/>
 );
 
 const TableMarkup = ({patient, results, types}) => (
@@ -29,18 +29,18 @@ const TableMarkup = ({patient, results, types}) => (
         </tr>
         {results && <><tr>
             <td>WBC</td>
-            <td colSpan="2">{results[1].wbc} <strong>G/l</strong></td>
+            <td colSpan="2"><strong>{results.wbc}</strong> G/l</td>
         </tr>
         {types.map((item, index) => (
-           item !== 'nrbc' && <tr key={index}>
+           item !== 'nrbc' && item !== 'wbc' && <tr key={index}>
             <td>{item}</td>
-            <td>{results[0][item]} %</td>
-            <td>{results[0][item] * results[1].wbc / 100} G/l</td>
+                <td><strong>{results[item]}</strong> %</td>
+            <td><strong>{(results[item] * results.wbc / 100).toFixed(2)}</strong> G/l</td>
             </tr>
             ))}
             <tr>
             <td>nRBC</td>
-            <td colSpan="2">{results[0].nrbc} / 100 WBC</td>
+            <td colSpan="2"><strong>{results.nrbc} / 100</strong> WBC</td>
             </tr></>}
         </tbody>
     </StyledTable>
@@ -49,8 +49,8 @@ const TableMarkup = ({patient, results, types}) => (
 Table.propTypes = {
     /** patient is an object with data describing patient; mandatory props */
     patient: propTypes.object.isRequired,
-    /** array with results, wbc MUST be in index 1, nRBC in 2, rest in object in index 1; optional props, without it table renders only part showing patient info */
-    results: propTypes.array
+    /** object with results, key is cell type name, value is given cell type count; optional props, without it table renders only part showing patient info */
+    results: propTypes.object
 }
 
 Table.defaultProps = {
