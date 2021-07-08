@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {
     HashRouter,
     Route,
-    Switch
+    Switch,
+    Redirect
 } from 'react-router-dom';
 import {Header} from "./components/Header/Header";
 import {AddNewPatient} from "./views/AddNewPatient";
@@ -57,8 +58,8 @@ function App() {
     }
 
     useEffect(() => {
-        setProgress(100);
-        // setProgress(Object.values(results).reduce(sum));
+        // setProgress(100);
+        setProgress(Object.values(results).reduce(sum));
     }, [results]);
 
     const reset = () => {
@@ -80,16 +81,23 @@ function App() {
             wbc: 0
         })
     }
-
+    
     return (
         <HashRouter>
             <>
                 <Header />
                 <Switch>
-                    <Route exact path='/' render={() => (<AddNewPatient confirmPatient={confirmPatient}/>)}/>
-                    <Route path='/leukogram' render={() => (<Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell} results={results}/>)}/>
-                    <Route path='/results' render={() => (<Results results={results} patient={patient} reset={reset}/>)}/>
-                    </Switch>
+                    <Route exact path='/'><AddNewPatient confirmPatient={confirmPatient}/></Route>
+                    <Route path='/leukogram'>
+                        {patient ? <Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell} results={results}/> : <Redirect to='/' />}
+                    </Route>
+                    <Route path='/results'>
+                        {results.wbc ? <Results results={results} patient={patient} reset={reset}/> : <Redirect to='/leukogram' />}
+                    </Route>
+                    <Route>
+                        <Redirect to='/results' />
+                    </Route>
+                </Switch>
                 </>
         </HashRouter>
 );
