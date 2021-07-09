@@ -11,23 +11,23 @@ const ButtonStyled = styled.button`
   text-align: center;
   box-shadow: 0 4px 4px 0 hsla(0, 0%, 0%, .25);
   border-radius: 11px;
-  color: ${props => props.theme.color};
-  background-color: ${props => props.theme.backgroundColor};
+  color: #E5E5E5;
+  background-color: #951B81;
   transition: .4s;
   &:hover, &:active {
-    background-color: ${props => props.theme.hoverColor};
+    background-color: #CD1719;
     box-shadow: inset 0 4px 4px 0 hsla(0, 0%, 0%, .25);
     cursor: pointer;
   }
 `;
 
-ButtonStyled.defaultProps = {
-    theme: {
-        color: '#E5E5E5',
-        backgroundColor: '#951B81',
-        hoverColor: '#CD1719'
-    }
-}
+// ButtonStyled.defaultProps = {
+//     theme: {
+//         color: '#E5E5E5',
+//         backgroundColor: '#951B81',
+//         hoverColor: '#CD1719'
+//     }
+// }
 
 export {ButtonStyled};
 

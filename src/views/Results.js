@@ -4,7 +4,7 @@ import {Center} from "../components/Center/Center";
 import {Icon} from "../components/Icon/Icon";
 import {TipText} from "../components/TipText/TipText";
 import {Link} from "react-router-dom";
-import {download, print} from "../components/pdf";
+import {download, print} from "../utilities/pdf";
 
 const Results = ({patient, results, reset}) => {
 

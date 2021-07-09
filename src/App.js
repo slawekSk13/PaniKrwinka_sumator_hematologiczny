@@ -89,7 +89,6 @@ function App() {
 
     return (
         <HashRouter>
-            <>
                 <Header/>
                 <Switch>
                     <Route exact path='/'><AddNewPatient confirmPatient={confirmPatient}/></Route>
@@ -105,7 +104,6 @@ function App() {
                         <Redirect to='/results'/>
                     </Route>
                 </Switch>
-            </>
         </HashRouter>
     );
 }

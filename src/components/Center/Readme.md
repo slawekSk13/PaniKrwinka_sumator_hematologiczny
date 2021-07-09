@@ -1,3 +1,3 @@
 ```js
-<Center />
+<Center>Centered element</Center>
 ```
