@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 
 const Leukogram = ({patient, progress, handleAddCell, results, date}) => {
     const [localWbc, setLocalWbc] = useState('');
+    const [calcFinished, setCalcFinished] = useState(false);
     const handleLocalWbc = e => {
         const newValue = e.target.value;
         const regex = /^\d*(\.|,?)\d{0,2}$/;
@@ -22,20 +23,26 @@ const Leukogram = ({patient, progress, handleAddCell, results, date}) => {
     }
     const handleMultiClick = e => {
         typeof handleAddCell === 'function' ? handleAddCell(e.target.innerText.toLowerCase()) : console.warn('handleAddCell must be a function');
+        progress >= 99 && setCalcFinished(true);
     }
-
     const handleWbcClick = () => {
         const newValue = Number.parseFloat(localWbc.replace(',', '.'));
         console.log(newValue);
         handleAddCell('wbc', newValue);
     }
 
+    const leuko = <>
+        {Object.keys(results).slice(0,-2).map((element, i) => <Button key={i} text={element} name={element} onClick={handleMultiClick} />)}
+        <Button onClick={()=> setCalcFinished(true)} text='dalej' size='big' />
+    </>
+
+
     return (
         <FlexWrapper justify='around'>
             <Table patient={patient} date={date}/>
             <ProgressBar progress={progress} />
             <Center>
-            {progress < 100 ? Object.keys(results).slice(0,-2).map((element, i) => <Button key={i} text={element} name={element} onClick={handleMultiClick} />) : (
+            {!calcFinished ? leuko : (
                 <FlexWrapper height='40vh'>
                     <Center>
                         <Input onChange={handleLocalWbc} name='wbc' value={localWbc} placeholder='WBC (G/l)' up={true}/>

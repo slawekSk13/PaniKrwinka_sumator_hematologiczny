@@ -84,7 +84,8 @@ function App() {
             mlb: 0,
             inne: 0,
             nrbc: 0,
-            wbc: 0
+            wbc: 0,
+            correctedWbc: 0
         });
         setDate(new Date().toJSON().slice(0, 10).replace(/-/g, '-'));
     }
@@ -99,7 +100,7 @@ function App() {
                                               results={results} date={date}/> : <Redirect to='/'/>}
                     </Route>
                     <Route path='/results'>
-                        {results.wbc ? <Results results={results} patient={patient} reset={reset} date={date}/> :
+                        {results.wbc ? <Results results={results} patient={patient} reset={reset} date={date} progress={progress}/> :
                             <Redirect to='/leukogram'/>}
                     </Route>
                     <Route>

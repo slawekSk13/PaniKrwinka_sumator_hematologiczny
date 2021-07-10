@@ -1,11 +1,12 @@
 import {StyledTable} from "./Table.styles";
 import propTypes from "prop-types";
 
-const Table = ({patient, results, date}) => (
-    <TableMarkup date={date} patient={patient} results={results} types={results ? Object.keys(results) : null}/>
-);
+const Table = ({patient, results, date, progress}) => {
+    return <TableMarkup date={date} patient={patient} results={results} types={results ? Object.keys(results) : null}
+                 progress={progress ? progress : null}/>
+};
 
-const TableMarkup = ({patient, results, types, date}) => (
+const TableMarkup = ({patient, results, types, date, progress}) => (
     <StyledTable>
         <colgroup>
             <col/>
@@ -35,20 +36,20 @@ const TableMarkup = ({patient, results, types, date}) => (
             <td>WBC</td>
             <td colSpan="2"><strong>{results.wbc}</strong> G/l</td>
         </tr>
-            {results.correctedWbc !== 0 && <tr>
+            {results.correctedWbc !== 0 && progress > 99 && <tr>
                 <td>skor. WBC</td>
                 <td colSpan="2"><strong>{results.correctedWbc}</strong> G/l</td>
             </tr>}
         {types.map((item, index) => (
            item !== 'nrbc' && item !== 'wbc' && item !== 'correctedWbc' && <tr key={index}>
             <td>{item}</td>
-                <td><strong>{results[item]}</strong> %</td>
-            <td><strong>{(results[item] * results.wbc / 100).toFixed(2)}</strong> G/l</td>
+                <td><strong>{(results[item] / progress * 100).toFixed(2)}</strong> %</td>
+            <td><strong>{(results[item] * results.wbc / progress).toFixed(2) }</strong> G/l</td>
             </tr>
             ))}
             <tr>
             <td>nRBC</td>
-            <td colSpan="2"><strong>{results.nrbc} / 100</strong> WBC</td>
+            <td colSpan="2"><strong>{results.nrbc} / {progress}</strong> WBC</td>
             </tr></>}
         </tbody>
     </StyledTable>

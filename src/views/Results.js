@@ -6,14 +6,13 @@ import {TipText} from "../components/TipText/TipText";
 import {Link} from "react-router-dom";
 import {download, print} from "../utilities/pdf";
 
-const Results = ({patient, results, reset, date}) => {
-
+const Results = ({patient, results, reset, date, progress}) => {
     return (
         <FlexWrapper>
-            <Table results={results} patient={patient} date={date} />
+            <Table results={results} patient={patient} date={date} progress={progress} />
             <Center>
-                <Icon onClick={() => download(patient, results, date)} icon='pdf' />
-                <Icon onClick={() => print(patient, results, date)} icon='print' />
+                <Icon onClick={() => download(patient, results, date, progress)} icon='pdf' />
+                <Icon onClick={() => print(patient, results, date, progress)} icon='print' />
                 <Link to='/'>
                 <Icon onClick={reset} icon='add' />
                 </Link>

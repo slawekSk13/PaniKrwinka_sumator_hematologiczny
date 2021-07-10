@@ -1,7 +1,7 @@
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 
-const createNewPdf = (patient, results, date) => {
+const createNewPdf = (patient, results, date, progress) => {
 
     const docDefinition = {
         content: [
@@ -19,18 +19,18 @@ const createNewPdf = (patient, results, date) => {
                         [ { text: 'Data badania', bold: true }, `${date}`, ''],
                         [ '', '', ''],
                         [{ text: 'WBC', bold: true }, `${results.wbc} G/l`, ''],
-                        [{ text: 'skor. WBC', bold: true }, `${results.correctedWbc} G/l`, ''],
-                        [{ text: 'band', bold: true }, `${results.band} %`, `${(results.band * results.wbc / 100).toFixed(2)} G/l`],
-                        [{ text: 'seg', bold: true }, `${results.seg} %`, `${(results.seg * results.wbc / 100).toFixed(2)} G/l`],
-                        [{ text: 'lym', bold: true }, `${results.lym} %`, `${(results.lym * results.wbc / 100).toFixed(2)} G/l`],
-                        [{ text: 'mon', bold: true }, `${results.mon} %`, `${(results.mon * results.wbc / 100).toFixed(2)} G/l`],
-                        [{ text: 'eos', bold: true }, `${results.eos} %`, `${(results.eos * results.wbc / 100).toFixed(2)} G/l`],
-                        [{ text: 'bas', bold: true }, `${results.bas} %`, `${(results.bas * results.wbc / 100).toFixed(2)} G/l`],
-                        [{ text: 'pml', bold: true }, `${results.pml} %`, `${(results.pml * results.wbc / 100).toFixed(2)} G/l`],
-                        [{ text: 'mie', bold: true }, `${results.mie} %`, `${(results.mie * results.wbc / 100).toFixed(2)} G/l`],
-                        [{ text: 'met', bold: true }, `${results.met} %`, `${(results.met * results.wbc / 100).toFixed(2)} G/l`],
-                        [{ text: 'mlb', bold: true }, `${results.mlb} %`, `${(results.mlb * results.wbc / 100).toFixed(2)} G/l`],
-                        [{ text: 'inne', bold: true }, `${results.inne} %`, `${(results.inne * results.wbc / 100).toFixed(2)} G/l`],
+                        [{ text: 'skor. WBC', bold: true }, progress > 99 ? `${results.correctedWbc} G/l` : 'b.d.' , ''],
+                        [{ text: 'band', bold: true }, `${(results.band / progress * 100).toFixed(2)} %`, `${(results.band * results.wbc / progress).toFixed(2)} G/l`],
+                        [{ text: 'seg', bold: true }, `${(results.seg / progress * 100).toFixed(2)} %`, `${(results.seg * results.wbc / progress).toFixed(2)} G/l`],
+                        [{ text: 'lym', bold: true }, `${(results.lym / progress * 100).toFixed(2)} %`, `${(results.lym * results.wbc / progress).toFixed(2)} G/l`],
+                        [{ text: 'mon', bold: true }, `${(results.mon / progress * 100).toFixed(2)} %`, `${(results.mon * results.wbc / progress).toFixed(2)} G/l`],
+                        [{ text: 'eos', bold: true }, `${(results.eos / progress * 100).toFixed(2)} %`, `${(results.eos * results.wbc / progress).toFixed(2)} G/l`],
+                        [{ text: 'bas', bold: true }, `${(results.bas / progress * 100).toFixed(2)} %`, `${(results.bas * results.wbc / progress).toFixed(2)} G/l`],
+                        [{ text: 'pml', bold: true }, `${(results.pml / progress * 100).toFixed(2)} %`, `${(results.pml * results.wbc / progress).toFixed(2)} G/l`],
+                        [{ text: 'mie', bold: true }, `${(results.mie / progress * 100).toFixed(2)} %`, `${(results.mie * results.wbc / progress).toFixed(2)} G/l`],
+                        [{ text: 'met', bold: true }, `${(results.met / progress * 100).toFixed(2)} %`, `${(results.met * results.wbc / progress).toFixed(2)} G/l`],
+                        [{ text: 'mlb', bold: true }, `${(results.mlb / progress * 100).toFixed(2)} %`, `${(results.mlb * results.wbc / progress).toFixed(2)} G/l`],
+                        [{ text: 'inne', bold: true }, `${(results.inne / progress * 100).toFixed(2)} %`, `${(results.inne * results.wbc / progress).toFixed(2)} G/l`],
                         [{ text: 'nRBC', bold: true }, `${results.nrbc} / 100 WBC`, '']
                     ]
                 }
@@ -50,7 +50,7 @@ const createNewPdf = (patient, results, date) => {
  return docDefinition;
 }
 
-const download = (patient, results, date) => pdfMake.createPdf(createNewPdf(patient, results, date)).download(`${patient.name}_${date}`);
-const print = (patient, results, date) => pdfMake.createPdf(createNewPdf(patient, results, date)).print();
+const download = (patient, results, date, progress) => pdfMake.createPdf(createNewPdf(patient, results, date, progress)).download(`${patient.name}_${date}`);
+const print = (patient, results, date, progress) => pdfMake.createPdf(createNewPdf(patient, results, date, progress)).print();
 
 export {download, print}
