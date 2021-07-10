@@ -1,7 +1,7 @@
 import {InputStyled} from './Input.styles';
 import propTypes from 'prop-types';
 
-const Input = ({placeholder, up, value, onChange, name}) => <InputStyled name={name} onChange={onChange} value={value} placeholder={placeholder} up={up}/>
+const Input = ({placeholder, up, value, onChange, name}) => <InputStyled autocomplete="off" name={name} onChange={onChange} value={value} placeholder={placeholder} up={up}/>
 
 Input.propTypes = {
     /** text to show as a placeholder */

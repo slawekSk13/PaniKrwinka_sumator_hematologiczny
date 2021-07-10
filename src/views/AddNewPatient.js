@@ -8,11 +8,10 @@ import {Link} from 'react-router-dom'
 
 const AddNewPatient = ({confirmPatient}) => {
     const [localPatient, setLocalPatient] = useState({
-        name: '',
-        ownerName: '',
-        ownerSurname: '',
-        species: 'pies',
-        date: new Date().toJSON().slice(0, 10).replace(/-/g, '-')
+        patname: '',
+        patOwnerName: '',
+        patOwnerLname: '',
+        species: 'pies'
     });
 
     const handleLocalPatientChange = e => {
@@ -37,13 +36,12 @@ const AddNewPatient = ({confirmPatient}) => {
 
     const handleClick = () => {
         const patientToSave = {
-            name: capitalizeFirstLetter(localPatient.name),
+            name: capitalizeFirstLetter(localPatient.patname),
             owner: {
-                name: capitalizeFirstLetter(localPatient.ownerName),
-                surname: capitalizeFirstLetter(localPatient.ownerSurname)
+                name: capitalizeFirstLetter(localPatient.patOwnerName),
+                surname: capitalizeFirstLetter(localPatient.patOwnerLname)
             },
-            species: localPatient.species,
-            date: localPatient.date
+            species: localPatient.species
         }
         typeof confirmPatient === 'function' ? confirmPatient(patientToSave) : console.warn(`confirmPatient must be a function, patientToSave could not be saved`);
     }
@@ -53,11 +51,11 @@ const AddNewPatient = ({confirmPatient}) => {
     return (
         <FlexWrapper>
             <FlexWrapper justify='around' height='65vh'>
-                <Input onChange={handleLocalPatientChange} name={'name'} value={localPatient.name}
+                <Input onChange={handleLocalPatientChange} name={'patname'} value={localPatient.patname}
                        placeholder='imię pacjenta'/>
-                <Input onChange={handleLocalPatientChange} name={'ownerName'} value={localPatient.ownerName}
+                <Input onChange={handleLocalPatientChange} name={'patOwnerName'} value={localPatient.patOwnerName}
                        placeholder='imię właściciela'/>
-                <Input onChange={handleLocalPatientChange} name={'ownerSurname'} value={localPatient.ownerSurname}
+                <Input onChange={handleLocalPatientChange} name={'patOwnerLname'} value={localPatient.patOwnerLname}
                        placeholder='nazwisko właściciela'/>
                 <RadioButtonGroup onChange={handleRadioChange}/>
                 <Link style={{width: '100%', textAlign: 'center'}} to='/leukogram' >

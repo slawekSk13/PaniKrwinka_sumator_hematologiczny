@@ -1,11 +1,11 @@
 import {StyledTable} from "./Table.styles";
 import propTypes from "prop-types";
 
-const Table = ({patient, results}) => (
-    <TableMarkup patient={patient} results={results} types={results ? Object.keys(results) : null}/>
+const Table = ({patient, results, date}) => (
+    <TableMarkup date={date} patient={patient} results={results} types={results ? Object.keys(results) : null}/>
 );
 
-const TableMarkup = ({patient, results, types}) => (
+const TableMarkup = ({patient, results, types, date}) => (
     <StyledTable>
         <colgroup>
             <col/>
@@ -25,7 +25,7 @@ const TableMarkup = ({patient, results, types}) => (
         </tr>
         <tr>
             <td>data badania:</td>
-            <td colSpan="2">{patient.date}</td>
+            <td colSpan="2">{date}</td>
         </tr>
         {results && <>
             <tr>

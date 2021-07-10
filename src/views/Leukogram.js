@@ -8,7 +8,7 @@ import {TipText} from "../components/TipText/TipText";
 import {useState} from "react";
 import {Link} from "react-router-dom";
 
-const Leukogram = ({patient, progress, handleAddCell, results}) => {
+const Leukogram = ({patient, progress, handleAddCell, results, date}) => {
     const [localWbc, setLocalWbc] = useState('');
     const handleLocalWbc = e => {
         const newValue = e.target.value;
@@ -32,7 +32,7 @@ const Leukogram = ({patient, progress, handleAddCell, results}) => {
 
     return (
         <FlexWrapper justify='around'>
-            <Table patient={patient}/>
+            <Table patient={patient} date={date}/>
             <ProgressBar progress={progress} />
             <Center>
             {progress < 100 ? Object.keys(results).slice(0,-2).map((element, i) => <Button key={i} text={element} name={element} onClick={handleMultiClick} />) : (

@@ -1,7 +1,7 @@
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 
-const createNewPdf = (patient, results) => {
+const createNewPdf = (patient, results, date) => {
 
     const docDefinition = {
         content: [
@@ -16,7 +16,7 @@ const createNewPdf = (patient, results) => {
                     body: [
                         [ { text: 'Właściciel:', bold: true }, `${patient.owner.name} ${patient.owner.surname}`, ''],
                         [  { text: 'Pacjent:', bold: true }, `${patient.species} ${patient.name}`, ''],
-                        [ { text: 'Data badania', bold: true }, `${patient.date}`, ''],
+                        [ { text: 'Data badania', bold: true }, `${date}`, ''],
                         [ '', '', ''],
                         [{ text: 'WBC', bold: true }, `${results.wbc} G/l`, ''],
                         [{ text: 'skor. WBC', bold: true }, `${results.correctedWbc} G/l`, ''],
@@ -50,7 +50,7 @@ const createNewPdf = (patient, results) => {
  return docDefinition;
 }
 
-const download = (patient, results) => pdfMake.createPdf(createNewPdf(patient, results)).download(patient.name);
-const print = (patient, results) => pdfMake.createPdf(createNewPdf(patient, results)).print();
+const download = (patient, results, date) => pdfMake.createPdf(createNewPdf(patient, results, date)).download(`${patient.name}_${date}`);
+const print = (patient, results, date) => pdfMake.createPdf(createNewPdf(patient, results, date)).print();
 
 export {download, print}

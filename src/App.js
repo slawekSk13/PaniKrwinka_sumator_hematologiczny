@@ -31,6 +31,7 @@ function App() {
             correctedWbc: 0
         }
     );
+    const [date, setDate] = useState(new Date().toJSON().slice(0, 10).replace(/-/g, '-'));
 
     const confirmPatient = patientToSave => setPatient(patientToSave);
 
@@ -84,7 +85,8 @@ function App() {
             inne: 0,
             nrbc: 0,
             wbc: 0
-        })
+        });
+        setDate(new Date().toJSON().slice(0, 10).replace(/-/g, '-'));
     }
 
     return (
@@ -94,10 +96,10 @@ function App() {
                     <Route exact path='/'><AddNewPatient confirmPatient={confirmPatient}/></Route>
                     <Route path='/leukogram'>
                         {patient ? <Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell}
-                                              results={results}/> : <Redirect to='/'/>}
+                                              results={results} date={date}/> : <Redirect to='/'/>}
                     </Route>
                     <Route path='/results'>
-                        {results.wbc ? <Results results={results} patient={patient} reset={reset}/> :
+                        {results.wbc ? <Results results={results} patient={patient} reset={reset} date={date}/> :
                             <Redirect to='/leukogram'/>}
                     </Route>
                     <Route>
