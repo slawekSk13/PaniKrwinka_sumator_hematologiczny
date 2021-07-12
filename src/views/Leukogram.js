@@ -33,7 +33,7 @@ const Leukogram = ({patient, progress, handleAddCell, results, date}) => {
     }
 
     const leuko = <>
-        {Object.keys(results).slice(0,-2).map((element, i) => <Button key={i} text={element} name={element} onClick={handleMultiClick} />)}
+        {Object.keys(results).slice(0,-3).map((element, i) => <Button key={i} text={element} name={element} onClick={handleMultiClick} />)}
         <Button onClick={()=> setCalcFinished(true)} text='dalej' size='big' />
     </>
 

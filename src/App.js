@@ -5,11 +5,14 @@ import {
     Switch,
     Redirect
 } from 'react-router-dom';
+import {v4 as uuid} from 'uuid';
 import {Header} from "./components/Header/Header";
 import {AddNewPatient} from "./views/AddNewPatient";
 import {Leukogram} from "./views/Leukogram";
 import {Results} from "./views/Results";
 import {Icon} from "./components/Icon/Icon";
+import {getResults} from "./utilities/api/get";
+import {postResults} from "./utilities/api/post";
 
 function App() {
     const [patient, setPatient] = useState();
@@ -29,18 +32,19 @@ function App() {
             inne: 0,
             nrbc: 0,
             wbc: 0,
-            correctedWbc: 0
+            correctedWbc: 'b.d.',
+            id: uuid()
         }
     );
     const [date, setDate] = useState(new Date().toJSON().slice(0, 10).replace(/-/g, '-'));
 
-    const confirmPatient = patientToSave => setPatient(patientToSave);
+    const confirmPatient = patientToSave => setPatient({...patientToSave, id: uuid()});
 
     const sum = (a, b) => a + b;
 
     const handleAddCell = (key, value) => {
         if (key === 'wbc') {
-            if (results.nrbc < 5) {
+            if (results.nrbc < 5 || progress < 100) {
                 setResults(prevState => ({
                     ...prevState,
                     [key]: value
@@ -64,10 +68,16 @@ function App() {
             );
     }
 
+    const handleData = data => console.log(data);
+
     useEffect(() => {
         // setProgress(100);
         setProgress(Object.values(results).splice(0, 11).reduce(sum));
     }, [results]);
+
+    useEffect(() => {
+        getResults(handleData);
+    }, []);
 
     const reset = () => {
         setPatient();
@@ -86,13 +96,15 @@ function App() {
             inne: 0,
             nrbc: 0,
             wbc: 0,
-            correctedWbc: 0
+            correctedWbc: 'b.d.',
+            id: uuid()
         });
         setDate(new Date().toJSON().slice(0, 10).replace(/-/g, '-'));
+        getResults(handleData);
     }
 
     const save = () => {
-        console.log('save results');
+        postResults(results);
     }
 
     return (

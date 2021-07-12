@@ -1,0 +1,40 @@
+{
+  "results": [
+    {
+      "id": 2414,
+      "patientId": 124121,
+      "date": "2021-07-11",
+      "band": 0,
+      "seg": 0,
+      "lym": 0,
+      "mon": 0,
+      "eos": 0,
+      "bas": 0,
+      "pml": 0,
+      "mie": 0,
+      "met": 0,
+      "mlb": 0,
+      "inne": 0,
+      "nrbc": 0,
+      "wbc": 0,
+      "correctedWbc": 0
+    },
+    {
+      "band": 0,
+      "seg": 0,
+      "lym": 0,
+      "mon": 0,
+      "eos": 0,
+      "bas": 0,
+      "pml": 0,
+      "mie": 0,
+      "met": 0,
+      "mlb": 2,
+      "inne": 0,
+      "nrbc": 8,
+      "wbc": 22,
+      "correctedWbc": "b.d.",
+      "id": "a92b4aa7-e757-468b-b213-b2a2cbc99e5a"
+    }
+  ]
+}
