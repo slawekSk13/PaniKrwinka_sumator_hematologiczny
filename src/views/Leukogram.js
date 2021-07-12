@@ -9,7 +9,7 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 
 const Leukogram = ({patient, progress, handleAddCell, results, date}) => {
-    const [localWbc, setLocalWbc] = useState('');
+    const [localWbc, setLocalWbc] = useState(results.wbc !== 0 ? results.wbc.toString() : '');
     const [calcFinished, setCalcFinished] = useState(false);
     const handleLocalWbc = e => {
         const newValue = e.target.value;
@@ -23,12 +23,13 @@ const Leukogram = ({patient, progress, handleAddCell, results, date}) => {
     }
     const handleMultiClick = e => {
         typeof handleAddCell === 'function' ? handleAddCell(e.target.innerText.toLowerCase()) : console.warn('handleAddCell must be a function');
+        setCalcFinished(false);
         progress >= 99 && setCalcFinished(true);
     }
     const handleWbcClick = () => {
         const newValue = Number.parseFloat(localWbc.replace(',', '.'));
-        console.log(newValue);
         handleAddCell('wbc', newValue);
+        setLocalWbc(results.wbc);
     }
 
     const leuko = <>
@@ -42,7 +43,7 @@ const Leukogram = ({patient, progress, handleAddCell, results, date}) => {
             <Table patient={patient} date={date}/>
             <ProgressBar progress={progress} />
             <Center>
-            {!calcFinished ? leuko : (
+            {!calcFinished || progress < 1 ? leuko : (
                 <FlexWrapper height='40vh'>
                     <Center>
                         <Input onChange={handleLocalWbc} name='wbc' value={localWbc} placeholder='WBC (G/l)' up={true}/>

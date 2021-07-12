@@ -94,7 +94,7 @@ function App() {
         <HashRouter>
                 <Header/>
                 <Switch>
-                    <Route exact path='/'><AddNewPatient confirmPatient={confirmPatient}/></Route>
+                    <Route exact path='/'><AddNewPatient confirmPatient={confirmPatient} patient={patient}/></Route>
                     <Route path='/leukogram'>
                         {patient ? <Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell}
                                               results={results} date={date}/> : <Redirect to='/'/>}

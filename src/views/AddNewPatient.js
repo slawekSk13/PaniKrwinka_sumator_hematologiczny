@@ -6,12 +6,23 @@ import {FlexWrapper} from "../components/FlexWrapper/FlexWrapper";
 import {useState} from "react";
 import {Link} from 'react-router-dom'
 
-const AddNewPatient = ({confirmPatient}) => {
-    const [localPatient, setLocalPatient] = useState({
-        patname: '',
-        patOwnerName: '',
-        patOwnerLname: '',
-        species: 'pies'
+const AddNewPatient = ({confirmPatient, patient}) => {
+    const [localPatient, setLocalPatient] = useState(() => {
+        if(patient) {
+            return ({
+                patname: patient.name,
+                patOwnerName: patient.owner.name,
+                patOwnerLname: patient.owner.surname,
+                species: patient.species
+            });
+        } else {
+          return ( {
+                patname: '',
+                    patOwnerName: '',
+                patOwnerLname: '',
+                species: 'pies'
+            })
+        }
     });
 
     const handleLocalPatientChange = e => {
