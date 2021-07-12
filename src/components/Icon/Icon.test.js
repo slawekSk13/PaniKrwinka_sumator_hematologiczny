@@ -7,9 +7,16 @@ test('renders icon', () => {
     expect(icon).toBeInTheDocument();
 });
 
-test('mouse enter', () => {
+test('mouse click', () => {
     const handleClick = jest.fn();
     render(<Icon onClick={handleClick}/>);
-    fireEvent.mouseOver(document.querySelector('svg'), new MouseEvent('click'));
+    fireEvent.click(document.querySelector('svg'));
     expect(handleClick).toHaveBeenCalled();
+});
+
+test('icon color', () => {
+    render(<Icon/>);
+    const icon = document.querySelector('svg');
+    const style = window.getComputedStyle(icon);
+    expect(style.color).toBe('rgb(149, 27, 129)');
 });
