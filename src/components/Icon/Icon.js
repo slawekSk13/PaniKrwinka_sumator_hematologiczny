@@ -1,12 +1,12 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faPlusSquare, faPrint, faFilePdf, faTimes} from '@fortawesome/free-solid-svg-icons'
+import {faSave, faPrint, faFilePdf, faTimes} from '@fortawesome/free-solid-svg-icons'
 import propTypes from "prop-types"
 import {useState} from 'react'
 
 const Icon = ({icon, onClick}) => {
     const [style, setStyle] = useState({
         color: '#951B81',
-        fontSize: '2rem',
+        fontSize: '3rem',
         margin: '1rem',
     })
 
@@ -18,10 +18,10 @@ const Icon = ({icon, onClick}) => {
         } else console.warn(`onClick must be a function, current type is ${typeof onClick}`)
     }
     switch (icon) {
-        case 'add':
+        case 'save':
             return (
                 <FontAwesomeIcon onClick={() => handleClick()} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} style={style}
-                                 icon={faPlusSquare}/>
+                                 icon={faSave}/>
             );
         case 'pdf':
             return (
@@ -35,7 +35,7 @@ const Icon = ({icon, onClick}) => {
             );
         case 'exit':
             return (
-                <FontAwesomeIcon onClick={handleClick} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} style={style}
+                <FontAwesomeIcon onClick={handleClick} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseLeave} style={{...style, position: 'absolute', top: '0', right: '0'}}
                                  icon={faTimes}/>
             );
         default:
@@ -52,7 +52,7 @@ Icon.propTypes = {
 }
 
 Icon.defaultProps = {
-    icon: 'add',
+    icon: 'save',
     onClick: () => console.warn('onClick function not set')
 }
 

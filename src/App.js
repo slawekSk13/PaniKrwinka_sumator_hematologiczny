@@ -9,6 +9,7 @@ import {Header} from "./components/Header/Header";
 import {AddNewPatient} from "./views/AddNewPatient";
 import {Leukogram} from "./views/Leukogram";
 import {Results} from "./views/Results";
+import {Icon} from "./components/Icon/Icon";
 
 function App() {
     const [patient, setPatient] = useState();
@@ -90,17 +91,22 @@ function App() {
         setDate(new Date().toJSON().slice(0, 10).replace(/-/g, '-'));
     }
 
+    const save = () => {
+        console.log('save results');
+    }
+
     return (
         <HashRouter>
                 <Header/>
+            {patient && <Icon icon='exit' onClick={reset}/>}
                 <Switch>
                     <Route exact path='/'><AddNewPatient confirmPatient={confirmPatient} patient={patient}/></Route>
                     <Route path='/leukogram'>
                         {patient ? <Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell}
-                                              results={results} date={date}/> : <Redirect to='/'/>}
+                                              results={results} date={date} reset={reset}/> : <Redirect to='/'/>}
                     </Route>
                     <Route path='/results'>
-                        {results.wbc ? <Results results={results} patient={patient} reset={reset} date={date} progress={progress}/> :
+                        {results.wbc ? <Results results={results} patient={patient} save={save} reset={reset} date={date} progress={progress}/> :
                             <Redirect to='/leukogram'/>}
                     </Route>
                     <Route>
