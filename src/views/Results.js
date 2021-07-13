@@ -14,9 +14,9 @@ console.log(progress);
             <Center>
                 <Icon onClick={() => download(patient, results, progress)} icon='pdf' />
                 <Icon onClick={() => print(patient, results, progress)} icon='print' />
-                {/*<Link to='/'>*/}
-                <Icon onClick={save} icon='save' />
-                {/*</Link>*/}
+                <Link to='/'>
+                <Icon onClick={() => save('results')} icon='save' />
+                </Link>
             </Center>
             <TipText text='Możesz zapisać wynik badania w formacie PDF lub od razu go wydrukować, a także zresetować wyniki i zacząć nowe badanie'/>
         </FlexWrapper>

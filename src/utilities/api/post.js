@@ -1,9 +1,9 @@
 import {API_URL} from "./constants";
 
-const postResults = resultsToSave => {
-    fetch(`${API_URL}/results`, {
+const postToAPI = (dataToSave, path) => {
+    fetch(`${API_URL}/${path}`, {
         method: 'POST',
-        body: JSON.stringify(resultsToSave),
+        body: JSON.stringify(dataToSave),
         headers: {
             "Content-Type": "application/json"
         }
@@ -13,4 +13,4 @@ const postResults = resultsToSave => {
         .catch(errors => console.warn(errors));
 }
 
-export {postResults}
+export {postToAPI}

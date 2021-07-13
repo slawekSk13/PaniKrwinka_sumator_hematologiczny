@@ -11,8 +11,6 @@ import {Link} from "react-router-dom";
 const Leukogram = ({patient, progress, handleAddCell, results, handleCalcFinish, calcFinished}) => {
     const [localWbc, setLocalWbc] = useState(results.leukogram.wbc.nominal !== 0 ? results.leukogram.wbc.nominal.toString() : '');
 
-    console.log(calcFinished)
-    console.log(progress);
     const handleLocalWbc = e => {
         const newValue = e.target.value;
         const regex = /^\d*(\.|,?)\d{0,2}$/;
@@ -29,8 +27,10 @@ const Leukogram = ({patient, progress, handleAddCell, results, handleCalcFinish,
     }
     const handleWbcClick = () => {
         const newValue = Number.parseFloat(localWbc.replace(',', '.'));
-        handleAddCell('wbc', newValue);
-        setLocalWbc(results.leukogram.wbc.nominal);
+        if (newValue) {
+            handleAddCell('wbc', newValue);
+            setLocalWbc(results.leukogram.wbc.nominal);
+        }
     }
 
     const leuko = <>

@@ -2,12 +2,12 @@ import {API_URL} from "./constants";
 
 //@param {function} succesCallback - func that saves incoming data
 
-const getResults = successCallback => {
-    fetch(`${API_URL}/results`)
+const getFromAPI = (successCallback, path) => {
+    fetch(`${API_URL}/${path}`)
         .then(response => response.json())
         .then(data => {
-            typeof successCallback === 'function' && successCallback(data);})
+            typeof successCallback === 'function' && successCallback(data, path);})
         .catch(errors => console.warn(errors));
 }
 
-export {getResults}
+export {getFromAPI}

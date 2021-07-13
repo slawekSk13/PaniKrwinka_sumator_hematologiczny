@@ -10,19 +10,23 @@ import {AddNewPatient} from "./views/AddNewPatient";
 import {Leukogram} from "./views/Leukogram";
 import {Results} from "./views/Results";
 import {Icon} from "./components/Icon/Icon";
-import {getResults} from "./utilities/api/get";
-import {postResults} from "./utilities/api/post";
+import {getFromAPI} from "./utilities/api/get";
+import {postToAPI} from "./utilities/api/post";
 import {patientZero, resultsZero} from "./utilities/defaultStates";
+import {NewOrHistory} from "./views/NewOrHistory";
 
 function App() {
     const [patient, setPatient] = useState(patientZero);
     const [progress, setProgress] = useState(0);
     const [results, setResults] = useState(resultsZero);
     const [calcFinished, setCalcFinished] = useState(false);
+    const [historicalResults, setHistoricalResults] = useState();
+    const [historicalPatients, setHistoricalPatients] = useState();
 
-    const confirmPatient = patientToSave => setPatient(patientToSave);
-
-    console.log(results);
+    const confirmPatient = patientToSave => {
+        setPatient(patientToSave);
+        save('patient');
+    };
 
     const sum = (a, b) => a + b;
 
@@ -70,7 +74,9 @@ function App() {
         progress >= 99 && setCalcFinished(true);
     }
 
-    const handleData = data => console.log(data);
+    const handleData = (data, path) => {
+       path === 'results' ? setHistoricalResults(data) : setHistoricalPatients(data);
+    };
 
     useEffect(() => {
         // setProgress(100);
@@ -78,7 +84,8 @@ function App() {
     }, [results]);
 
     useEffect(() => {
-        getResults(handleData);
+        getFromAPI(handleData, 'results');
+        getFromAPI(handleData, 'patients');
     }, []);
 
     useEffect(() => {
@@ -92,15 +99,22 @@ function App() {
         setPatient(patientZero);
         setProgress(0);
         setResults(resultsZero);
-        getResults(handleData);
+        getFromAPI(handleData, 'results');
+        getFromAPI(handleData, 'patients');
     }
 
     const handleCalcFinish = () => {
         setCalcFinished(true);
     }
 
-    const save = () => {
-        postResults(results);
+    const save = saveType => {
+       if (saveType === 'results') {
+           postToAPI(results, 'results');
+           reset();
+       } else if (saveType === 'patient') {
+           postToAPI(patient, 'patients')
+       }
+
     }
 
     return (
@@ -108,7 +122,8 @@ function App() {
             <Header/>
             {patient !== patientZero && <Icon icon='exit' onClick={reset}/>}
             <Switch>
-                <Route exact path='/'><AddNewPatient confirmPatient={confirmPatient} patient={patient}/></Route>
+                <Route exact path='/'><NewOrHistory /></Route>
+                <Route path='/addnewpatient'><AddNewPatient confirmPatient={confirmPatient} patient={patient}/></Route>
                 <Route path='/leukogram'>
                     {patient !== patientZero ? <Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell}
                                           results={results} reset={reset} handleCalcFinish={handleCalcFinish}

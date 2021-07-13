@@ -4,7 +4,7 @@ const InputStyled = styled.input.attrs({
     type: 'text',
     autocomplete: 'off'
 })`
-  max-width: 100%;
+  width: 75%;
   font-size: 1.5rem;
   text-transform: uppercase;
   text-align: center;

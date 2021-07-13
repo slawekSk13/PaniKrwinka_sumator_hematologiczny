@@ -1,40 +1,88 @@
 {
   "results": [
     {
-      "id": 2414,
-      "patientId": 124121,
-      "date": "2021-07-11",
-      "band": 0,
-      "seg": 0,
-      "lym": 0,
-      "mon": 0,
-      "eos": 0,
-      "bas": 0,
-      "pml": 0,
-      "mie": 0,
-      "met": 0,
-      "mlb": 0,
-      "inne": 0,
-      "nrbc": 0,
-      "wbc": 0,
-      "correctedWbc": 0
+      "id": "30559326-953a-486d-a8bc-c42174632c25",
+      "date": "2021-07-13",
+      "patientId": "6331c383-6de4-4cdd-ad9b-29051433ae8a",
+      "leukogram": {
+        "wbc": {
+          "nominal": 24,
+          "corrected": "22.22"
+        },
+        "nrbc": 8,
+        "relative": {
+          "band": 6,
+          "seg": 8,
+          "lym": 8,
+          "mon": 10,
+          "eos": 8,
+          "bas": 5,
+          "pml": 14,
+          "mie": 11,
+          "met": 11,
+          "mlb": 14,
+          "inne": 5
+        }
+      }
     },
     {
-      "band": 0,
-      "seg": 0,
-      "lym": 0,
-      "mon": 0,
-      "eos": 0,
-      "bas": 0,
-      "pml": 0,
-      "mie": 0,
-      "met": 0,
-      "mlb": 2,
-      "inne": 0,
-      "nrbc": 8,
-      "wbc": 22,
-      "correctedWbc": "b.d.",
-      "id": "a92b4aa7-e757-468b-b213-b2a2cbc99e5a"
+      "id": "0b939e64-dddb-4ca7-b2b3-f7fa23dd06b9",
+      "date": "2021-07-13",
+      "patientId": "8823c9b9-7c4a-4505-a703-e7f0bca1c98c",
+      "leukogram": {
+        "wbc": {
+          "nominal": 12,
+          "corrected": 12
+        },
+        "nrbc": 3,
+        "relative": {
+          "band": 1,
+          "seg": 5,
+          "lym": 3,
+          "mon": 6,
+          "eos": 3,
+          "bas": 5,
+          "pml": 0,
+          "mie": 3,
+          "met": 9,
+          "mlb": 2,
+          "inne": 4
+        }
+      }
+    },
+    {
+      "id": "b9480ce3-ec85-4675-bf87-3e4bf9d01ec5",
+      "date": "2021-07-13",
+      "patientId": "bf6b4359-d901-4f68-ada9-fac567eb180c",
+      "leukogram": {
+        "wbc": {
+          "nominal": 23,
+          "corrected": "b.d."
+        },
+        "nrbc": 6,
+        "relative": {
+          "band": 4,
+          "seg": 5,
+          "lym": 5,
+          "mon": 4,
+          "eos": 6,
+          "bas": 6,
+          "pml": 4,
+          "mie": 6,
+          "met": 7,
+          "mlb": 8,
+          "inne": 6
+        }
+      }
+    }
+  ],
+  "patients": [
+    {
+      "id": "bf6b4359-d901-4f68-ada9-fac567eb180c",
+      "patName": "Puszek",
+      "patOwnerName": "Jan",
+      "patOwnerLname": "Kowalski",
+      "species": "kot"
     }
   ]
 }
