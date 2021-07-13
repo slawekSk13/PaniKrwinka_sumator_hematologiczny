@@ -122,7 +122,7 @@ function App() {
             <Header/>
             {patient !== patientZero && <Icon icon='exit' onClick={reset}/>}
             <Switch>
-                <Route exact path='/'><NewOrHistory /></Route>
+                <Route exact path='/'><NewOrHistory historicalPatients={historicalPatients} historicalResults={historicalResults} /></Route>
                 <Route path='/addnewpatient'><AddNewPatient confirmPatient={confirmPatient} patient={patient}/></Route>
                 <Route path='/leukogram'>
                     {patient !== patientZero ? <Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell}
