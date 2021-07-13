@@ -1,12 +1,16 @@
 import {StyledTable} from "./Table.styles";
 import propTypes from "prop-types";
 
-const Table = ({patient, results, date, progress}) => {
-    return <TableMarkup date={date} patient={patient} results={results} types={results ? Object.keys(results) : null}
-                 progress={progress ? progress : null}/>
+const Table = ({patient, results, progress, calcFinished}) => {
+    return <TableMarkup patient={patient} results={results} progress={progress ? progress : null}
+                        calcFinished={calcFinished}/>
 };
 
-const TableMarkup = ({patient, results, types, date, progress}) => {
+const TableMarkup = ({patient, results, progress, calcFinished}) => {
+
+    const types = Object.keys(results.leukogram.relative);
+    const date = results.date;
+    const renderResults = calcFinished && progress > 1 && results.leukogram.wbc.nominal > 0;
     return (
         <StyledTable>
             <colgroup>
@@ -17,40 +21,40 @@ const TableMarkup = ({patient, results, types, date, progress}) => {
             <tbody>
             <tr>
                 <td>właściciel:</td>
-                <td colSpan="2">{patient.owner.name} {patient.owner.surname}</td>
+                <td colSpan="2">{patient.patOwnerName} {patient.patOwnerLname}</td>
 
             </tr>
             <tr>
                 <td>pacjent:</td>
-                <td colSpan="2">{patient.species} <strong>{patient.name}</strong></td>
+                <td colSpan="2">{patient.species} <strong>{patient.patName}</strong></td>
 
             </tr>
             <tr>
                 <td>data badania:</td>
                 <td colSpan="2">{date}</td>
             </tr>
-            {results && <>
+            {renderResults && <>
                 <tr>
                     <td colSpan="3">&nbsp;</td>
                 </tr>
                 <tr>
                     <td>WBC</td>
-                    <td colSpan="2"><strong>{results.wbc}</strong> G/l</td>
+                    <td colSpan="2"><strong>{results.leukogram.wbc.nominal}</strong> G/l</td>
                 </tr>
-                {results.correctedWbc !== 0 && progress > 99 && <tr>
+                {results.leukogram.wbc.corrected !== 'b.d.' && progress > 99 && <tr>
                     <td>skor. WBC</td>
-                    <td colSpan="2"><strong>{results.correctedWbc}</strong> G/l</td>
+                    <td colSpan="2"><strong>{results.leukogram.wbc.corrected}</strong> G/l</td>
                 </tr>}
-                {types.slice(0,11).map((item, index) => (
+                {types.map((item, index) => (
                     <tr key={index}>
                         <td>{item}</td>
-                        <td><strong>{(results[item] / progress * 100).toFixed(2)}</strong> %</td>
-                        <td><strong>{(results[item] * results.wbc / progress).toFixed(2)}</strong> G/l</td>
+                        <td><strong>{(results.leukogram.relative[item] / progress * 100).toFixed()}</strong> %</td>
+                        <td><strong>{(results.leukogram.relative[item] * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)}</strong> G/l</td>
                     </tr>
                 ))}
                 <tr>
                     <td>nRBC</td>
-                    <td colSpan="2"><strong>{results.nrbc} / {progress}</strong> WBC</td>
+                    <td colSpan="2"><strong>{results.leukogram.nrbc} / {progress}</strong> WBC</td>
                 </tr>
             </>}
             </tbody>

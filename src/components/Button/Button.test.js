@@ -22,7 +22,8 @@ test('button background color', () => {
 });
 
 test ('button text', () => {
-    render(<Button text='dalej' />);
-    const button = screen.getByText('dalej');
+    const text = 'dalej';
+    render(<Button text={text} />);
+    const button = screen.getByText(text);
     expect(button).toBeInTheDocument();
 });

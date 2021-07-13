@@ -7,22 +7,12 @@ import {useState} from "react";
 import {Link} from 'react-router-dom'
 
 const AddNewPatient = ({confirmPatient, patient}) => {
-    const [localPatient, setLocalPatient] = useState(() => {
-        if(patient) {
-            return ({
-                patname: patient.name,
-                patOwnerName: patient.owner.name,
-                patOwnerLname: patient.owner.surname,
-                species: patient.species
-            });
-        } else {
-          return ( {
-                patname: '',
-                    patOwnerName: '',
-                patOwnerLname: '',
-                species: 'pies'
-            })
-        }
+    const [localPatient, setLocalPatient] = useState({
+        id: patient.id,
+        patName: patient.patName,
+        patOwnerName: patient.patOwnerName,
+        patOwnerLname: patient.patOwnerLname,
+        species: patient.species
     });
 
     const handleLocalPatientChange = e => {
@@ -30,7 +20,7 @@ const AddNewPatient = ({confirmPatient, patient}) => {
         setLocalPatient(prevState => (
             {
                 ...prevState,
-                [name]: value
+                [name]: capitalizeFirstLetter(value)
             }
 
         ));
@@ -46,15 +36,7 @@ const AddNewPatient = ({confirmPatient, patient}) => {
     }
 
     const handleClick = () => {
-        const patientToSave = {
-            name: capitalizeFirstLetter(localPatient.patname),
-            owner: {
-                name: capitalizeFirstLetter(localPatient.patOwnerName),
-                surname: capitalizeFirstLetter(localPatient.patOwnerLname)
-            },
-            species: localPatient.species
-        }
-        typeof confirmPatient === 'function' ? confirmPatient(patientToSave) : console.warn(`confirmPatient must be a function, patientToSave could not be saved`);
+        typeof confirmPatient === 'function' ? confirmPatient(localPatient) : console.warn(`confirmPatient must be a function, patientToSave could not be saved`);
     }
 
     const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
@@ -62,15 +44,15 @@ const AddNewPatient = ({confirmPatient, patient}) => {
     return (
         <FlexWrapper>
             <FlexWrapper justify='around' height='65vh'>
-                <Input onChange={handleLocalPatientChange} name={'patname'} value={localPatient.patname}
+                <Input onChange={handleLocalPatientChange} name={'patName'} value={localPatient.patName}
                        placeholder='imię pacjenta'/>
                 <Input onChange={handleLocalPatientChange} name={'patOwnerName'} value={localPatient.patOwnerName}
                        placeholder='imię właściciela'/>
                 <Input onChange={handleLocalPatientChange} name={'patOwnerLname'} value={localPatient.patOwnerLname}
                        placeholder='nazwisko właściciela'/>
                 <RadioButtonGroup onChange={handleRadioChange}/>
-                <Link style={{width: '100%', textAlign: 'center'}} to='/leukogram' >
-                <Button onClick={handleClick} size='big' text='dalej'/>
+                <Link style={{width: '100%', textAlign: 'center'}} to='/leukogram'>
+                    <Button onClick={handleClick} size='big' text='dalej'/>
                 </Link>
             </FlexWrapper>
             <TipText text='Wprowadź dane pacjenta'/>

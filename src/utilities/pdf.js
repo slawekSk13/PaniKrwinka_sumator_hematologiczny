@@ -1,7 +1,6 @@
 import pdfMake from 'pdfmake/build/pdfmake'
-import pdfFonts from 'pdfmake/build/vfs_fonts'
 
-const createNewPdf = (patient, results, date, progress) => {
+const createNewPdf = (patient, results, progress) => {
 
     const docDefinition = {
         content: [
@@ -11,27 +10,27 @@ const createNewPdf = (patient, results, date, progress) => {
                     // headers are automatically repeated if the table spans over multiple pages
                     // you can declare how many rows should be treated as headers
                     heights: 30,
-                    headerRows: 3,
+                    headerRows: 1,
                     widths: [ 'auto', 'auto', 'auto' ],
                     body: [
-                        [ { text: 'Właściciel:', bold: true }, `${patient.owner.name} ${patient.owner.surname}`, ''],
-                        [  { text: 'Pacjent:', bold: true }, `${patient.species} ${patient.name}`, ''],
-                        [ { text: 'Data badania', bold: true }, `${date}`, ''],
+                        [  { text: 'Pacjent:', bold: true }, `${patient.species} ${patient.patName}`, ''],
+                        [ { text: 'Właściciel:', bold: true }, `${patient.patOwnerName} ${patient.patOwnerLname}`, ''],
+                        [ { text: 'Data badania', bold: true }, `${results.date}`, ''],
                         [ '', '', ''],
-                        [{ text: 'WBC', bold: true }, `${results.wbc} G/l`, ''],
-                        [{ text: 'skor. WBC', bold: true }, progress > 99 ? `${results.correctedWbc} G/l` : 'b.d.' , ''],
-                        [{ text: 'band', bold: true }, `${(results.band / progress * 100).toFixed(2)} %`, `${(results.band * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'seg', bold: true }, `${(results.seg / progress * 100).toFixed(2)} %`, `${(results.seg * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'lym', bold: true }, `${(results.lym / progress * 100).toFixed(2)} %`, `${(results.lym * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'mon', bold: true }, `${(results.mon / progress * 100).toFixed(2)} %`, `${(results.mon * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'eos', bold: true }, `${(results.eos / progress * 100).toFixed(2)} %`, `${(results.eos * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'bas', bold: true }, `${(results.bas / progress * 100).toFixed(2)} %`, `${(results.bas * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'pml', bold: true }, `${(results.pml / progress * 100).toFixed(2)} %`, `${(results.pml * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'mie', bold: true }, `${(results.mie / progress * 100).toFixed(2)} %`, `${(results.mie * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'met', bold: true }, `${(results.met / progress * 100).toFixed(2)} %`, `${(results.met * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'mlb', bold: true }, `${(results.mlb / progress * 100).toFixed(2)} %`, `${(results.mlb * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'inne', bold: true }, `${(results.inne / progress * 100).toFixed(2)} %`, `${(results.inne * results.wbc / progress).toFixed(2)} G/l`],
-                        [{ text: 'nRBC', bold: true }, `${results.nrbc} / 100 WBC`, '']
+                        [{ text: 'WBC', bold: true }, `${results.leukogram.wbc.nominal} G/l`, ''],
+                        [{ text: 'skor. WBC', bold: true }, progress > 99 ? `${results.leukogram.wbc.corrected} G/l` : 'b.d.' , ''],
+                        [{ text: 'band', bold: true }, `${(results.leukogram.relative.band / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.band * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'seg', bold: true }, `${(results.leukogram.relative.seg / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.seg * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'lym', bold: true }, `${(results.leukogram.relative.lym / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.lym * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'mon', bold: true }, `${(results.leukogram.relative.mon / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.mon * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'eos', bold: true }, `${(results.leukogram.relative.eos / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.eos * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'bas', bold: true }, `${(results.leukogram.relative.bas / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.bas * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'pml', bold: true }, `${(results.leukogram.relative.pml / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.pml * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'mie', bold: true }, `${(results.leukogram.relative.mie / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.mie * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'met', bold: true }, `${(results.leukogram.relative.met / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.met * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'mlb', bold: true }, `${(results.leukogram.relative.mlb / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.mlb * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'inne', bold: true }, `${(results.leukogram.relative.inne / progress * 100).toFixed(2)} %`, `${(results.leukogram.relative.inne * (results.leukogram.wbc.corrected === 'b.d.' ? results.leukogram.wbc.nominal : results.leukogram.wbc.corrected) / progress).toFixed(2)} G/l`],
+                        [{ text: 'nRBC', bold: true }, `${results.leukogram.nrbc} / ${progress} WBC`, '']
                     ]
                 }
             }
