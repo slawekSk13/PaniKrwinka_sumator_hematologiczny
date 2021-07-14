@@ -5,10 +5,9 @@ const StyledTable = styled.table`
   border-collapse: collapse;
   margin: 2rem;
   color: #951B81;
-
   td {
     border: none;
-    padding: .5rem 1rem;
+    padding: .5rem;
 
     :first-of-type {
       font-weight: 600;
