@@ -1,127 +1,109 @@
 {
   "results": [
     {
-      "id": "30559326-953a-486d-a8bc-c42174632c25",
-      "date": "2021-07-13",
-      "patientId": "6331c383-6de4-4cdd-ad9b-29051433ae8a",
-      "leukogram": {
-        "wbc": {
-          "nominal": 24,
-          "corrected": "22.22"
-        },
-        "nrbc": 8,
-        "relative": {
-          "band": 6,
-          "seg": 8,
-          "lym": 8,
-          "mon": 10,
-          "eos": 8,
-          "bas": 5,
-          "pml": 14,
-          "mie": 11,
-          "met": 11,
-          "mlb": 14,
-          "inne": 5
-        }
-      }
-    },
-    {
-      "id": "0b939e64-dddb-4ca7-b2b3-f7fa23dd06b9",
-      "date": "2021-07-13",
-      "patientId": "bf6b4183-d901-4f68-ada9-fac567eb180c",
-      "leukogram": {
-        "wbc": {
-          "nominal": 12,
-          "corrected": 12
-        },
-        "nrbc": 3,
-        "relative": {
-          "band": 1,
-          "seg": 5,
-          "lym": 3,
-          "mon": 6,
-          "eos": 3,
-          "bas": 5,
-          "pml": 0,
-          "mie": 3,
-          "met": 9,
-          "mlb": 2,
-          "inne": 4
-        }
-      }
-    },
-    {
-      "id": "b9480ce3-ec85-4675-bf87-3e4bf9d01ec5",
-      "date": "2021-07-13",
-      "patientId": "bf6b4359-d901-4f68-ada9-fac567eb180c",
+      "id": 1626286488115,
+      "date": "2021-07-14",
+      "patientId": 1626286488115,
       "leukogram": {
         "wbc": {
           "nominal": 23,
-          "corrected": "b.d."
+          "corrected": 23
         },
-        "nrbc": 6,
+        "nrbc": 0,
         "relative": {
-          "band": 4,
-          "seg": 5,
-          "lym": 5,
-          "mon": 4,
-          "eos": 6,
-          "bas": 6,
-          "pml": 4,
-          "mie": 6,
-          "met": 7,
-          "mlb": 8,
-          "inne": 6
+          "band": 3,
+          "seg": 3,
+          "lym": 3,
+          "mon": 3,
+          "eos": 3,
+          "bas": 1,
+          "pml": 0,
+          "mie": 0,
+          "met": 0,
+          "mlb": 0,
+          "inne": 0
         }
       }
     },
     {
-      "id": "44a369fc-dbdd-4849-a099-995417c399f6",
       "date": "2021-07-14",
-      "patientId": "bf6b4359-d901-4f68-ada9-fac567eb180c",
+      "patientId": 1626286852606,
       "leukogram": {
         "wbc": {
-          "nominal": 24,
-          "corrected": "22.64"
+          "nominal": 23,
+          "corrected": 23
         },
-        "nrbc": 6,
+        "nrbc": 0,
         "relative": {
-          "band": 10,
-          "seg": 5,
-          "lym": 5,
-          "mon": 12,
-          "eos": 5,
-          "bas": 10,
-          "pml": 11,
-          "mie": 12,
-          "met": 14,
-          "mlb": 11,
-          "inne": 5
+          "band": 4,
+          "seg": 2,
+          "lym": 3,
+          "mon": 3,
+          "eos": 0,
+          "bas": 0,
+          "pml": 0,
+          "mie": 0,
+          "met": 0,
+          "mlb": 3,
+          "inne": 0
         }
-      }
+      },
+      "id": 1626286852606
+    },
+    {
+      "date": "2021-07-14",
+      "patientId": 1626286852606,
+      "leukogram": {
+        "wbc": {
+          "nominal": 21,
+          "corrected": 21
+        },
+        "nrbc": 0,
+        "relative": {
+          "band": 3,
+          "seg": 5,
+          "lym": 0,
+          "mon": 0,
+          "eos": 5,
+          "bas": 4,
+          "pml": 0,
+          "mie": 0,
+          "met": 0,
+          "mlb": 0,
+          "inne": 0
+        }
+      },
+      "id": 1626287231441
     }
   ],
   "patients": [
     {
-      "id": "bf6b4359-d901-4f68-ada9-fac567eb180c",
+      "id": 1626286488115,
+      "patName": "Patyk",
+      "patOwnerName": "Janek",
+      "patOwnerLname": "Onkowski",
+      "species": "pies"
+    },
+    {
+      "id": 1626286686989,
       "patName": "Puszek",
       "patOwnerName": "Jan",
       "patOwnerLname": "Kowalski",
       "species": "kot"
     },
     {
-      "id": "bf6b4183-d901-4f68-ada9-fac567eb180c",
-      "patName": "Patyk",
-      "patOwnerName": "Janek",
-      "patOwnerLname": "Onkowalski",
+      "id": 1626286852606,
+      "patName": "Reks",
+      "patOwnerName": "Kasia",
+      "patOwnerLname": "Skrzeczynska",
       "species": "pies"
     },
     {
-      "id": "73756e2c-a158-4c0f-ab7a-bd359722ec6b",
-      "patName": "",
-      "patOwnerName": "",
-      "patOwnerLname": "",
-      "species": "pies"
+      "id": 1626286917336,
+      "patName": "Hultaj",
+      "patOwnerName": "Janek",
+      "patOwnerLname": "Yyyooygkgit",
+      "species": "inny"
     }
   ]
 }

@@ -17,12 +17,12 @@ import {NewOrHistory} from "./views/NewOrHistory";
 import {HistoricalResults} from "./views/HistoricalResults";
 
 function App() {
-    const [patient, setPatient] = useState(patientZero);
+    const [patient, setPatient] = useState({...patientZero, id: new Date().valueOf()});
     const [progress, setProgress] = useState(0);
-    const [results, setResults] = useState(resultsZero);
+    const [results, setResults] = useState({...resultsZero, id: new Date().valueOf()});
     const [calcFinished, setCalcFinished] = useState(false);
     const [historicalResults, setHistoricalResults] = useState();
-    const [historicalPatients, setHistoricalPatients] = useState();
+    const [historicalPatients, setHistoricalPatients] = useState([]);
     const [regEx, setRegEx] = useState();
     const [resultsToShowArray, setResultsToShowArray] = useState();
 
@@ -33,7 +33,7 @@ function App() {
     const confirmPatient = (patientToSave, matchingPatient) => {
         if (matchingPatient.length === 0) {
             setPatient(patientToSave);
-            save('patient');
+            postToAPI(patientToSave, 'patients');
         } else {
             setPatient(matchingPatient[0]);
         }
@@ -90,7 +90,6 @@ function App() {
     };
 
     useEffect(() => {
-        // setProgress(100);
         setProgress(Object.values(results.leukogram.relative).reduce(sum));
     }, [results]);
 
@@ -107,9 +106,10 @@ function App() {
     }, [patient]);
 
     const reset = () => {
-        setPatient(patientZero);
+        setPatient({...patientZero, id: new Date().valueOf()});
         setProgress(0);
-        setResults(resultsZero);
+        setResults({...resultsZero, id: new Date().valueOf()});
+        setCalcFinished(false);
         setResultsToShowArray();
         getFromAPI(handleData, 'results');
         getFromAPI(handleData, 'patients');
@@ -123,8 +123,6 @@ function App() {
         if (saveType === 'results') {
             postToAPI(results, 'results');
             reset();
-        } else if (saveType === 'patient') {
-            postToAPI(patient, 'patients')
         }
     }
 
@@ -160,15 +158,18 @@ function App() {
     return (
         <HashRouter>
             <Header/>
-            {(patient !== patientZero || resultsToShowArray) && <Icon icon='exit' onClick={reset}/>}
+            {(patient.patName !== '' || resultsToShowArray) && <Icon icon='exit' onClick={reset}/>}
             <Switch>
                 <Route exact path='/'><NewOrHistory showHistoricalResults={showHistoricalResults}
-                                                    handleRegEx={handleRegEx} handleResultsToShowArray={handleResultsToShowArray}/></Route>
-                <Route path='/history'>{resultsToShowArray ? <HistoricalResults resultsToShowArray={resultsToShowArray} sum={sum} save={save} history={resultsToShowArray}/> : <Redirect to='/'/>}</Route>
+                                                    handleRegEx={handleRegEx}
+                                                    handleResultsToShowArray={handleResultsToShowArray}/></Route>
+                <Route path='/history'>{resultsToShowArray ?
+                    <HistoricalResults resultsToShowArray={resultsToShowArray} sum={sum} save={save}
+                                       history={resultsToShowArray}/> : <Redirect to='/'/>}</Route>
                 <Route path='/addnewpatient'><AddNewPatient confirmPatient={confirmPatient} patient={patient}
                                                             historicalPatients={historicalPatients}/></Route>
                 <Route path='/leukogram'>
-                    {patient !== patientZero ?
+                    {patient.patName !== '' ?
                         <Leukogram patient={patient} progress={progress} handleAddCell={handleAddCell}
                                    results={results} reset={reset} handleCalcFinish={handleCalcFinish}
                                    calcFinished={calcFinished}/> : <Redirect to='/'/>}

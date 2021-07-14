@@ -1,7 +1,5 @@
-import {v4 as uuid} from "uuid";
 
 const patientZero = {
-    id: uuid(),
     patName: '',
     patOwnerName: '',
     patOwnerLname: '',
@@ -9,7 +7,6 @@ const patientZero = {
 }
 
 const resultsZero = {
-    id: uuid(),
     date: new Date().toJSON().slice(0, 10).replace(/-/g, '-'),
     patientId: '',
     leukogram: {

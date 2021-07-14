@@ -23,10 +23,9 @@ Next planned features:
 2) REACT
 3) Styleguidist
 4) Styled Components
-5) Uuid v4
-6) pdfMake
-7) lodash
-8) react-responsive-carousel
+5) pdfMake
+6) lodash
+7) react-responsive-carousel
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
