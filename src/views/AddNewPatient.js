@@ -3,10 +3,10 @@ import {RadioButtonGroup} from "../components/RadioButtonGroup/RadioButtonGroup"
 import {Button} from "../components/Button/Button";
 import {TipText} from "../components/TipText/TipText";
 import {FlexWrapper} from "../components/FlexWrapper/FlexWrapper";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Link} from 'react-router-dom'
 
-const AddNewPatient = ({confirmPatient, patient}) => {
+const AddNewPatient = ({confirmPatient, patient, historicalPatients}) => {
     const [localPatient, setLocalPatient] = useState({
         id: patient.id,
         patName: patient.patName,
@@ -15,16 +15,28 @@ const AddNewPatient = ({confirmPatient, patient}) => {
         species: patient.species
     });
 
+    const [matchingPatient, setMatchingPatient] = useState([]);
+
     const handleLocalPatientChange = e => {
         const {name, value} = e.target;
         setLocalPatient(prevState => (
             {
                 ...prevState,
                 [name]: capitalizeFirstLetter(value)
-            }
-
-        ));
+            }));
     }
+
+    useEffect(() => {
+        if (historicalPatients) {
+            const checkMatch = element => {
+                if (element.patName === localPatient.patName && element.patOwnerName === localPatient.patOwnerName && element.patOwnerLname === localPatient.patOwnerLname && element.species === localPatient.species) {
+                    return element
+                }
+            }
+            const foundPatient = historicalPatients.filter(checkMatch)
+            setMatchingPatient(foundPatient);
+        }
+    }, [localPatient])
 
     const handleRadioChange = species => {
         setLocalPatient(prevState => (
@@ -36,7 +48,7 @@ const AddNewPatient = ({confirmPatient, patient}) => {
     }
 
     const handleClick = () => {
-        typeof confirmPatient === 'function' ? confirmPatient(localPatient) : console.warn(`confirmPatient must be a function, patientToSave could not be saved`);
+        typeof confirmPatient === 'function' ? confirmPatient(localPatient, matchingPatient) : console.warn(`confirmPatient must be a function, patientToSave could not be saved`);
     }
 
     const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
@@ -52,10 +64,11 @@ const AddNewPatient = ({confirmPatient, patient}) => {
                        placeholder='nazwisko właściciela'/>
                 <RadioButtonGroup onChange={handleRadioChange}/>
                 <Link style={{width: '100%', textAlign: 'center'}} to='/leukogram'>
-                    <Button onClick={handleClick} size='big' text='dalej'/>
+                    <Button onClick={handleClick} size='big' text={matchingPatient.length === 0 ? 'dalej' : 'tak'}/>
                 </Link>
             </FlexWrapper>
-            <TipText text='Wprowadź dane pacjenta'/>
+            <TipText
+                text={matchingPatient.length === 0 ? 'Wprowadź dane pacjenta' : `${capitalizeFirstLetter(localPatient.species)} ${localPatient.patName} należący do właściciela o imieniu i nazwisku ${localPatient.patOwnerName} ${localPatient.patOwnerLname} jest już w bazie. Czy to ten sam? Jeśli tak, przejdź dalej, aby dodać kolejne badanie dla tego pacjenta. Jeśli nie, dodaj jakiś wyróżnik do danych, żeby móc w przyszłości odróżnić pacjentów.`}/>
         </FlexWrapper>
     );
 }

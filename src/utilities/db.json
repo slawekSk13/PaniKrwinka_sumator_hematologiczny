@@ -28,7 +28,7 @@
     {
       "id": "0b939e64-dddb-4ca7-b2b3-f7fa23dd06b9",
       "date": "2021-07-13",
-      "patientId": "8823c9b9-7c4a-4505-a703-e7f0bca1c98c",
+      "patientId": "bf6b4183-d901-4f68-ada9-fac567eb180c",
       "leukogram": {
         "wbc": {
           "nominal": 12,
@@ -74,6 +74,31 @@
           "inne": 6
         }
       }
+    },
+    {
+      "id": "44a369fc-dbdd-4849-a099-995417c399f6",
+      "date": "2021-07-14",
+      "patientId": "bf6b4359-d901-4f68-ada9-fac567eb180c",
+      "leukogram": {
+        "wbc": {
+          "nominal": 24,
+          "corrected": "22.64"
+        },
+        "nrbc": 6,
+        "relative": {
+          "band": 10,
+          "seg": 5,
+          "lym": 5,
+          "mon": 12,
+          "eos": 5,
+          "bas": 10,
+          "pml": 11,
+          "mie": 12,
+          "met": 14,
+          "mlb": 11,
+          "inne": 5
+        }
+      }
     }
   ],
   "patients": [
@@ -83,6 +108,13 @@
       "patOwnerName": "Jan",
       "patOwnerLname": "Kowalski",
       "species": "kot"
+    },
+    {
+      "id": "bf6b4183-d901-4f68-ada9-fac567eb180c",
+      "patName": "Patyk",
+      "patOwnerName": "Janek",
+      "patOwnerLname": "Onkowalski",
+      "species": "pies"
     }
   ]
 }
