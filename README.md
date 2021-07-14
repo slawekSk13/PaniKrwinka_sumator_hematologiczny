@@ -1,4 +1,4 @@
-![Logo of the project](http://localhost:3000/sumator/static/media/logo.0224e142.png) \
+![Logo of the project](https://panikrwinka.pl/sumator/static/media/logo.0224e142.png) \
 Designed with [Figma](https://www.figma.com/file/3DvVqJRCrQvF62wlxCZ6lE/Sumator-hematologiczny?node-id=1%3A18)
 
 Live app: [Pani Krwinka Sumator Hematologiczny](https://www.panikrwinka.pl/sumator)
