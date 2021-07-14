@@ -14,6 +14,7 @@ import {getFromAPI} from "./utilities/api/get";
 import {postToAPI} from "./utilities/api/post";
 import {patientZero, resultsZero} from "./utilities/defaultStates";
 import {NewOrHistory} from "./views/NewOrHistory";
+import {HistoricalResults} from "./views/HistoricalResults";
 
 function App() {
     const [patient, setPatient] = useState(patientZero);
@@ -22,7 +23,8 @@ function App() {
     const [calcFinished, setCalcFinished] = useState(false);
     const [historicalResults, setHistoricalResults] = useState();
     const [historicalPatients, setHistoricalPatients] = useState();
-    const [regEx, setRegEx] = useState()
+    const [regEx, setRegEx] = useState();
+    const [resultsToShowArray, setResultsToShowArray] = useState();
 
     const handleRegEx = pattern => {
         pattern === '' ? setRegEx() : setRegEx(new RegExp(`.{0,}${pattern}.{0,}`, 'gi'));
@@ -108,6 +110,7 @@ function App() {
         setPatient(patientZero);
         setProgress(0);
         setResults(resultsZero);
+        setResultsToShowArray();
         getFromAPI(handleData, 'results');
         getFromAPI(handleData, 'patients');
     }
@@ -149,13 +152,19 @@ function App() {
         }
     }
 
+    const handleResultsToShowArray = patientId => {
+        setResultsToShowArray(showHistoricalResults().filter(element => element.patientId === patientId));
+
+    }
+
     return (
         <HashRouter>
             <Header/>
-            {patient !== patientZero && <Icon icon='exit' onClick={reset}/>}
+            {(patient !== patientZero || resultsToShowArray) && <Icon icon='exit' onClick={reset}/>}
             <Switch>
                 <Route exact path='/'><NewOrHistory showHistoricalResults={showHistoricalResults}
-                                                    handleRegEx={handleRegEx}/></Route>
+                                                    handleRegEx={handleRegEx} handleResultsToShowArray={handleResultsToShowArray}/></Route>
+                <Route path='/history'>{resultsToShowArray ? <HistoricalResults resultsToShowArray={resultsToShowArray} sum={sum}/> : <Redirect to='/'/>}</Route>
                 <Route path='/addnewpatient'><AddNewPatient confirmPatient={confirmPatient} patient={patient}
                                                             historicalPatients={historicalPatients}/></Route>
                 <Route path='/leukogram'>

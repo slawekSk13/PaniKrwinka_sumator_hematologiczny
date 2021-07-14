@@ -26,6 +26,7 @@ Next planned features:
 5) Uuid v4
 6) pdfMake
 7) lodash
+8) react-responsive-carousel
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

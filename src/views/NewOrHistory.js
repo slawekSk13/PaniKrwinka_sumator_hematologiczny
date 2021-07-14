@@ -8,7 +8,7 @@ import {List} from "../components/List/List";
 import {Icon} from "../components/Icon/Icon";
 
 
-const NewOrHistory = ({showHistoricalResults, handleRegEx}) => {
+const NewOrHistory = ({showHistoricalResults, handleRegEx, handleResultsToShowArray}) => {
     const [historySearch, setHistorySearch] = useState('');
     const handleHistorySearch = e => {
         setHistorySearch(e.target.value);
@@ -28,7 +28,7 @@ const NewOrHistory = ({showHistoricalResults, handleRegEx}) => {
                     </Link>}
                     <Input name='historySearch' onChange={handleHistorySearch} placeholder='szukaj w historii'
                            value={historySearch}/>
-                    {historySearch !== '' && <List results={showHistoricalResults()}/>}
+                    {historySearch !== '' && <List results={showHistoricalResults()} handleClick={handleResultsToShowArray}/>}
                 </FlexWrapper>
                 <TipText
                     text={historySearch === '' ? 'Zacznij nowe badanie lub szukaj po imieniu pacjenta albo imieniu i nazwisku właściciela' : 'Do wyszukiwania możesz użyć imienia pacjenta lub imienia i nazwiska właściciela'}/>

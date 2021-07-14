@@ -7,7 +7,6 @@ import {Link} from "react-router-dom";
 import {download, print} from "../utilities/pdf";
 
 const Results = ({patient, results, save, date, progress, calcFinished}) => {
-console.log(progress);
     return (
         <FlexWrapper>
             <Table results={results} patient={patient} date={date} progress={progress} calcFinished={calcFinished} />

@@ -31,6 +31,34 @@ body {
   /*height: 100vh;*/
 }
 
+.carousel .control-arrow.control-prev, .carousel .control-arrow.control-next {
+  opacity: 1;
+}
+
+.carousel .control-arrow.control-prev:hover {
+  opacity: 1;
+}
+
+.carousel.carousel-slider .control-prev.control-arrow:before {
+  border-right: 20px solid #951B81;
+}
+
+.carousel.carousel-slider .control-prev.control-arrow:hover:before {
+  border-right: 20px solid #CD1719;
+}
+
+.carousel.carousel-slider .control-next.control-arrow:before {
+  border-left: 20px solid #951B81;
+}
+
+.carousel.carousel-slider .control-next.control-arrow:hover:before {
+  border-left: 20px solid #CD1719;
+}
+
+.carousel.carousel-slider .control-next.control-arrow:hover, .carousel.carousel-slider .control-prev.control-arrow:hover {
+  background-color: transparent;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
