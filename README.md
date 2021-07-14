@@ -1,6 +1,31 @@
+![Logo of the project](http://localhost:3000/sumator/static/media/logo.0224e142.png) \
 Designed with [Figma](https://www.figma.com/file/3DvVqJRCrQvF62wlxCZ6lE/Sumator-hematologiczny?node-id=1%3A18)
 
-# Getting Started with Create React App
+Live app: [Pani Krwinka Sumator Hematologiczny](https://www.panikrwinka.pl/sumator)
+
+# Pani Krwinka - Sumator hematologiczny
+
+Sumator Hematologiczny is a tool that allows veterinary hematologists to work faster and more efficiently. \
+Current features are:
+1) Leukogram
+2) Saving results in API
+3) Creating and printing PDF file with results
+4) Finding historical results
+
+Next planned features:
+1) Creating account, logging in, results assigned to user
+2) Retikulogram
+3) Platelets calculation
+
+## Libraries, frameworks and tools
+
+1) JS ES6
+2) REACT
+3) Styleguidist
+4) Styled Components
+5) Uuid v4
+6) pdfMake
+7) lodash
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -15,6 +40,15 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+### `npm run styleguide`
+
+Runs the Styleguidist server, allowing you to check components styling and funcionality .\
+Open [http://localhost:6060](http://localhost:6060) to view it in the browser.
+
+### `npx json-server --watch src/utilities/db.json --port 3004`
+
+Runs `json-server` at port 3004 to avoid conflict with `npm start` server, I'm using it to fake API connection
 
 ### `npm test`
 
@@ -41,32 +75,24 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### MIT LICENSE
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Copyright (c) 2021 Sławomir Skrzeczyński
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-### Code Splitting
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
