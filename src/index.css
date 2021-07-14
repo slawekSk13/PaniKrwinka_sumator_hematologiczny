@@ -31,11 +31,7 @@ body {
   /*height: 100vh;*/
 }
 
-.carousel .control-arrow.control-prev, .carousel .control-arrow.control-next {
-  opacity: 1;
-}
-
-.carousel .control-arrow.control-prev:hover {
+.carousel.carousel-slider .control-arrow.control-next, .carousel.carousel-slider .control-arrow.control-prev {
   opacity: 1;
 }
 

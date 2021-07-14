@@ -164,7 +164,7 @@ function App() {
             <Switch>
                 <Route exact path='/'><NewOrHistory showHistoricalResults={showHistoricalResults}
                                                     handleRegEx={handleRegEx} handleResultsToShowArray={handleResultsToShowArray}/></Route>
-                <Route path='/history'>{resultsToShowArray ? <HistoricalResults resultsToShowArray={resultsToShowArray} sum={sum}/> : <Redirect to='/'/>}</Route>
+                <Route path='/history'>{resultsToShowArray ? <HistoricalResults resultsToShowArray={resultsToShowArray} sum={sum} save={save} history={resultsToShowArray}/> : <Redirect to='/'/>}</Route>
                 <Route path='/addnewpatient'><AddNewPatient confirmPatient={confirmPatient} patient={patient}
                                                             historicalPatients={historicalPatients}/></Route>
                 <Route path='/leukogram'>
@@ -176,7 +176,7 @@ function App() {
                 <Route path='/results'>
                     {results.leukogram.wbc.nominal !== 0 ?
                         <Results results={results} patient={patient} save={save} reset={reset}
-                                 progress={progress} calcFinished={calcFinished}/> :
+                                 progress={progress} calcFinished={calcFinished} history={resultsToShowArray}/> :
                         <Redirect to='/leukogram'/>}
                 </Route>
                 <Route>

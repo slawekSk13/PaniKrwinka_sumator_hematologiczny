@@ -6,7 +6,7 @@ import {TipText} from "../components/TipText/TipText";
 import {Link} from "react-router-dom";
 import {download, print} from "../utilities/pdf";
 
-const Results = ({patient, results, save, date, progress, calcFinished}) => {
+const Results = ({patient, results, save, date, progress, calcFinished, history}) => {
     return (
         <FlexWrapper>
             <Table results={results} patient={patient} date={date} progress={progress} calcFinished={calcFinished} />
@@ -14,7 +14,7 @@ const Results = ({patient, results, save, date, progress, calcFinished}) => {
                 <Icon onClick={() => download(patient, results, progress)} icon='pdf' />
                 <Icon onClick={() => print(patient, results, progress)} icon='print' />
                 <Link to='/'>
-                <Icon onClick={() => save('results')} icon='save' />
+                    {!history && <Icon onClick={() => save('results')} icon='save'/>}
                 </Link>
             </Center>
             <TipText text='Możesz zapisać wynik badania w formacie PDF lub od razu go wydrukować, a także zresetować wyniki i zacząć nowe badanie'/>

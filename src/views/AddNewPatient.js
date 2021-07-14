@@ -48,7 +48,10 @@ const AddNewPatient = ({confirmPatient, patient, historicalPatients}) => {
     }
 
     const handleClick = () => {
-        typeof confirmPatient === 'function' ? confirmPatient(localPatient, matchingPatient) : console.warn(`confirmPatient must be a function, patientToSave could not be saved`);
+        if (typeof confirmPatient === 'function') {
+            const {patName, patOwnerName, patOwnerLname} = localPatient;
+            patName.length > 0 && patOwnerName.length > 0 && patOwnerLname.length > 0 && confirmPatient(localPatient, matchingPatient);
+        } else console.warn(`confirmPatient must be a function, patientToSave could not be saved`);
     }
 
     const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
