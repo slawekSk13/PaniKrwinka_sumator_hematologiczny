@@ -1,66 +1,117 @@
 {
   "Result" : {
     "id": {
-      "int": {}
+      "int": {
+        "min": 0,
+        "max": 999999999999999
+      }
     },
     "date": {
       "string": {}
     },
     "patientId": {
-      "int": {}
+      "int": {
+        "min": 0,
+        "max": 999999999999999
+      }
     },
     "leukogram": {
       "wbc": {
         "nominal": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "corrected": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         }
       },
       "nrbc": {
-        "int": {}
+        "int": {
+          "min": 0,
+          "max": 1000
+        }
       },
       "relative": {
         "band": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "seg": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "lym": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "mon": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "eos": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "bas": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "pml": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "mie": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "met": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "mlb": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         },
         "inne": {
-          "int": {}
+          "int": {
+            "min": 0,
+            "max": 1000
+          }
         }
       }
     }
   },
   "Patient": {
     "id": {
-      "int": {}
+      "int": {
+        "min": 0,
+        "max": 9999999999999999
+      }
     },
     "patName": {
       "string": {}
