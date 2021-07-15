@@ -26,6 +26,7 @@ Next planned features:
 5) pdfMake
 6) lodash
 7) react-responsive-carousel
+8) my-json-server
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
