@@ -8,9 +8,10 @@ const StyledTable = styled.table`
   td {
     border: none;
     padding: .5rem;
-
+    text-align: left;
     :first-of-type {
       font-weight: 600;
+      padding-left: 1.5rem;
     }
   }
 

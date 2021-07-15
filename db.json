@@ -1,4 +1,159 @@
 {
-  "results": [],
-  "patients": []
+  "results": [
+    {
+      "date": "2021-07-15",
+      "patientId": 1626341526240,
+      "leukogram": {
+        "wbc": {
+          "nominal": 24,
+          "corrected": "b.d."
+        },
+        "nrbc": 7,
+        "relative": {
+          "band": 4,
+          "seg": 4,
+          "lym": 5,
+          "mon": 22,
+          "eos": 3,
+          "bas": 4,
+          "pml": 10,
+          "mie": 8,
+          "met": 10,
+          "mlb": 0,
+          "inne": 0
+        }
+      },
+      "id": 1626341526240
+    },
+    {
+      "date": "2021-07-15",
+      "patientId": 1626341597450,
+      "leukogram": {
+        "wbc": {
+          "nominal": 24.65,
+          "corrected": "22.61"
+        },
+        "nrbc": 9,
+        "relative": {
+          "band": 22,
+          "seg": 22,
+          "lym": 17,
+          "mon": 17,
+          "eos": 2,
+          "bas": 5,
+          "pml": 4,
+          "mie": 3,
+          "met": 3,
+          "mlb": 4,
+          "inne": 1
+        }
+      },
+      "id": 1626341597450
+    },
+    {
+      "date": "2021-07-15",
+      "patientId": 1626341526240,
+      "leukogram": {
+        "wbc": {
+          "nominal": 24,
+          "corrected": 24
+        },
+        "nrbc": 4,
+        "relative": {
+          "band": 18,
+          "seg": 15,
+          "lym": 4,
+          "mon": 3,
+          "eos": 0,
+          "bas": 0,
+          "pml": 10,
+          "mie": 9,
+          "met": 8,
+          "mlb": 0,
+          "inne": 0
+        }
+      },
+      "id": 1626341665212
+    },
+    {
+      "date": "2021-07-15",
+      "patientId": 1626341700930,
+      "leukogram": {
+        "wbc": {
+          "nominal": 22.45,
+          "corrected": 22.45
+        },
+        "nrbc": 4,
+        "relative": {
+          "band": 0,
+          "seg": 0,
+          "lym": 14,
+          "mon": 9,
+          "eos": 5,
+          "bas": 6,
+          "pml": 4,
+          "mie": 4,
+          "met": 7,
+          "mlb": 4,
+          "inne": 4
+        }
+      },
+      "id": 1626341700930
+    },
+    {
+      "date": "2021-07-15",
+      "patientId": 1626341754576,
+      "leukogram": {
+        "wbc": {
+          "nominal": 24,
+          "corrected": 24
+        },
+        "nrbc": 3,
+        "relative": {
+          "band": 5,
+          "seg": 3,
+          "lym": 4,
+          "mon": 4,
+          "eos": 0,
+          "bas": 4,
+          "pml": 0,
+          "mie": 3,
+          "met": 9,
+          "mlb": 7,
+          "inne": 0
+        }
+      },
+      "id": 1626341754577
+    }
+  ],
+  "patients": [
+    {
+      "id": 1626341526240,
+      "patName": "Patyk",
+      "patOwnerName": "Janek",
+      "patOwnerLname": "Onkowski",
+      "species": "pies"
+    },
+    {
+      "id": 1626341597450,
+      "patName": "Puszek",
+      "patOwnerName": "Jan",
+      "patOwnerLname": "Kowalski",
+      "species": "kot"
+    },
+    {
+      "id": 1626341700930,
+      "patName": "Reks",
+      "patOwnerName": "Kasia",
+      "patOwnerLname": "Rolkowska",
+      "species": "inny"
+    },
+    {
+      "id": 1626341754576,
+      "patName": "Kasztan",
+      "patOwnerName": "Marek",
+      "patOwnerLname": "Iksiński",
+      "species": "pies"
+    }
+  ]
 }

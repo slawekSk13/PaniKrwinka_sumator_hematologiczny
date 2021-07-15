@@ -47,7 +47,7 @@ You will also see any lint errors in the console.
 Runs the Styleguidist server, allowing you to check components styling and funcionality .\
 Open [http://localhost:6060](http://localhost:6060) to view it in the browser.
 
-### `npx json-server --watch src/utilities/db.json --port 3004`
+### `npx json-server --watch /db.json --port 3004`
 
 Runs `json-server` at port 3004 to avoid conflict with `npm start` server, I'm using it to fake API connection
 
