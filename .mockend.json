@@ -1,0 +1,78 @@
+{
+  "Result" : {
+    "id": {
+      "int": {}
+    },
+    "date": {
+      "string": {}
+    },
+    "patientId": {
+      "int": {}
+    },
+    "leukogram": {
+      "wbc": {
+        "nominal": {
+          "int": {}
+        },
+        "corrected": {
+          "int": {}
+        }
+      },
+      "nrbc": {
+        "int": {}
+      },
+      "relative": {
+        "band": {
+          "int": {}
+        },
+        "seg": {
+          "int": {}
+        },
+        "lym": {
+          "int": {}
+        },
+        "mon": {
+          "int": {}
+        },
+        "eos": {
+          "int": {}
+        },
+        "bas": {
+          "int": {}
+        },
+        "pml": {
+          "int": {}
+        },
+        "mie": {
+          "int": {}
+        },
+        "met": {
+          "int": {}
+        },
+        "mlb": {
+          "int": {}
+        },
+        "inne": {
+          "int": {}
+        }
+      }
+    }
+  },
+  "Patient": {
+    "id": {
+      "int": {}
+    },
+    "patName": {
+      "string": {}
+    },
+    "patOwnerName": {
+      "string": {}
+    },
+    "patOwnerLname": {
+      "string": {}
+    },
+    "species": {
+      "string": {}
+    }
+  }
+}
