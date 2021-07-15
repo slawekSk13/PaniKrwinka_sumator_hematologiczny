@@ -26,7 +26,8 @@ Next planned features:
 5) pdfMake
 6) lodash
 7) react-responsive-carousel
-8) my-json-server
+8) my-json-server (for local testing)
+9) Firebase
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -47,7 +48,7 @@ You will also see any lint errors in the console.
 Runs the Styleguidist server, allowing you to check components styling and funcionality .\
 Open [http://localhost:6060](http://localhost:6060) to view it in the browser.
 
-### `npx json-server --watch /db.json --port 3004`
+### `npm run json-server`
 
 Runs `json-server` at port 3004 to avoid conflict with `npm start` server, I'm using it to fake API connection
 

@@ -86,7 +86,7 @@ function App() {
     }
 
     const handleData = (data, path) => {
-        path === 'results' ? setHistoricalResults(data) : setHistoricalPatients(data);
+        path === 'results' ? setHistoricalResults(Object.values(data)) : setHistoricalPatients(Object.values(data));
     };
 
     useEffect(() => {

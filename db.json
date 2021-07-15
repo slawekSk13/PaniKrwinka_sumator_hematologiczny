@@ -124,6 +124,31 @@
         }
       },
       "id": 1626341754577
+    },
+    {
+      "date": "2021-07-15",
+      "patientId": 1626341526240,
+      "leukogram": {
+        "wbc": {
+          "nominal": 24.4,
+          "corrected": "23.02"
+        },
+        "nrbc": 6,
+        "relative": {
+          "band": 11,
+          "seg": 6,
+          "lym": 17,
+          "mon": 13,
+          "eos": 8,
+          "bas": 9,
+          "pml": 4,
+          "mie": 11,
+          "met": 11,
+          "mlb": 10,
+          "inne": 0
+        }
+      },
+      "id": 1626349019775
     }
   ],
   "patients": [

@@ -1,7 +1,7 @@
 import {API_URL} from "./constants";
 
 const postToAPI = (dataToSave, path) => {
-    fetch(`${API_URL}/${path}`, {
+    fetch(`${API_URL}/${path}.json`, {
         method: 'POST',
         body: JSON.stringify(dataToSave),
         headers: {
