@@ -1,12 +1,14 @@
 import {ProgressBarStyled} from "./ProgressBar.styles";
 import propTypes from "prop-types";
+import {ColorTheme} from "../../utilities/ColorTheme";
 
 const ProgressBar = ({progress}) => {
-    return (
-        <div style={{width: '95%', marginBottom: '2rem'}}>
-            <ProgressBarStyled width={`${progress}%`} color={'#CD1719'}/>
-            <ProgressBarStyled width={`${100 - progress}%`} color={'#F9F9F9'}/>
-        </div>
+    return (<ColorTheme.Consumer>
+            {colors => <div style={{width: '95%', marginBottom: '2rem'}}>
+                <ProgressBarStyled width={`${progress}%`} color={colors.accentColor}/>
+                <ProgressBarStyled width={`${100 - progress}%`} color={colors.progressBarNegativeColor}/>
+            </div>}
+        </ColorTheme.Consumer>
     );
 }
 

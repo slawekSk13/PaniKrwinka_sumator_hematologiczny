@@ -8,27 +8,27 @@ const InputStyled = styled.input.attrs({
   font-size: 1.5rem;
   text-transform: uppercase;
   text-align: center;
-  color: #951B81;
+  color: ${props => props.colors.primaryColor};
   padding: 1rem 0;
-  background: #F9F9F9;
-  border: 2px solid #951B81;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+  background: ${props => props.colors.progressBarNegativeColor};
+  border: 2px solid ${props => props.colors.primaryColor};
+  box-shadow: 0 4px 4px ${props => props.colors.shadowColor};
   border-radius: 10px;
 
   &::placeholder {
     font-size: 1.3rem;
     text-transform: ${props => props.up ? 'none' : 'lowercase'};
-    color: rgba(149, 27, 129, 0.5);
+    color: ${props => props.colors.placeholderPrimaryColor};
   }
 
   &:focus {
     outline: none;
-    border: 2px solid #CD1719;
-    box-shadow: inset 0 4px 4px rgba(0, 0, 0, .25);
-    color: rgba(205, 23, 25, 0.9);
+    border: 2px solid ${props => props.colors.accentColor};
+    box-shadow: inset 0 4px 4px ${props => props.colors.shadowColor};
+    color: ${props => props.colors.accentColor};
 
     &::placeholder {
-      color: rgba(205, 23, 25, 0.5);
+      color: ${props => props.colors.placeholderAccentColor};
     }
   }
 `;

@@ -9,14 +9,14 @@ const ButtonStyled = styled.button`
   font-size: 1.5em;
   font-weight: 600;
   text-align: center;
-  box-shadow: 0 4px 4px 0 hsla(0, 0%, 0%, .25);
+  box-shadow: 0 4px 4px 0 ${props => props.colors.shadowColor};
   border-radius: 11px;
-  color: #E5E5E5;
-  background-color: #951B81;
+  color: ${props => props.colors.fontColor};
+  background-color: ${props => props.colors.primaryColor};
   transition: .4s;
   &:hover, &:active {
-    background-color: #CD1719;
-    box-shadow: inset 0 4px 4px 0 hsla(0, 0%, 0%, .25);
+    background-color: ${props => props.colors.accentColor};
+    box-shadow: inset 0 4px 4px 0 ${props => props.colors.shadowColor};
     cursor: pointer;
   }
 `;

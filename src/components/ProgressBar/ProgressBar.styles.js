@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
-const ProgressBarStyled = styled.div.attrs(props => ({
-    color: props.color,
-    width: props.width
-}))`
+const ProgressBarStyled = styled.div`
   height: 10px;
   width: ${props => props.width};
   display: inline-block;

@@ -5,6 +5,7 @@ import {
     Switch,
     Redirect
 } from 'react-router-dom';
+import {ColorTheme} from "./utilities/ColorTheme";
 import {Header} from "./components/Header/Header";
 import {AddNewPatient} from "./views/AddNewPatient";
 import {Leukogram} from "./views/Leukogram";

@@ -4,7 +4,7 @@ const StyledTable = styled.table`
   border: none;
   border-collapse: collapse;
   margin: 2rem;
-  color: #951B81;
+  color: ${props => props.colors.primaryColor};
   td {
     border: none;
     padding: .5rem;
@@ -16,18 +16,18 @@ const StyledTable = styled.table`
   }
 
   tr {
-    border-bottom: 1px solid #951B81;
+    border-bottom: 1px solid ${props => props.colors.primaryColor};
 
     :nth-of-type(odd) {
-      background-color: #F9F9F9;
+      background-color: ${props => props.colors.progressBarNegativeColor};
     }
 
     :nth-of-type(4) {
-      border-top: 2px solid #951B81;
+      border-top: 2px solid ${props => props.colors.primaryColor};
     }
 
     :hover {
-      box-shadow: inset 0 4px 4px rgba(0, 0, 0, .25);
+      box-shadow: inset 0 4px 4px ${props => props.colors.shadowColor};
     }
   }
 `;

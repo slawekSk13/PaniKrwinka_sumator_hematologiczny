@@ -1,7 +1,13 @@
 import {InputStyled} from './Input.styles';
 import propTypes from 'prop-types';
+import {ColorTheme} from "../../utilities/ColorTheme";
 
-const Input = ({placeholder, up, value, onChange, name}) => <InputStyled autocomplete="off" name={name} onChange={onChange} value={value} placeholder={placeholder} up={up}/>
+const Input = ({placeholder, up, value, onChange, name}) => {
+   return (<ColorTheme.Consumer>
+       {colors => <InputStyled autocomplete="off" name={name} onChange={onChange} value={value} placeholder={placeholder}
+                     up={up} colors={colors}/>}
+   </ColorTheme.Consumer>)
+}
 
 Input.propTypes = {
     /** text to show as a placeholder */

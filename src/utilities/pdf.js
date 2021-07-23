@@ -1,4 +1,5 @@
 import pdfMake from 'pdfmake/build/pdfmake'
+import {ColorThemeObj} from "./ColorTheme";
 
 const createNewPdf = (patient, results, progress) => {
 
@@ -41,7 +42,7 @@ const createNewPdf = (patient, results, progress) => {
             alignment: 'center'
         },
         defaultStyle: {
-            color: '#951B81',
+            color: `${ColorThemeObj.primaryColor}`,
             fontSize: 22
         },
         pageMargins: [100, 100, 60, 40]

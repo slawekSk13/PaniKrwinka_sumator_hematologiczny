@@ -1,8 +1,13 @@
 import React from 'react';
 import {ButtonStyled} from "./Button.styles";
 import propTypes from "prop-types";
+import {ColorTheme} from "../../utilities/ColorTheme";
 
-const Button = ({text, size, onClick}) =>  <ButtonStyled size={size} onClick={onClick}>{text}</ButtonStyled>
+const Button = ({text, size, onClick}) => {
+    return (<ColorTheme.Consumer>
+        {colors => <ButtonStyled size={size} onClick={onClick} colors={colors}>{text}</ButtonStyled>}
+    </ColorTheme.Consumer>)
+}
 Button.propTypes = {
     /** text to show on button */
     text: propTypes.string,
