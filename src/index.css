@@ -1,3 +1,13 @@
+:root {
+  --fontColor: #E5E5E5;
+  --primaryColor: #951B81;
+  --accentColor: #CD1719;
+  --progressBarNegativeColor: #F9F9F9;
+  --placeholderPrimaryColor: rgba(149, 27, 129, 0.5);
+  --placeholderAccentColor: rgba(205, 23, 25, 0.5);
+  --shadowColor: rgba(0, 0, 0, .25);
+}
+
 html {
   max-width: 100vw;
   overflow-x: hidden;
@@ -17,7 +27,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #E5E5E5;
+  background-color: var(--fontColor);
   /*overflow: hidden;*/
 }
 
@@ -26,7 +36,6 @@ body {
   margin: 0 auto;
   width: 100%;
   max-width: 420px;
-  background-color: #E5E5E5;
   position: relative;
   /*height: 100vh;*/
 }
@@ -36,19 +45,19 @@ body {
 }
 
 .carousel.carousel-slider .control-prev.control-arrow:before {
-  border-right: 20px solid #951B81;
+  border-right: 20px solid var(--primaryColor);
 }
 
 .carousel.carousel-slider .control-prev.control-arrow:hover:before {
-  border-right: 20px solid #CD1719;
+  border-right: 20px solid var(--accentColor);
 }
 
 .carousel.carousel-slider .control-next.control-arrow:before {
-  border-left: 20px solid #951B81;
+  border-left: 20px solid var(--primaryColor);
 }
 
 .carousel.carousel-slider .control-next.control-arrow:hover:before {
-  border-left: 20px solid #CD1719;
+  border-left: 20px solid var(--accentColor);
 }
 
 .carousel.carousel-slider .control-next.control-arrow:hover, .carousel.carousel-slider .control-prev.control-arrow:hover {

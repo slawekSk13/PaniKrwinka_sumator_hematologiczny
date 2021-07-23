@@ -1,7 +1,14 @@
 import {ListItemStyled} from "./ListItem.styles"
 import propTypes from "prop-types";
+import {ColorTheme} from "../../utilities/ColorTheme";
 
-const ListItem = ({result, onClick}) => <ListItemStyled onClick={()=>onClick(result.patientId)}>{result.patient.patOwnerName} {result.patient.patOwnerLname}, {result.patient.species} <strong>{result.patient.patName}</strong>, {result.date} </ListItemStyled>
+const ListItem = ({result, onClick}) => {
+    return (<ColorTheme.Consumer>
+        {colors => <ListItemStyled
+            onClick={() => onClick(result.patientId)} colors={colors}>{result.patient.patOwnerName} {result.patient.patOwnerLname}, {result.patient.species}
+            <strong>{result.patient.patName}</strong>, {result.date} </ListItemStyled>}
+    </ColorTheme.Consumer>)
+}
 
 ListItem.propTypes = {
     /** results object */
@@ -11,7 +18,7 @@ ListItem.propTypes = {
 }
 
 ListItem.defaultProps = {
-        result: {
+    result: {
         date: '2021-06-99'
     }
 }

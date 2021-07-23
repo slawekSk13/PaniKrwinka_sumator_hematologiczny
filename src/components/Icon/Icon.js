@@ -2,16 +2,17 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSave, faPrint, faFilePdf, faTimes} from '@fortawesome/free-solid-svg-icons'
 import propTypes from "prop-types"
 import {useState} from 'react'
+import {ColorThemeObj} from "../../utilities/ColorTheme";
 
 const Icon = ({icon, onClick}) => {
     const [style, setStyle] = useState({
-        color: '#951B81',
+        color: `${ColorThemeObj.primaryColor}`,
         fontSize: '3rem',
         margin: '1rem',
     })
 
-    const handleMouseOver = () => setStyle(prev => ({...prev, color: '#CD1719', cursor: 'pointer'}));
-    const handleMouseLeave = () => setStyle(prev => ({...prev, color: '#951B81', cursor: 'default'}));
+    const handleMouseOver = () => setStyle(prev => ({...prev, color: `${ColorThemeObj.accentColor}`, cursor: 'pointer'}));
+    const handleMouseLeave = () => setStyle(prev => ({...prev, color: `${ColorThemeObj.primaryColor}`, cursor: 'default'}));
     const handleClick = () => {
         if(typeof onClick === 'function') {
             onClick();

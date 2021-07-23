@@ -1,22 +1,24 @@
 import {useState} from "react";
 
+import {ColorTheme} from "../../utilities/ColorTheme";
 import {Input, Label, Indicator} from './RadioButton.styles'
 import propTypes from 'prop-types'
 
 const SingleRadioButton = ({id, onChange, name, label, checked, value}) => {
-    return (
-        <Label htmlFor={id}>
-            {label}
-            <Input  id={id}
-                    type="radio"
-                    role="radio"
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    checked={checked}
-            />
-            <Indicator />
-        </Label>
+    return (<ColorTheme.Consumer>
+            {colors => <Label htmlFor={id} colors={colors}>
+                {label}
+                <Input id={id}
+                       type="radio"
+                       role="radio"
+                       name={name}
+                       value={value}
+                       onChange={onChange}
+                       checked={checked}
+                />
+                <Indicator colors={colors}/>
+            </Label>}
+        </ColorTheme.Consumer>
     );
 }
 

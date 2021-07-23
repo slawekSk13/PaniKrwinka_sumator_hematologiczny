@@ -19,7 +19,7 @@ to {
 `;
 
 const Label = styled.label`
-  color: #951B81;
+  color: ${props => props.colors.primaryColor};
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -32,7 +32,7 @@ const Label = styled.label`
 `;
 
 const Indicator = styled.div`
-  border: 3px solid #951B81;
+  border: 3px solid ${props => props.colors.primaryColor};
   border-radius: 1em;
   width: 1.05em;
   height: 1.05em;
@@ -41,7 +41,7 @@ const Indicator = styled.div`
   left: -1.3em;
 
   ${Label}:hover & {
-    background: hsla(310, 69%, 35%, .3);
+    background: ${props => props.colors.placeholderPrimaryColor};
   }
 
   &::after {
@@ -52,9 +52,9 @@ const Indicator = styled.div`
 
   ${Input}:checked + &::after {
     display: block;
-    border: solid #951B81;
+    border: solid ${props => props.colors.primaryColor};
     border-radius: 1em;
-    background-color: #951B81;
+    background-color: ${props => props.colors.primaryColor};
     width: 0.2em;
     height: 0.2em;
     top: 50%;
