@@ -3,9 +3,8 @@ import {
     HashRouter,
     Route,
     Switch,
-    Redirect
+    Redirect, Link
 } from 'react-router-dom';
-import {ColorTheme} from "./utilities/ColorTheme";
 import {Header} from "./components/Header/Header";
 import {AddNewPatient} from "./views/AddNewPatient";
 import {Leukogram} from "./views/Leukogram";
@@ -112,8 +111,6 @@ function App() {
         setResults({...resultsZero, id: new Date().valueOf()});
         setCalcFinished(false);
         setResultsToShowArray();
-        getFromAPI(handleData, 'results');
-        getFromAPI(handleData, 'patients');
     }
 
     const handleCalcFinish = () => {
@@ -123,7 +120,8 @@ function App() {
     const save = saveType => {
         if (saveType === 'results') {
             postToAPI(results, 'results');
-            reset();
+            getFromAPI(handleData, 'results');
+            getFromAPI(handleData, 'patients');
         }
     }
 
@@ -159,7 +157,7 @@ function App() {
     return (
         <HashRouter>
             <Header/>
-            {(patient.patName !== '' || resultsToShowArray) && <Icon icon='exit' onClick={reset}/>}
+            {(patient.patName !== '' || resultsToShowArray) && <Link to='/'><Icon icon='exit' onClick={reset}/></Link>}
             <Switch>
                 <Route exact path='/'><NewOrHistory showHistoricalResults={showHistoricalResults}
                                                     handleRegEx={handleRegEx}

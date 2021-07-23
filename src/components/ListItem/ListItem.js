@@ -6,7 +6,7 @@ const ListItem = ({result, onClick}) => {
     return (<ColorTheme.Consumer>
         {colors => <ListItemStyled
             onClick={() => onClick(result.patientId)} colors={colors}>{result.patient.patOwnerName} {result.patient.patOwnerLname}, {result.patient.species}
-            <strong>{result.patient.patName}</strong>, {result.date} </ListItemStyled>}
+            <strong> {result.patient.patName}</strong>, {result.date} </ListItemStyled>}
     </ColorTheme.Consumer>)
 }
 
