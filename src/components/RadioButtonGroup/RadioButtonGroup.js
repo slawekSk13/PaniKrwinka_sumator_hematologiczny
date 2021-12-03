@@ -31,7 +31,7 @@ const RadioButtonGroup = ({onChange}) => {
     }
 
     return (
-        <div style={{width: '80%', position: 'relative', left: '1.5rem'}}>
+        <div style={{width: '50%', position: 'relative', left: '1rem'}}>
             <SingleRadioButton id={1} onChange={() => {
                 handleChange('pies');
             }} name="pies" label="pies" checked={radioValue === 'pies'} value={radioValue}/>

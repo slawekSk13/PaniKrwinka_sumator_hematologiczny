@@ -7,6 +7,7 @@ display: flex;
   align-items: center;
   flex-wrap: wrap;
   min-height: ${props => props.height};
+  min-width: 100%;
 `;
 
 export {FlexWrapperStyled}
