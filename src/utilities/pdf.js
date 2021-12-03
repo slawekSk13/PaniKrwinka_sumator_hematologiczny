@@ -50,7 +50,7 @@ const createNewPdf = (patient, results, progress) => {
  return docDefinition;
 }
 
-const download = (patient, results, date, progress) => pdfMake.createPdf(createNewPdf(patient, results, date, progress)).download(`${patient.name}_${date}`);
+const download = (patient, results, date, progress) => pdfMake.createPdf(createNewPdf(patient, results, date, progress)).download(`${patient.patName}_${date}`);
 const print = (patient, results, date, progress) => pdfMake.createPdf(createNewPdf(patient, results, date, progress)).print();
 
 export {download, print}
