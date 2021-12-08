@@ -30,11 +30,11 @@ const Login = ({ handleLogin }) => {
           value={password}
           type={"password"}
         />
-        <Button
+       <Link to='/' ><Button
           size="big"
           text="zaloguj"
           onClick={() => handleLogin(email, password)}
-        />
+        /></Link>
       </FlexWrapper>
       <TipText text="Dzięki logowaniu możesz sprawdzić historię wyników swoich pacjentów" />
     </FlexWrapper>

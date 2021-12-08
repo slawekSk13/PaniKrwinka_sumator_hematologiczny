@@ -6,19 +6,21 @@ import { Leukogram } from "./views/Leukogram";
 import { Results } from "./views/Results";
 import { Icon } from "./components/Icon/Icon";
 import { getFromAPI } from "./utilities/api/get";
-import { postToAPI } from "./utilities/api/post";
+import { getFromFirebase, postToFirebase } from "./utilities/api/post";
 import { patientZero, resultsZero } from "./utilities/defaultStates";
 import { NewOrHistory } from "./views/NewOrHistory";
 import { HistoricalResults } from "./views/HistoricalResults";
 import { Start } from "./views/Start";
-import {Login} from './views/Login';
+import { Login } from "./views/Login";
 import { firebaseConfig } from "./utilities/firebaseconfig";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 import { setCookie, getCookie, deleteCookie } from "./utilities/cookies";
 import { Register } from "./views/Register";
 
@@ -40,6 +42,7 @@ function App() {
   const [resultsToShowArray, setResultsToShowArray] = useState();
 
   const app = initializeApp(firebaseConfig);
+  const db = getDatabase();
   const auth = getAuth();
   const handleUserError = (err) => {
     const { code, message } = err;
@@ -47,7 +50,9 @@ function App() {
   };
   const handleUserSucces = (userCredential) => {
     const user = userCredential.user;
-    setActiveUser({ uid: user.uid, email: user.email });
+    auth.currentUser.getIdToken().then((idToken) => {
+      setActiveUser({ uid: user.uid, email: user.email, idToken: idToken });
+    });
     setCookie("activeUserEmail", user.email, 60 * 60);
     setCookie("activeUserUid", user.uid, 60 * 60);
   };
@@ -62,17 +67,19 @@ function App() {
 
   const handleLogin = (email, password) =>
     signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      handleUserSucces(userCredential);
-    })
-    .catch((err) => {
-      handleUserError(err);
-    });
-    const handleLogOut = () => {
-        setActiveUser(false);
-        deleteCookie('activeUserEmail');
-        deleteCookie('activeUserUid');
-    }
+      .then((userCredential) => {
+        handleUserSucces(userCredential);
+      })
+
+      .catch((err) => {
+        handleUserError(err);
+      });
+  const handleLogOut = () => {
+      signOut(auth);
+    setActiveUser(false);
+    deleteCookie("activeUserEmail");
+    deleteCookie("activeUserUid");
+  };
 
   const handleRegEx = (pattern) => {
     pattern === ""
@@ -80,10 +87,10 @@ function App() {
       : setRegEx(new RegExp(`.{0,}${pattern}.{0,}`, "gi"));
   };
 
-  const confirmPatient = (patientToSave, matchingPatient) => {
+  const confirmPatient = async (patientToSave, matchingPatient) => {
     if (matchingPatient.length === 0) {
       setPatient(patientToSave);
-      postToAPI(patientToSave, "patients");
+      await postToFirebase(db, patientToSave, `patients`, auth.currentUser);
     } else {
       setPatient(matchingPatient[0]);
     }
@@ -150,9 +157,9 @@ function App() {
   }, [results]);
 
   useEffect(() => {
-    getFromAPI(handleData, "results");
-    getFromAPI(handleData, "patients");
-  }, []);
+    getFromFirebase(db, `results`, auth.currentUser, handleData);
+    getFromFirebase(db, `patients`, auth.currentUser, handleData);
+  }, [activeUser]);
 
   useEffect(() => {
     setResults((prevState) => ({
@@ -173,11 +180,11 @@ function App() {
     setCalcFinished(true);
   };
 
-  const save = (saveType) => {
+  const save = async (saveType) => {
     if (saveType === "results") {
-      postToAPI(results, "results");
-      getFromAPI(handleData, "results");
-      getFromAPI(handleData, "patients");
+      await postToFirebase(db, results, `results`, auth.currentUser);
+      await getFromFirebase(db, "results", auth.currentUser, handleData);
+      await getFromFirebase(db, "patients", auth.currentUser, handleData);
     }
   };
 
@@ -233,7 +240,15 @@ function App() {
       )}
       <Switch>
         <Route exact path="/">
-          <Start />
+          {activeUser.uid ? (
+            <NewOrHistory
+              showHistoricalResults={showHistoricalResults}
+              handleRegEx={handleRegEx}
+              handleResultsToShowArray={handleResultsToShowArray}
+            />
+          ) : (
+            <Start />
+          )}
         </Route>
         <Route exact path="/login">
           <Login handleLogin={handleLogin} />
@@ -241,9 +256,6 @@ function App() {
         <Route exact path="/register">
           <Register handleRegister={handleRegister} />
         </Route>
-        {/* <Route exact path='/'><NewOrHistory showHistoricalResults={showHistoricalResults}
-                                                    handleRegEx={handleRegEx}
-                                                    handleResultsToShowArray={handleResultsToShowArray}/></Route> */}
         <Route path="/history">
           {resultsToShowArray ? (
             <HistoricalResults

@@ -1,16 +1,22 @@
-import {API_URL} from "./constants";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 
-const postToAPI = (dataToSave, path) => {
-    fetch(`${API_URL}/${path}.json`, {
-        method: 'POST',
-        body: JSON.stringify(dataToSave),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(errors => console.warn(errors));
-}
+const postToFirebase = async (db, dataToSave, dataType, user) => {
+  try {
+    await set(ref(db, `${user.uid}/${dataType}/${dataToSave.id}`), dataToSave);
+  } catch (err) {
+    console.warn(err);
+  }
+};
+const getFromFirebase = async (db, dataType, user, succesCallback) => {
+  try {
+    const dataRef = await ref(db, `${user.uid}/${dataType}`);
+    onValue(dataRef, (snapshot) => {
+      const data = snapshot.val();
+      data && succesCallback(data, dataType);
+    });
+  } catch (err) {
+    console.warn(err);
+  }
+};
 
-export {postToAPI}
+export { postToFirebase, getFromFirebase };
