@@ -1,31 +1,26 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from "styled-components";
 
 const animation = keyframes`
-0% {
-    border-width: 30px;
-    transform: rotate(0deg);
-}
+0% {}
 50%{
-    border-width: 50px;
-    transform: rotate(180deg);
+    border-color: transparent;
+    transform: rotate(-135deg) scale(90%);
+    box-shadow: none;
 }
-100% {
-    border-width: 30px;
-    transform: rotate(360deg);
-}`
+100% {}`;
 
 const LoadingStyled = styled.div`
-box-sizing: border-box;
-width: 100px;
-height: 100px;
-border-radius: 50%;
-border: 40px solid ${props => props.colors.primaryColor};
-border-bottom-color: ${props => props.colors.accentColor};
-border-top-color: ${props => props.colors.accentColor};
-background-color: ${props => props.colors.accentColor};
-animation-name: ${animation};
-animation-duration: 5s;
-animation-iteration-count: infinite;
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  border-radius: 100% 100% 0 100% / 100% 100% 0% 100%;
+  border: 50px solid ${(props) => props.colors.primaryColor};
+  background-color: ${(props) => props.colors.accentColor};
+  transform: rotate(-135deg);
+  animation-name: ${animation};
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  box-shadow: 0 0 15px 10px ${(props) => props.colors.shadowColor};
 `;
 
-export {LoadingStyled}
+export { LoadingStyled };

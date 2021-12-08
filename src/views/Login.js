@@ -14,6 +14,7 @@ const Login = ({ handleLogin }) => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
   return (
     <FlexWrapper justify="between">
       <FlexWrapper justify={"around"} height="35vh">

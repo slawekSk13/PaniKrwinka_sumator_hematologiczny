@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { HashRouter, Route, Switch, Redirect, Link } from "react-router-dom";
+
 import { Header } from "./components/Header/Header";
+import { Loading } from "./components/Loading/Loading";
+import { Icon } from "./components/Icon/Icon";
+
 import { AddNewPatient } from "./views/AddNewPatient";
 import { Leukogram } from "./views/Leukogram";
 import { Results } from "./views/Results";
-import { Loading } from "./components/Loading/Loading";
-import { Icon } from "./components/Icon/Icon";
-import { getFromAPI } from "./utilities/api/get";
-import { getFromFirebase, postToFirebase } from "./utilities/api/post";
-import { patientZero, resultsZero } from "./utilities/defaultStates";
 import { NewOrHistory } from "./views/NewOrHistory";
 import { HistoricalResults } from "./views/HistoricalResults";
 import { Start } from "./views/Start";
 import { Login } from "./views/Login";
+import { Register } from "./views/Register";
+
+import { patientZero, resultsZero } from "./utilities/defaultStates";
+
+import { getFromFirebase, postToFirebase } from "./utilities/api/post";
 import { firebaseConfig } from "./utilities/firebaseconfig";
 import { initializeApp } from "firebase/app";
 import {
@@ -22,12 +26,9 @@ import {
   signOut,
   sendEmailVerification,
 } from "firebase/auth";
-import { getDatabase, ref, set } from "firebase/database";
-import { setCookie, getCookie, deleteCookie } from "./utilities/cookies";
-import { Register } from "./views/Register";
+import { getDatabase } from "firebase/database";
 
 function App() {
-  const [activeUser, setActiveUser] = useState({});
   const [patient, setPatient] = useState({
     ...patientZero,
     id: new Date().valueOf(),
@@ -51,27 +52,16 @@ function App() {
     const { code, message } = err;
     console.warn(`An error occured: ${code}: ${message}`);
   };
-  const handleUserSucces = (userCredential) => {
-    const user = userCredential.user;
-    auth.currentUser.getIdToken().then((idToken) => {
-      setActiveUser({ uid: user.uid, email: user.email, idToken: idToken });
-    });
-    setCookie("activeUserEmail", user.email, 60 * 60);
-    setCookie("activeUserUid", user.uid, 60 * 60);
-  };
+
   const handleRegister = async (email, password) => {
     setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await createUserWithEmailAndPassword(auth, email, password);
       sendEmailVerification(auth.currentUser);
-      if(!auth.currentUser.emailVerified) {
-        handleLogOut();
-        window.alert('Email not veriefied!');}
-      handleUserSucces(userCredential);
+      if (!auth.currentUser.emailVerified) {
+        signOut(auth);
+        window.alert("Email not veriefied!");
+      }
     } catch (err) {
       handleUserError(err);
     }
@@ -81,26 +71,28 @@ function App() {
   const handleLogin = async (email, password) => {
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      if(!auth.currentUser.emailVerified) {
-        handleLogOut();
-      window.alert('Email not veriefied!');}
-      handleUserSucces(userCredential);
+      await signInWithEmailAndPassword(auth, email, password);
+      if (!auth.currentUser.emailVerified) {
+        signOut(auth);
+        window.alert("Email not veriefied!");
+      } else {
+        getFromFirebase(db, `results`, auth.currentUser, handleData);
+        getFromFirebase(db, `patients`, auth.currentUser, handleData);
+      }
     } catch (err) {
       handleUserError(err);
     }
     setLoading(false);
   };
- 
-  const handleLogOut = () => {
-    signOut(auth);
-    setActiveUser(false);
-    deleteCookie("activeUserEmail");
-    deleteCookie("activeUserUid");
+
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+      await signOut(auth);
+    } catch (err) {
+      handleUserError(err);
+    }
+    setLoading(false);
   };
 
   const handleRegEx = (pattern) => {
@@ -168,11 +160,6 @@ function App() {
   useEffect(() => {
     setProgress(Object.values(results.leukogram.relative).reduce(sum));
   }, [results]);
-
-  useEffect(() => {
-    getFromFirebase(db, `results`, auth.currentUser, handleData);
-    getFromFirebase(db, `patients`, auth.currentUser, handleData);
-  }, [activeUser]);
 
   useEffect(() => {
     setResults((prevState) => ({
@@ -250,7 +237,6 @@ function App() {
       )
     );
   };
-  
 
   return (
     <HashRouter>
@@ -267,6 +253,7 @@ function App() {
               showHistoricalResults={showHistoricalResults}
               handleRegEx={handleRegEx}
               handleResultsToShowArray={handleResultsToShowArray}
+              handleLogout={handleLogout}
             />
           ) : loading ? (
             <Loading />
