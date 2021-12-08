@@ -12,7 +12,7 @@ const Results = ({patient, results, save, progress, calcFinished, history}) => {
             <Center>
                 <Icon onClick={() => download(patient, results, (results.date), progress)} icon='pdf' />
                 <Icon onClick={() => print(patient, results, (results.date), progress)} icon='print' />
-                    {!history && <Icon onClick={() => save('results')} icon='save'/>}
+                    {!history && <Icon onClick={save} icon='save'/>}
             </Center>
             <TipText text='Możesz zapisać wynik badania w formacie PDF lub od razu go wydrukować, a także zresetować wyniki i zacząć nowe badanie'/>
         </FlexWrapper>

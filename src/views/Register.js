@@ -48,11 +48,12 @@ const Register = ({ handleRegister }) => {
           value={passwordConfirm}
           type="password"
         />
+        <Link className='link' to='/' >
         <Button
           size="big"
           text="zarejestruj"
           onClick={() => registerButtonHandler()}
-        />
+        /></Link>
       </FlexWrapper>
       {!passwordConfirmed && (
         <TipText text="Hasło w obu polach musi być indentyczne!" />

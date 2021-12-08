@@ -40,6 +40,13 @@ body {
   /*height: 100vh;*/
 }
 
+.link {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .carousel.carousel-slider .control-arrow.control-next, .carousel.carousel-slider .control-arrow.control-prev {
   opacity: 1;
 }

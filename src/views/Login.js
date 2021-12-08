@@ -30,7 +30,7 @@ const Login = ({ handleLogin }) => {
           value={password}
           type={"password"}
         />
-       <Link to='/' ><Button
+       <Link className='link' to='/' ><Button
           size="big"
           text="zaloguj"
           onClick={() => handleLogin(email, password)}

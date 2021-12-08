@@ -83,7 +83,7 @@ const Leukogram = ({
                 placeholder="WBC (G/l)"
                 up={true}
               />
-              <Link to={localWbc === "" ? "/leukogram" : "/results"}>
+              <Link className='link' to={localWbc === "" ? "/leukogram" : "/results"}>
                 <Button onClick={handleWbcClick} text="dalej" size="big" />
               </Link>
             </Center>

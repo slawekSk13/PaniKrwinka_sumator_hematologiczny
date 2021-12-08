@@ -8,10 +8,10 @@ const Start = () => {
   return (
     <FlexWrapper>
       <FlexWrapper justify="start" height={"65vh"}>
-        <Link style={{ width: "100%", textAlign: "center" }} to="/register">
+        <Link className='link' to="/register">
           <Button text="zarejestruj" size="big" />
         </Link>
-        <Link style={{ width: "100%", textAlign: "center" }} to="/login">
+        <Link className='link' to="/login">
           <Button text="zaloguj" size="big" />
         </Link>
       </FlexWrapper>

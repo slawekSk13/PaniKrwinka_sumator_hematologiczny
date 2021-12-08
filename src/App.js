@@ -4,6 +4,7 @@ import { Header } from "./components/Header/Header";
 import { AddNewPatient } from "./views/AddNewPatient";
 import { Leukogram } from "./views/Leukogram";
 import { Results } from "./views/Results";
+import { Loading } from "./components/Loading/Loading";
 import { Icon } from "./components/Icon/Icon";
 import { getFromAPI } from "./utilities/api/get";
 import { getFromFirebase, postToFirebase } from "./utilities/api/post";
@@ -19,6 +20,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  sendEmailVerification,
 } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 import { setCookie, getCookie, deleteCookie } from "./utilities/cookies";
@@ -40,6 +42,7 @@ function App() {
   const [historicalPatients, setHistoricalPatients] = useState([]);
   const [regEx, setRegEx] = useState();
   const [resultsToShowArray, setResultsToShowArray] = useState();
+  const [loading, setLoading] = useState(false);
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase();
@@ -56,26 +59,45 @@ function App() {
     setCookie("activeUserEmail", user.email, 60 * 60);
     setCookie("activeUserUid", user.uid, 60 * 60);
   };
-  const handleRegister = (email, password) =>
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        handleUserSucces(userCredential);
-      })
-      .catch((err) => {
-        handleUserError(err);
-      });
+  const handleRegister = async (email, password) => {
+    setLoading(true);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      sendEmailVerification(auth.currentUser);
+      if(!auth.currentUser.emailVerified) {
+        handleLogOut();
+        window.alert('Email not veriefied!');}
+      handleUserSucces(userCredential);
+    } catch (err) {
+      handleUserError(err);
+    }
+    setLoading(false);
+  };
 
-  const handleLogin = (email, password) =>
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        handleUserSucces(userCredential);
-      })
-
-      .catch((err) => {
-        handleUserError(err);
-      });
+  const handleLogin = async (email, password) => {
+    setLoading(true);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if(!auth.currentUser.emailVerified) {
+        handleLogOut();
+      window.alert('Email not veriefied!');}
+      handleUserSucces(userCredential);
+    } catch (err) {
+      handleUserError(err);
+    }
+    setLoading(false);
+  };
+ 
   const handleLogOut = () => {
-      signOut(auth);
+    signOut(auth);
     setActiveUser(false);
     deleteCookie("activeUserEmail");
     deleteCookie("activeUserUid");
@@ -85,15 +107,6 @@ function App() {
     pattern === ""
       ? setRegEx()
       : setRegEx(new RegExp(`.{0,}${pattern}.{0,}`, "gi"));
-  };
-
-  const confirmPatient = async (patientToSave, matchingPatient) => {
-    if (matchingPatient.length === 0) {
-      setPatient(patientToSave);
-      await postToFirebase(db, patientToSave, `patients`, auth.currentUser);
-    } else {
-      setPatient(matchingPatient[0]);
-    }
   };
 
   const sum = (a, b) => a + b;
@@ -180,11 +193,19 @@ function App() {
     setCalcFinished(true);
   };
 
-  const save = async (saveType) => {
-    if (saveType === "results") {
-      await postToFirebase(db, results, `results`, auth.currentUser);
-      await getFromFirebase(db, "results", auth.currentUser, handleData);
-      await getFromFirebase(db, "patients", auth.currentUser, handleData);
+  const save = async () => {
+    await postToFirebase(db, results, `results`, auth.currentUser);
+    await getFromFirebase(db, "results", auth.currentUser, handleData);
+    await getFromFirebase(db, "patients", auth.currentUser, handleData);
+    reset();
+  };
+
+  const confirmPatient = async (patientToSave, matchingPatient) => {
+    if (matchingPatient.length === 0) {
+      setPatient(patientToSave);
+      await postToFirebase(db, patientToSave, `patients`, auth.currentUser);
+    } else {
+      setPatient(matchingPatient[0]);
     }
   };
 
@@ -229,6 +250,7 @@ function App() {
       )
     );
   };
+  
 
   return (
     <HashRouter>
@@ -240,12 +262,14 @@ function App() {
       )}
       <Switch>
         <Route exact path="/">
-          {activeUser.uid ? (
+          {auth.currentUser?.emailVerified ? (
             <NewOrHistory
               showHistoricalResults={showHistoricalResults}
               handleRegEx={handleRegEx}
               handleResultsToShowArray={handleResultsToShowArray}
             />
+          ) : loading ? (
+            <Loading />
           ) : (
             <Start />
           )}

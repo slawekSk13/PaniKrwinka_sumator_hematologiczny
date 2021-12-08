@@ -66,7 +66,7 @@ const AddNewPatient = ({confirmPatient, patient, historicalPatients}) => {
                 <Input onChange={handleLocalPatientChange} name={'patOwnerLname'} value={localPatient.patOwnerLname}
                        placeholder='nazwisko właściciela'/>
                 <RadioButtonGroup onChange={handleRadioChange}/>
-                <Link style={{width: '100%', textAlign: 'center'}} to='/leukogram'>
+                <Link className='link' to='/leukogram'>
                     <Button onClick={handleClick} size='big' text={matchingPatient.length === 0 ? 'dalej' : 'tak'}/>
                 </Link>
             </FlexWrapper>
