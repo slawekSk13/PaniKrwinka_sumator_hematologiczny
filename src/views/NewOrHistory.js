@@ -11,7 +11,7 @@ const NewOrHistory = ({
   showHistoricalResults,
   handleRegEx,
   handleResultsToShowArray,
-  handleLogout
+  handleLogout, callback, loading
 }) => {
   const [historySearch, setHistorySearch] = useState("");
   const handleHistorySearch = (e) => {
@@ -43,7 +43,7 @@ const NewOrHistory = ({
             placeholder="szukaj w historii"
             value={historySearch}
           />
-          <Button text='wyloguj' size='big' onClick={handleLogout} />
+          <Button text='wyloguj' size='big' onClick={() => handleLogout(loading, callback)} />
           {historySearch !== "" && (
             <List
               results={showHistoricalResults()}

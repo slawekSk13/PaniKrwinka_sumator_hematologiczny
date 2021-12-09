@@ -16,19 +16,10 @@ import { Register } from "./views/Register";
 
 import { patientZero, resultsZero } from "./utilities/defaultStates";
 
-import { getFromFirebase, postToFirebase } from "./utilities/api/post";
-import { firebaseConfig } from "./utilities/firebaseconfig";
-import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  sendEmailVerification,
-} from "firebase/auth";
-import { getDatabase } from "firebase/database";
+import { postToFirebase, save, handleLogin, handleLogout,  handleRegister } from "./utilities/firebase";
 
 function App() {
+  const [user, setUser] = useState(null);
   const [patient, setPatient] = useState({
     ...patientZero,
     id: new Date().valueOf(),
@@ -39,65 +30,15 @@ function App() {
     id: new Date().valueOf(),
   });
   const [calcFinished, setCalcFinished] = useState(false);
-  const [historicalResults, setHistoricalResults] = useState();
+  const [historicalResults, setHistoricalResults] = useState([]);
   const [historicalPatients, setHistoricalPatients] = useState([]);
-  const [regEx, setRegEx] = useState();
-  const [resultsToShowArray, setResultsToShowArray] = useState();
+  const [regEx, setRegEx] = useState(null);
+  const [resultsToShowArray, setResultsToShowArray] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase();
-  const auth = getAuth();
-  const handleUserError = (err) => {
-    const { code, message } = err;
-    console.warn(`An error occured: ${code}: ${message}`);
-  };
-
-  const handleRegister = async (email, password) => {
-    setLoading(true);
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      sendEmailVerification(auth.currentUser);
-      if (!auth.currentUser.emailVerified) {
-        signOut(auth);
-        window.alert("Email not veriefied!");
-      }
-    } catch (err) {
-      handleUserError(err);
-    }
-    setLoading(false);
-  };
-
-  const handleLogin = async (email, password) => {
-    setLoading(true);
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      if (!auth.currentUser.emailVerified) {
-        signOut(auth);
-        window.alert("Email not veriefied!");
-      } else {
-        getFromFirebase(db, `results`, auth.currentUser, handleData);
-        getFromFirebase(db, `patients`, auth.currentUser, handleData);
-      }
-    } catch (err) {
-      handleUserError(err);
-    }
-    setLoading(false);
-  };
-
-  const handleLogout = async () => {
-    setLoading(true);
-    try {
-      await signOut(auth);
-    } catch (err) {
-      handleUserError(err);
-    }
-    setLoading(false);
-  };
 
   const handleRegEx = (pattern) => {
     pattern === ""
-      ? setRegEx()
+      ? setRegEx(null)
       : setRegEx(new RegExp(`.{0,}${pattern}.{0,}`, "gi"));
   };
 
@@ -173,24 +114,17 @@ function App() {
     setProgress(0);
     setResults({ ...resultsZero, id: new Date().valueOf() });
     setCalcFinished(false);
-    setResultsToShowArray();
+    setResultsToShowArray([]);
   };
 
   const handleCalcFinish = () => {
     setCalcFinished(true);
   };
 
-  const save = async () => {
-    await postToFirebase(db, results, `results`, auth.currentUser);
-    await getFromFirebase(db, "results", auth.currentUser, handleData);
-    await getFromFirebase(db, "patients", auth.currentUser, handleData);
-    reset();
-  };
-
   const confirmPatient = async (patientToSave, matchingPatient) => {
     if (matchingPatient.length === 0) {
       setPatient(patientToSave);
-      await postToFirebase(db, patientToSave, `patients`, auth.currentUser);
+      await postToFirebase(patientToSave, `patients`);
     } else {
       setPatient(matchingPatient[0]);
     }
@@ -237,7 +171,7 @@ function App() {
       )
     );
   };
-
+  
   return (
     <HashRouter>
       <Header />
@@ -248,12 +182,14 @@ function App() {
       )}
       <Switch>
         <Route exact path="/">
-          {auth.currentUser?.emailVerified ? (
+          {user?.emailVerified ? (
             <NewOrHistory
               showHistoricalResults={showHistoricalResults}
               handleRegEx={handleRegEx}
               handleResultsToShowArray={handleResultsToShowArray}
               handleLogout={handleLogout}
+              callback={setUser}
+              loading={setLoading}
             />
           ) : loading ? (
             <Loading />
@@ -262,10 +198,12 @@ function App() {
           )}
         </Route>
         <Route exact path="/login">
-          <Login handleLogin={handleLogin} />
+          <Login handleLogin={handleLogin} 
+              callback={setUser}
+              loading={setLoading} handleData={handleData}/>
         </Route>
         <Route exact path="/register">
-          <Register handleRegister={handleRegister} />
+          <Register handleRegister={handleRegister} loading={setLoading}/>
         </Route>
         <Route path="/history">
           {resultsToShowArray ? (
@@ -273,6 +211,8 @@ function App() {
               resultsToShowArray={resultsToShowArray}
               sum={sum}
               save={save}
+              reset={reset}
+              handleData={handleData}
               history={resultsToShowArray}
             />
           ) : (
@@ -311,6 +251,7 @@ function App() {
               progress={progress}
               calcFinished={calcFinished}
               history={resultsToShowArray}
+              handleData={handleData}
             />
           ) : (
             <Redirect to="/leukogram" />

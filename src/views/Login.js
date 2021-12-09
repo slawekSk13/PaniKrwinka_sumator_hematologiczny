@@ -5,7 +5,7 @@ import { TipText } from "../components/TipText/TipText";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Login = ({ handleLogin }) => {
+const Login = ({ handleLogin, callback, loading, handleData }) => {
   const [email, setEmail] = useState("");
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -34,7 +34,7 @@ const Login = ({ handleLogin }) => {
        <Link className='link' to='/' ><Button
           size="big"
           text="zaloguj"
-          onClick={() => handleLogin(email, password)}
+          onClick={() => handleLogin(email, password, loading, handleData, callback)}
         /></Link>
       </FlexWrapper>
       <TipText text="Dzięki logowaniu możesz sprawdzić historię wyników swoich pacjentów" />

@@ -5,7 +5,7 @@ import { TipText } from "../components/TipText/TipText";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Register = ({ handleRegister }) => {
+const Register = ({ handleRegister, loading }) => {
   const [passwordConfirmed, setPasswordConfirmed] = useState(true);
   const [email, setEmail] = useState("");
   const handleEmailChange = (e) => {
@@ -22,7 +22,7 @@ const Register = ({ handleRegister }) => {
 
   const registerButtonHandler = () => {
     password === passwordConfirm
-      ? handleRegister(email, password)
+      ? handleRegister(email, password, loading)
       : setPasswordConfirmed(false);
   };
   return (

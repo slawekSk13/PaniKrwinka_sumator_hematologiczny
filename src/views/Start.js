@@ -1,7 +1,7 @@
 import { FlexWrapper } from "../components/FlexWrapper/FlexWrapper";
 import { Button } from "../components/Button/Button";
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { TipText } from "../components/TipText/TipText";
 
 const Start = () => {
