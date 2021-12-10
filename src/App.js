@@ -15,8 +15,21 @@ import { Login } from "./views/Login";
 import { Register } from "./views/Register";
 
 import { patientZero, resultsZero } from "./utilities/defaultStates";
+import {
+  sum,
+  showHistoricalResults,
+  handleAddCellWBC,
+  handleAddCellNRBC,
+  handleAddCellLeuko,
+} from "./utilities/helpers";
 
-import { postToFirebase, save, handleLogin, handleLogout,  handleRegister } from "./utilities/firebase";
+import {
+  postToFirebase,
+  save,
+  handleLogin,
+  handleLogout,
+  handleRegister,
+} from "./utilities/firebase";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -42,53 +55,16 @@ function App() {
       : setRegEx(new RegExp(`.{0,}${pattern}.{0,}`, "gi"));
   };
 
-  const sum = (a, b) => a + b;
-
   const handleAddCell = (key, value) => {
     if (key === "wbc") {
-      const corrWbc =
-        results.leukogram.nrbc < 5
-          ? value
-          : progress < 100
-          ? "b.d."
-          : ((value * 100) / (100 + results.leukogram.nrbc)).toFixed(2);
-      setResults((prevState) => ({
-        ...prevState,
-        leukogram: {
-          ...prevState.leukogram,
-          wbc: {
-            nominal: value,
-            corrected: corrWbc,
-          },
-        },
-      }));
+      setResults((prevState) => handleAddCellWBC(prevState, value, progress));
     } else {
       navigator.vibrate(100);
-      if (key === "nrbc") {
-        setResults((prevState) => ({
-          ...prevState,
-          leukogram: {
-            ...prevState.leukogram,
-            nrbc: prevState.leukogram.nrbc + 1,
-          },
-        }));
-      } else {
-        setResults((prevState) => {
-          return {
-            ...prevState,
-            leukogram: {
-              ...prevState.leukogram,
-              relative: {
-                ...prevState.leukogram.relative,
-                [key]: prevState.leukogram.relative[key] + 1,
-              },
-            },
-          };
-        });
-      }
+      key === "nrbc"
+        ? setResults((prevState) => handleAddCellNRBC(prevState))
+        : setResults((prevState) => handleAddCellLeuko(prevState, key));
       setCalcFinished(false);
     }
-
     progress >= 99 && setCalcFinished(true);
   };
 
@@ -130,48 +106,12 @@ function App() {
     }
   };
 
-  const findMatchingPatients = () => {
-    if (historicalPatients) {
-      const checkMatch = (el) => {
-        if (
-          el.patName.match(regEx) ||
-          el.patOwnerName.match(regEx) ||
-          el.patOwnerLname.match(regEx)
-        ) {
-          return el;
-        }
-      };
-      return historicalPatients.filter(checkMatch);
-    }
-  };
-
-  const showHistoricalResults = () => {
-    const matchingPatients = findMatchingPatients();
-    if (historicalResults) {
-      let matchingResults = [];
-      matchingPatients.forEach((matchingPatient) => {
-        const resultsToAdd = historicalResults.filter(
-          (historicalResult) =>
-            historicalResult.patientId === matchingPatient.id
-        );
-        const resulultsWithPatient = resultsToAdd.map((result) => ({
-          ...result,
-          patient: { ...matchingPatient },
-        }));
-        matchingResults = [...matchingResults, ...resulultsWithPatient];
-      });
-      return matchingResults;
-    }
-  };
-
-  const handleResultsToShowArray = (patientId) => {
+  const handleResultsToShowArray = (patientId, resultsToCheck) => {
     setResultsToShowArray(
-      showHistoricalResults().filter(
-        (element) => element.patientId === patientId
-      )
+      resultsToCheck.filter((element) => element.patientId === patientId)
     );
   };
-  
+
   return (
     <HashRouter>
       <Header />
@@ -190,6 +130,9 @@ function App() {
               handleLogout={handleLogout}
               callback={setUser}
               loading={setLoading}
+              historicalPatients={historicalPatients}
+              historicalResults={historicalResults}
+              regEx={regEx}
             />
           ) : loading ? (
             <Loading />
@@ -198,12 +141,15 @@ function App() {
           )}
         </Route>
         <Route exact path="/login">
-          <Login handleLogin={handleLogin} 
-              callback={setUser}
-              loading={setLoading} handleData={handleData}/>
+          <Login
+            handleLogin={handleLogin}
+            callback={setUser}
+            loading={setLoading}
+            handleData={handleData}
+          />
         </Route>
         <Route exact path="/register">
-          <Register handleRegister={handleRegister} loading={setLoading}/>
+          <Register handleRegister={handleRegister} loading={setLoading} />
         </Route>
         <Route path="/history">
           {resultsToShowArray ? (

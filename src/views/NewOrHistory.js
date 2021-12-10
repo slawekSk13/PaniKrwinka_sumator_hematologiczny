@@ -9,9 +9,10 @@ import { Icon } from "../components/Icon/Icon";
 
 const NewOrHistory = ({
   showHistoricalResults,
-  handleRegEx,
+  handleRegEx, regEx,
   handleResultsToShowArray,
-  handleLogout, callback, loading
+  handleLogout, callback, loading,
+  historicalResults, historicalPatients,
 }) => {
   const [historySearch, setHistorySearch] = useState("");
   const handleHistorySearch = (e) => {
@@ -46,8 +47,11 @@ const NewOrHistory = ({
           <Button text='wyloguj' size='big' onClick={() => handleLogout(loading, callback)} />
           {historySearch !== "" && (
             <List
-              results={showHistoricalResults()}
+              results={showHistoricalResults(historicalPatients, regEx, historicalResults)}
               handleClick={handleResultsToShowArray}
+              regEx={regEx}
+              historicalPatients={historicalPatients}
+              historicalResults={historicalResults}
             />
           )}
         </FlexWrapper>
