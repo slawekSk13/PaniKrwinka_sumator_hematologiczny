@@ -1,23 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { HashRouter, Route, Switch, Redirect, Link } from "react-router-dom";
-
-import { Header } from "./components/Header/Header";
-import { Loading } from "./components/Loading/Loading";
-import { Icon } from "./components/Icon/Icon";
-
-import { AddNewPatient } from "./views/AddNewPatient";
-import { Leukogram } from "./views/Leukogram";
-import { Results } from "./views/Results";
-import { NewOrHistory } from "./views/NewOrHistory";
-import { HistoricalResults } from "./views/HistoricalResults";
-import { Start } from "./views/Start";
-import { Login } from "./views/Login";
-import { Register } from "./views/Register";
+import { Router } from "./Router";
 
 import { patientZero, resultsZero } from "./utilities/defaultStates";
 import {
   sum,
-  showHistoricalResults,
   handleAddCellWBC,
   handleAddCellNRBC,
   handleAddCellLeuko,
@@ -25,10 +11,10 @@ import {
 
 import {
   postToFirebase,
-  save,
   handleLogin,
   handleLogout,
   handleRegister,
+  refreshData,
 } from "./utilities/firebase";
 
 function App() {
@@ -55,6 +41,32 @@ function App() {
       : setRegEx(new RegExp(`.{0,}${pattern}.{0,}`, "gi"));
   };
 
+  const onRegister = (email, password) => {
+    setLoading(true);
+    handleRegister(email, password);
+    setLoading(false);
+  };
+
+  const onLogin = async (email, password) => {
+    setLoading(true);
+    setUser(await handleLogin(email, password));
+    fetchData();
+    setLoading(false);
+  };
+
+  const onLogout = async () => {
+    setLoading(true);
+    setUser(handleLogout);
+    reset();
+    setLoading(false);
+  };
+
+  const save = async () => {
+    await postToFirebase(results, `results`);
+    await fetchData();
+    reset();
+  };
+
   const handleAddCell = (key, value) => {
     if (key === "wbc") {
       setResults((prevState) => handleAddCellWBC(prevState, value, progress));
@@ -68,12 +80,6 @@ function App() {
     progress >= 99 && setCalcFinished(true);
   };
 
-  const handleData = (data, path) => {
-    path === "results"
-      ? setHistoricalResults(Object.values(data))
-      : setHistoricalPatients(Object.values(data));
-  };
-
   useEffect(() => {
     setProgress(Object.values(results.leukogram.relative).reduce(sum));
   }, [results]);
@@ -84,6 +90,16 @@ function App() {
       patientId: patient.id,
     }));
   }, [patient]);
+
+  const fetchData = async () => {
+    try {
+      await refreshData(setHistoricalPatients, setHistoricalResults);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  // useEffect(() => fetchData, [user]);
 
   const reset = () => {
     setPatient({ ...patientZero, id: new Date().valueOf() });
@@ -108,106 +124,33 @@ function App() {
 
   const handleResultsToShowArray = (patientId, resultsToCheck) => {
     setResultsToShowArray(
-      resultsToCheck.filter((element) => element.patientId === patientId)
+      resultsToCheck.filter((el) => el.patientId === patientId)
     );
   };
 
   return (
-    <HashRouter>
-      <Header />
-      {(patient.patName !== "" || resultsToShowArray) && (
-        <Link to="/">
-          <Icon icon="exit" onClick={reset} />
-        </Link>
-      )}
-      <Switch>
-        <Route exact path="/">
-          {user?.emailVerified ? (
-            <NewOrHistory
-              showHistoricalResults={showHistoricalResults}
-              handleRegEx={handleRegEx}
-              handleResultsToShowArray={handleResultsToShowArray}
-              handleLogout={handleLogout}
-              callback={setUser}
-              loading={setLoading}
-              historicalPatients={historicalPatients}
-              historicalResults={historicalResults}
-              regEx={regEx}
-            />
-          ) : loading ? (
-            <Loading />
-          ) : (
-            <Start />
-          )}
-        </Route>
-        <Route exact path="/login">
-          <Login
-            handleLogin={handleLogin}
-            callback={setUser}
-            loading={setLoading}
-            handleData={handleData}
-          />
-        </Route>
-        <Route exact path="/register">
-          <Register handleRegister={handleRegister} loading={setLoading} />
-        </Route>
-        <Route path="/history">
-          {resultsToShowArray ? (
-            <HistoricalResults
-              resultsToShowArray={resultsToShowArray}
-              sum={sum}
-              save={save}
-              reset={reset}
-              handleData={handleData}
-              history={resultsToShowArray}
-            />
-          ) : (
-            <Redirect to="/" />
-          )}
-        </Route>
-        <Route path="/addnewpatient">
-          <AddNewPatient
-            confirmPatient={confirmPatient}
-            patient={patient}
-            historicalPatients={historicalPatients}
-          />
-        </Route>
-        <Route path="/leukogram">
-          {patient.patName !== "" ? (
-            <Leukogram
-              patient={patient}
-              progress={progress}
-              handleAddCell={handleAddCell}
-              results={results}
-              reset={reset}
-              handleCalcFinish={handleCalcFinish}
-              calcFinished={calcFinished}
-            />
-          ) : (
-            <Redirect to="/" />
-          )}
-        </Route>
-        <Route path="/results">
-          {results.leukogram.wbc.nominal !== 0 ? (
-            <Results
-              results={results}
-              patient={patient}
-              save={save}
-              reset={reset}
-              progress={progress}
-              calcFinished={calcFinished}
-              history={resultsToShowArray}
-              handleData={handleData}
-            />
-          ) : (
-            <Redirect to="/leukogram" />
-          )}
-        </Route>
-        <Route>
-          <Redirect to="/results" />
-        </Route>
-      </Switch>
-    </HashRouter>
+    <Router
+      patient={patient}
+      resultsToShowArray={resultsToShowArray}
+      user={user}
+      handleRegEx={handleRegEx}
+      handleResultsToShowArray={handleResultsToShowArray}
+      onLogout={onLogout}
+      historicalPatients={historicalPatients}
+      historicalResults={historicalResults}
+      regEx={regEx}
+      loading={loading}
+      onLogin={onLogin}
+      handleRegister={handleRegister}
+      confirmPatient={confirmPatient}
+      progress={progress}
+      handleAddCell={handleAddCell}
+      results={results}
+      handleCalcFinish={handleCalcFinish}
+      calcFinished={calcFinished}
+      save={save}
+      reset={reset}
+    />
   );
 }
 

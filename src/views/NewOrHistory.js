@@ -7,11 +7,12 @@ import { TipText } from "../components/TipText/TipText";
 import { List } from "../components/List/List";
 import { Icon } from "../components/Icon/Icon";
 
+import { showHistoricalResults } from "../utilities/helpers";
+
 const NewOrHistory = ({
-  showHistoricalResults,
   handleRegEx, regEx,
   handleResultsToShowArray,
-  handleLogout, callback, loading,
+  handleLogout,
   historicalResults, historicalPatients,
 }) => {
   const [historySearch, setHistorySearch] = useState("");
@@ -44,7 +45,7 @@ const NewOrHistory = ({
             placeholder="szukaj w historii"
             value={historySearch}
           />
-          <Button text='wyloguj' size='big' onClick={() => handleLogout(loading, callback)} />
+          <Button text='wyloguj' size='big' onClick={handleLogout} />
           {historySearch !== "" && (
             <List
               results={showHistoricalResults(historicalPatients, regEx, historicalResults)}

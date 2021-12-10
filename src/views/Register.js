@@ -22,7 +22,7 @@ const Register = ({ handleRegister, loading }) => {
 
   const registerButtonHandler = () => {
     password === passwordConfirm
-      ? handleRegister(email, password, loading)
+      ? handleRegister(email, password)
       : setPasswordConfirmed(false);
   };
   return (

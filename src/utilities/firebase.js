@@ -18,8 +18,7 @@ const handleUserError = (err) => {
   console.warn(`An error occured: ${code}: ${message}`);
 };
 
-const handleRegister = async (email, password, loading) => {
-  loading(true);
+const handleRegister = async (email, password) => {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
     sendEmailVerification(auth.currentUser);
@@ -30,64 +29,71 @@ const handleRegister = async (email, password, loading) => {
   } catch (err) {
     handleUserError(err);
   }
-  loading(false);
 };
 
-const handleLogin = async (email, password, loading, handleData, callback) => {
-  loading(true);
-  let user = null;
+const handleLogin = async (email, password) => {
   try {
-    user = await signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(auth, email, password);
+    const user = auth.currentUser;
     if (!auth.currentUser.emailVerified) {
       signOut(auth);
       window.alert("Email not veriefied!");
     } else {
-      getFromFirebase(`results`, handleData);
-      getFromFirebase(`patients`, handleData);
+      return user;
     }
   } catch (err) {
     handleUserError(err);
   }
-  loading(false);
-  callback(user.user);
 };
 
-const handleLogout = async (loading, callback) => {
-  loading(true);
+const handleLogout = async () => {
   try {
     await signOut(auth);
+    return null;
   } catch (err) {
     handleUserError(err);
   }
-  loading(false);
-  callback(null);
 };
 
-const save = async (results, handleData, reset) => {
-  await postToFirebase(results, `results`);
-  await getFromFirebase("results", handleData);
-  await getFromFirebase("patients", handleData);
-  reset();
+const refreshData = async (setPatients, setResults) => {
+  try {
+    await getFromFirebase("results", setResults);
+    await getFromFirebase("patients", setPatients);
+  } catch (err) {
+    handleUserError(err);
+  }
 };
-
 
 const postToFirebase = async (dataToSave, dataType) => {
   try {
-    await set(ref(db, `${auth.currentUser.uid}/${dataType}/${dataToSave.id}`), dataToSave);
+    await set(
+      ref(db, `${auth.currentUser.uid}/${dataType}/${dataToSave.id}`),
+      dataToSave
+    );
+    return true;
   } catch (err) {
-    console.warn(err);
+    handleUserError(err);
   }
 };
-const getFromFirebase = async (dataType, succesCallback) => {
+
+const getFromFirebase = async (dataType, cb) => {
   try {
     const dataRef = await ref(db, `${auth.currentUser.uid}/${dataType}`);
     onValue(dataRef, (snapshot) => {
       const data = snapshot.val();
-      data && succesCallback(data, dataType);
+      const dataValues = data ? Object.values(data) : false;
+      //how to return from here?
+      dataValues ? cb(dataValues) : cb([]);
     });
   } catch (err) {
-    console.warn(err);
+    handleUserError(err);
   }
 };
 
-export { postToFirebase, save, handleLogin, handleLogout,  handleRegister};
+export {
+  postToFirebase,
+  handleLogin,
+  handleLogout,
+  handleRegister,
+  refreshData,
+};

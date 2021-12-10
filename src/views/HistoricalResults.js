@@ -2,8 +2,9 @@ import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Results } from "./Results";
+import { sum } from "../utilities/helpers";
 
-const HistoricalResults = ({ resultsToShowArray, sum, save, history }) => {
+const HistoricalResults = ({ resultsToShowArray }) => {
   return (
     <Carousel
       infiniteLoop
@@ -18,8 +19,6 @@ const HistoricalResults = ({ resultsToShowArray, sum, save, history }) => {
           patient={result.patient}
           progress={Object.values(result.leukogram.relative).reduce(sum)}
           calcFinished={true}
-          save={save}
-          history={history}
         />
       ))}
     </Carousel>
