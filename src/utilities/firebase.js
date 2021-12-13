@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendEmailVerification,
+  sendPasswordResetEmail
 } from "firebase/auth";
 
 initializeApp(firebaseConfig);
@@ -55,6 +56,14 @@ const handleLogout = async () => {
   }
 };
 
+const handleResetPassword = async (email) => {
+  try {
+sendPasswordResetEmail(auth, email);
+  } catch (err) {
+    handleUserError(err);
+  }
+}
+
 const refreshData = async (setPatients, setResults) => {
   try {
     await getFromFirebase("results", setResults);
@@ -96,4 +105,5 @@ export {
   handleLogout,
   handleRegister,
   refreshData,
+  handleResetPassword
 };

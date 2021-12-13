@@ -13,12 +13,34 @@ import { HistoricalResults } from "./views/HistoricalResults";
 import { Start } from "./views/Start";
 import { Login } from "./views/Login";
 import { Register } from "./views/Register";
+import { ResetPassword } from "./views/ResetPassword";
+import { Success } from "./views/Success";
 
-const Router = ({patient, resultsToShowArray, user, handleRegEx, handleResultsToShowArray, onLogout,
-historicalPatients, historicalResults, regEx, loading, onLogin, handleRegister, confirmPatient,
-progress, handleAddCell, results, handleCalcFinish, calcFinished, save, reset}) => {
-    return (
-        <HashRouter>
+const Router = ({
+  patient,
+  resultsToShowArray,
+  user,
+  handleRegEx,
+  handleResultsToShowArray,
+  onLogout,
+  historicalPatients,
+  historicalResults,
+  regEx,
+  loading,
+  onLogin,
+  handleRegister,
+  confirmPatient,
+  progress,
+  handleAddCell,
+  results,
+  handleCalcFinish,
+  calcFinished,
+  save,
+  reset,
+  handlePasswordReset,
+}) => {
+  return (
+    <HashRouter>
       <Header />
       {(patient.patName !== "" || resultsToShowArray.length > 0) && (
         <Link to="/">
@@ -54,6 +76,12 @@ progress, handleAddCell, results, handleCalcFinish, calcFinished, save, reset}) 
         </Route>
         <Route exact path="/register">
           <Register handleRegister={handleRegister} />
+        </Route>
+        <Route path="/resetPassword">
+          <ResetPassword handleReset={handlePasswordReset} />
+        </Route>
+        <Route path="/resetPasswordSucces">
+          <Success message={"Na Twój adres wysłano link do zmiany hasła"} />
         </Route>
         <Route path="/history">
           {resultsToShowArray ? (
@@ -101,7 +129,7 @@ progress, handleAddCell, results, handleCalcFinish, calcFinished, save, reset}) 
         </Route>
       </Switch>
     </HashRouter>
-    )
-}
+  );
+};
 
-export {Router}
+export { Router };

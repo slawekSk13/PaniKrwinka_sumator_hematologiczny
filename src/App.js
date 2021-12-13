@@ -15,6 +15,7 @@ import {
   handleLogout,
   handleRegister,
   refreshData,
+  handleResetPassword,
 } from "./utilities/firebase";
 
 function App() {
@@ -45,6 +46,13 @@ function App() {
     setLoading(true);
     handleRegister(email, password);
     setLoading(false);
+  };
+
+  const onPasswordReset = async (email) => {
+    setLoading(true);
+    await handleResetPassword(email);
+    setLoading(false);
+    return true;
   };
 
   const onLogin = async (email, password) => {
@@ -99,8 +107,6 @@ function App() {
     }
   };
 
-  // useEffect(() => fetchData, [user]);
-
   const reset = () => {
     setPatient({ ...patientZero, id: new Date().valueOf() });
     setProgress(0);
@@ -141,7 +147,7 @@ function App() {
       regEx={regEx}
       loading={loading}
       onLogin={onLogin}
-      handleRegister={handleRegister}
+      handleRegister={onRegister}
       confirmPatient={confirmPatient}
       progress={progress}
       handleAddCell={handleAddCell}
@@ -150,6 +156,7 @@ function App() {
       calcFinished={calcFinished}
       save={save}
       reset={reset}
+      handlePasswordReset={onPasswordReset}
     />
   );
 }

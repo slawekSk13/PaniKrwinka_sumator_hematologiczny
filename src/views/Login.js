@@ -36,6 +36,8 @@ const Login = ({ onLogin }) => {
           text="zaloguj"
           onClick={() => onLogin(email, password)}
         /></Link>
+        <Link className='link' to='resetPassword'>
+        <TipText text='Zresetuj hasło' /></Link>
       </FlexWrapper>
       <TipText text="Dzięki logowaniu możesz sprawdzić historię wyników swoich pacjentów" />
     </FlexWrapper>
