@@ -4,6 +4,8 @@ import { Input } from "../components/Input/Input";
 import { TipText } from "../components/TipText/TipText";
 import { useState } from "react";
 
+import { changeLocation } from "../utilities/helpers";
+
 const ResetPassword = ({ handleReset }) => {
   const [emailConfirmed, setEmailConfirmed] = useState(true);
   const [email, setEmail] = useState("");
@@ -17,7 +19,7 @@ const ResetPassword = ({ handleReset }) => {
 
   const confirmButtonHandler = () => {
     email === emailConfirm
-      ? (handleReset(email) && (window.location.href = '/#/resetPasswordSucces'))
+      ? (handleReset(email) && changeLocation('resetPasswordSucces'))
       : setEmailConfirmed(false);
   };
   return (

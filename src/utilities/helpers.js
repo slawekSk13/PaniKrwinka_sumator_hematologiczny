@@ -1,5 +1,9 @@
 export const sum = (a, b) => a + b;
 
+export const changeLocation = (newLocation = '') => {
+  window.location.href = `/#/${newLocation}`
+}
+
 const checkMatch = (el, regEx) => {
   if (
     el.patName.match(regEx) ||

@@ -1,6 +1,8 @@
 import React from "react";
 import { HashRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 
+import { useSelector } from "react-redux";
+
 import { Header } from "./components/Header/Header";
 import { Loading } from "./components/Loading/Loading";
 import { Icon } from "./components/Icon/Icon";
@@ -19,15 +21,12 @@ import { Success } from "./views/Success";
 const Router = ({
   patient,
   resultsToShowArray,
-  user,
   handleRegEx,
   handleResultsToShowArray,
-  onLogout,
   historicalPatients,
   historicalResults,
   regEx,
   loading,
-  onLogin,
   handleRegister,
   confirmPatient,
   progress,
@@ -39,6 +38,7 @@ const Router = ({
   reset,
   handlePasswordReset,
 }) => {
+  const { user } = useSelector((state) => state);
   return (
     <HashRouter>
       <Header />
@@ -59,7 +59,6 @@ const Router = ({
               <NewOrHistory
                 handleRegEx={handleRegEx}
                 handleResultsToShowArray={handleResultsToShowArray}
-                handleLogout={onLogout}
                 historicalPatients={historicalPatients}
                 historicalResults={historicalResults}
                 regEx={regEx}
@@ -72,7 +71,7 @@ const Router = ({
           )}
         </Route>
         <Route exact path="/login">
-          <Login onLogin={onLogin} />
+          <Login />
         </Route>
         <Route exact path="/register">
           <Register handleRegister={handleRegister} />

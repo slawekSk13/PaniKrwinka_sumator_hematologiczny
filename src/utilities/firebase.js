@@ -50,7 +50,7 @@ const handleLogin = async (email, password) => {
 const handleLogout = async () => {
   try {
     await signOut(auth);
-    return null;
+    return true;
   } catch (err) {
     handleUserError(err);
   }
@@ -90,9 +90,9 @@ const getFromFirebase = async (dataType, cb) => {
     const dataRef = await ref(db, `${auth.currentUser.uid}/${dataType}`);
     onValue(dataRef, (snapshot) => {
       const data = snapshot.val();
-      const dataValues = data ? Object.values(data) : false;
+      const dataValues = data ? Object.values(data) : [];
       //how to return from here?
-      dataValues ? cb(dataValues) : cb([]);
+      cb(dataValues);
     });
   } catch (err) {
     handleUserError(err);

@@ -11,15 +11,12 @@ import {
 
 import {
   postToFirebase,
-  handleLogin,
-  handleLogout,
   handleRegister,
   refreshData,
   handleResetPassword,
 } from "./utilities/firebase";
 
 function App() {
-  const [user, setUser] = useState(null);
   const [patient, setPatient] = useState({
     ...patientZero,
     id: new Date().valueOf(),
@@ -53,20 +50,6 @@ function App() {
     await handleResetPassword(email);
     setLoading(false);
     return true;
-  };
-
-  const onLogin = async (email, password) => {
-    setLoading(true);
-    setUser(await handleLogin(email, password));
-    fetchData();
-    setLoading(false);
-  };
-
-  const onLogout = async () => {
-    setLoading(true);
-    setUser(handleLogout);
-    reset();
-    setLoading(false);
   };
 
   const save = async () => {
@@ -138,15 +121,12 @@ function App() {
     <Router
       patient={patient}
       resultsToShowArray={resultsToShowArray}
-      user={user}
       handleRegEx={handleRegEx}
       handleResultsToShowArray={handleResultsToShowArray}
-      onLogout={onLogout}
       historicalPatients={historicalPatients}
       historicalResults={historicalResults}
       regEx={regEx}
       loading={loading}
-      onLogin={onLogin}
       handleRegister={onRegister}
       confirmPatient={confirmPatient}
       progress={progress}
