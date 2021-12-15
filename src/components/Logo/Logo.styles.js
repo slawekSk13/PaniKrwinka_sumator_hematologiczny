@@ -8,6 +8,9 @@ const LogoStyled = styled.img.attrs({
   filter: drop-shadow(0 6px 6px ${props => props.colors.shadowColor});
   max-width: 100%;
   margin: 0 auto;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export {LogoStyled};

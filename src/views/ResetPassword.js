@@ -4,9 +4,15 @@ import { Input } from "../components/Input/Input";
 import { TipText } from "../components/TipText/TipText";
 import { useState } from "react";
 
-import { changeLocation } from "../utilities/helpers";
+import { actionCreators, useActions } from "../state";
 
-const ResetPassword = ({ handleReset }) => {
+import { changeLocation } from "../utilities/helpers";
+import { handleResetPassword } from "../utilities/firebase";
+
+const ResetPassword = () => {
+
+  const { setLoading, unsetLoading } = useActions(actionCreators);
+
   const [emailConfirmed, setEmailConfirmed] = useState(true);
   const [email, setEmail] = useState("");
   const handleEmailChange = (e) => {
@@ -18,9 +24,16 @@ const ResetPassword = ({ handleReset }) => {
   };
 
   const confirmButtonHandler = () => {
-    email === emailConfirm
-      ? (handleReset(email) && changeLocation('resetPasswordSucces'))
+    email === emailConfirm && email !== ""
+      ? handleReset(email) && changeLocation("resetPasswordSucces")
       : setEmailConfirmed(false);
+  };
+
+  const handleReset = async (email) => {
+    setLoading();
+    await handleResetPassword(email);
+    unsetLoading();
+    return true;
   };
   return (
     <FlexWrapper justify="between">
@@ -37,11 +50,11 @@ const ResetPassword = ({ handleReset }) => {
           placeholder="potwierdź email"
           value={emailConfirm}
         />
-          <Button
-            size="big"
-            text="Resetuj hasło"
-            onClick={() => confirmButtonHandler()}
-          />
+        <Button
+          size="big"
+          text="Resetuj hasło"
+          onClick={() => confirmButtonHandler()}
+        />
       </FlexWrapper>
       {!emailConfirmed && (
         <TipText text="Adres w obu polach musi być indentyczne!" />

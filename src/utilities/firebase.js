@@ -1,13 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "./firebaseconfig";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set, get, child } from "firebase/database";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   sendEmailVerification,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 initializeApp(firebaseConfig);
@@ -58,16 +58,17 @@ const handleLogout = async () => {
 
 const handleResetPassword = async (email) => {
   try {
-sendPasswordResetEmail(auth, email);
+    sendPasswordResetEmail(auth, email);
   } catch (err) {
     handleUserError(err);
   }
-}
+};
 
-const refreshData = async (setPatients, setResults) => {
+const refreshData = async () => {
   try {
-    await getFromFirebase("results", setResults);
-    await getFromFirebase("patients", setPatients);
+    const pastResults = await getFromFirebase("results");
+    const pastPatients = await getFromFirebase("patients");
+    return { pastResults, pastPatients };
   } catch (err) {
     handleUserError(err);
   }
@@ -87,13 +88,14 @@ const postToFirebase = async (dataToSave, dataType) => {
 
 const getFromFirebase = async (dataType, cb) => {
   try {
-    const dataRef = await ref(db, `${auth.currentUser.uid}/${dataType}`);
-    onValue(dataRef, (snapshot) => {
-      const data = snapshot.val();
-      const dataValues = data ? Object.values(data) : [];
-      //how to return from here?
-      cb(dataValues);
-    });
+    const dataRef = ref(db);
+    return get(child(dataRef, `${auth.currentUser.uid}/${dataType}`)).then(
+      (snapshot) => {
+        if (snapshot) {
+          return snapshot.val();
+        } else return [];
+      }
+    );
   } catch (err) {
     handleUserError(err);
   }
@@ -105,5 +107,6 @@ export {
   handleLogout,
   handleRegister,
   refreshData,
-  handleResetPassword
+  handleResetPassword,
+  getFromFirebase,
 };

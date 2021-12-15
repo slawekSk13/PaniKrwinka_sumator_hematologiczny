@@ -4,7 +4,6 @@ import { HashRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { Header } from "./components/Header/Header";
-import { Loading } from "./components/Loading/Loading";
 import { Icon } from "./components/Icon/Icon";
 
 import { AddNewPatient } from "./views/AddNewPatient";
@@ -19,26 +18,18 @@ import { ResetPassword } from "./views/ResetPassword";
 import { Success } from "./views/Success";
 
 const Router = ({
-  patient,
   resultsToShowArray,
-  handleRegEx,
   handleResultsToShowArray,
-  historicalPatients,
-  historicalResults,
-  regEx,
-  loading,
   handleRegister,
-  confirmPatient,
   progress,
   handleAddCell,
   results,
   handleCalcFinish,
   calcFinished,
   save,
-  reset,
-  handlePasswordReset,
+  reset
 }) => {
-  const { user } = useSelector((state) => state);
+  const { user, regEx, patient } = useSelector((state) => state);
   return (
     <HashRouter>
       <Header />
@@ -49,23 +40,15 @@ const Router = ({
       )}
       <Switch>
         <Route exact path="/">
-          {user?.emailVerified ? (
+          {user ? (
             <>
               {regEx && (
-                <Link to="/">
                   <Icon icon="exit" onClick={reset} />
-                </Link>
               )}
               <NewOrHistory
-                handleRegEx={handleRegEx}
                 handleResultsToShowArray={handleResultsToShowArray}
-                historicalPatients={historicalPatients}
-                historicalResults={historicalResults}
-                regEx={regEx}
               />
             </>
-          ) : loading ? (
-            <Loading />
           ) : (
             <Start />
           )}
@@ -77,7 +60,7 @@ const Router = ({
           <Register handleRegister={handleRegister} />
         </Route>
         <Route path="/resetPassword">
-          <ResetPassword handleReset={handlePasswordReset} />
+          <ResetPassword />
         </Route>
         <Route path="/resetPasswordSucces">
           <Success message={"Na Twój adres wysłano link do zmiany hasła"} />
@@ -91,9 +74,6 @@ const Router = ({
         </Route>
         <Route path="/addnewpatient">
           <AddNewPatient
-            confirmPatient={confirmPatient}
-            patient={patient}
-            historicalPatients={historicalPatients}
           />
         </Route>
         <Route path="/leukogram">

@@ -6,28 +6,30 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Loading } from "../components/Loading/Loading";
 
-import { useSelector, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
-import { actionCreators } from "../state";
+import { useSelector } from "react-redux";
+import { actionCreators, useActions } from "../state";
 
-import { handleLogin } from "../utilities/firebase";
+import { handleLogin, refreshData } from "../utilities/firebase";
 import { changeLocation } from "../utilities/helpers";
 
 const Login = () => {
-  const { user, loading } = useSelector((state) => state);
-  const dispatch = useDispatch();
-
-  const { setUser, setLoading, unsetLoading } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const { user, loading} = useSelector((state) => state);
+  const {
+    setUser,
+    setLoading,
+    unsetLoading,
+    setHistoricalPatients,
+    setHistoricalResults,
+  } = useActions(actionCreators);
 
   const onLogin = async (email, password) => {
     setLoading();
     setUser((await handleLogin(email, password)) || null);
+    const { pastResults, pastPatients } = await refreshData();
+    setHistoricalPatients(Object.values(pastPatients));
+    setHistoricalResults(Object.values(pastResults));
     unsetLoading();
   };
-
   user && changeLocation();
 
   const [email, setEmail] = useState("");

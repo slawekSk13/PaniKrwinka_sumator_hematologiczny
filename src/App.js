@@ -12,8 +12,6 @@ import {
 import {
   postToFirebase,
   handleRegister,
-  refreshData,
-  handleResetPassword,
 } from "./utilities/firebase";
 
 function App() {
@@ -27,29 +25,13 @@ function App() {
     id: new Date().valueOf(),
   });
   const [calcFinished, setCalcFinished] = useState(false);
-  const [historicalResults, setHistoricalResults] = useState([]);
-  const [historicalPatients, setHistoricalPatients] = useState([]);
-  const [regEx, setRegEx] = useState(null);
   const [resultsToShowArray, setResultsToShowArray] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const handleRegEx = (pattern) => {
-    pattern === ""
-      ? setRegEx(null)
-      : setRegEx(new RegExp(`.{0,}${pattern}.{0,}`, "gi"));
-  };
 
   const onRegister = (email, password) => {
     setLoading(true);
     handleRegister(email, password);
     setLoading(false);
-  };
-
-  const onPasswordReset = async (email) => {
-    setLoading(true);
-    await handleResetPassword(email);
-    setLoading(false);
-    return true;
   };
 
   const save = async () => {
@@ -84,7 +66,6 @@ function App() {
 
   const fetchData = async () => {
     try {
-      await refreshData(setHistoricalPatients, setHistoricalResults);
     } catch (err) {
       console.warn(err);
     }
@@ -102,15 +83,6 @@ function App() {
     setCalcFinished(true);
   };
 
-  const confirmPatient = async (patientToSave, matchingPatient) => {
-    if (matchingPatient.length === 0) {
-      setPatient(patientToSave);
-      await postToFirebase(patientToSave, `patients`);
-    } else {
-      setPatient(matchingPatient[0]);
-    }
-  };
-
   const handleResultsToShowArray = (patientId, resultsToCheck) => {
     setResultsToShowArray(
       resultsToCheck.filter((el) => el.patientId === patientId)
@@ -121,14 +93,9 @@ function App() {
     <Router
       patient={patient}
       resultsToShowArray={resultsToShowArray}
-      handleRegEx={handleRegEx}
       handleResultsToShowArray={handleResultsToShowArray}
-      historicalPatients={historicalPatients}
-      historicalResults={historicalResults}
-      regEx={regEx}
       loading={loading}
       handleRegister={onRegister}
-      confirmPatient={confirmPatient}
       progress={progress}
       handleAddCell={handleAddCell}
       results={results}
@@ -136,7 +103,6 @@ function App() {
       calcFinished={calcFinished}
       save={save}
       reset={reset}
-      handlePasswordReset={onPasswordReset}
     />
   );
 }

@@ -1,37 +1,29 @@
-const setCalcFinished = () => {
-    return (dispatch) => {
-      dispatch({ type: "TRUE" });
-    };
-  };
-  
-  const setCalcUnFinished = () => {
-    return (dispatch) => {
-      dispatch({ type: "FALSE" });
-    };
-  };
+import { setCalcUnFinished, setCalcFinished } from "./calcIsFinishedAction";
+import { setLoading, unsetLoading } from "./loadingAction";
+import { setUser, unsetUser } from "./userAction";
+import { setRegEx } from "./regExAction";
+import {
+  setHistoricalPatients,
+  unsetHistoricalPatients,
+} from "./historicalPatientsAction";
+import {
+  setHistoricalResults,
+  unsetHistoricalResults,
+} from "./historicalResultsAction";
+import { setPatient, clearPatient } from "./patientAction";
 
-  const setLoading = () => {
-    return (dispatch) => {
-      dispatch({ type: "LOADINGSTART" });
-    };
-  };
-  
-  const unsetLoading = () => {
-    return (dispatch) => {
-      dispatch({ type: "LOADINGFINISED" });
-    };
-  };
-
-const setUser = (user) => {
-  return (dispatch) => {
-    dispatch({ type: "LOGIN", payload: user });
-  };
+export {
+  setCalcFinished,
+  setCalcUnFinished,
+  setUser,
+  unsetUser,
+  setLoading,
+  unsetLoading,
+  setRegEx,
+  setHistoricalPatients,
+  unsetHistoricalPatients,
+  setHistoricalResults,
+  unsetHistoricalResults,
+  setPatient,
+  clearPatient,
 };
-
-const unsetUser = () => {
-  return (dispatch) => {
-    dispatch({ type: "LOGOUT" });
-  };
-};
-
-export { setCalcFinished, setCalcUnFinished, setUser, unsetUser, setLoading, unsetLoading };

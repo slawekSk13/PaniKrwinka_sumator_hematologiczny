@@ -4,6 +4,9 @@ export const changeLocation = (newLocation = '') => {
   window.location.href = `/#/${newLocation}`
 }
 
+export const capitalizeFirstLetter = (string) =>
+string.charAt(0).toUpperCase() + string.slice(1);
+
 const checkMatch = (el, regEx) => {
   if (
     el.patName.match(regEx) ||
