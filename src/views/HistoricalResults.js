@@ -4,7 +4,12 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Results } from "./Results";
 import { sum } from "../utilities/helpers";
 
-const HistoricalResults = ({ resultsToShowArray }) => {
+import { useSelector } from "react-redux";
+
+const HistoricalResults = () => {
+  const { resultsToShow } = useSelector(
+    (state) => state
+  );
   return (
     <Carousel
       infiniteLoop
@@ -12,13 +17,14 @@ const HistoricalResults = ({ resultsToShowArray }) => {
       showThumbs={false}
       showStatus={false}
     >
-      {resultsToShowArray.map((result) => (
+      {resultsToShow.map((result) => (
         <Results
           key={result.id}
           results={result}
           patient={result.patient}
           progress={Object.values(result.leukogram.relative).reduce(sum)}
           calcFinished={true}
+          historical={true}
         />
       ))}
     </Carousel>

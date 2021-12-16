@@ -1,109 +1,72 @@
-import React, { useEffect, useState } from "react";
-import { Router } from "./Router";
+import React from "react";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import { patientZero, resultsZero } from "./utilities/defaultStates";
-import {
-  sum,
-  handleAddCellWBC,
-  handleAddCellNRBC,
-  handleAddCellLeuko,
-} from "./utilities/helpers";
+import { useSelector } from "react-redux";
 
-import {
-  postToFirebase,
-  handleRegister,
-} from "./utilities/firebase";
+import { Header } from "./components/Header/Header";
+import { Icon } from "./components/Icon/Icon";
+
+import { AddNewPatient } from "./views/AddNewPatient";
+import { Leukogram } from "./views/Leukogram";
+import { Results } from "./views/Results";
+import { NewOrHistory } from "./views/NewOrHistory";
+import { HistoricalResults } from "./views/HistoricalResults";
+import { Start } from "./views/Start";
+import { Login } from "./views/Login";
+import { Register } from "./views/Register";
+import { ResetPassword } from "./views/ResetPassword";
+import { Success } from "./views/Success";
 
 function App() {
-  const [patient, setPatient] = useState({
-    ...patientZero,
-    id: new Date().valueOf(),
-  });
-  const [progress, setProgress] = useState(0);
-  const [results, setResults] = useState({
-    ...resultsZero,
-    id: new Date().valueOf(),
-  });
-  const [calcFinished, setCalcFinished] = useState(false);
-  const [resultsToShowArray, setResultsToShowArray] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const onRegister = (email, password) => {
-    setLoading(true);
-    handleRegister(email, password);
-    setLoading(false);
-  };
-
-  const save = async () => {
-    await postToFirebase(results, `results`);
-    await fetchData();
-    reset();
-  };
-
-  const handleAddCell = (key, value) => {
-    if (key === "wbc") {
-      setResults((prevState) => handleAddCellWBC(prevState, value, progress));
-    } else {
-      navigator.vibrate(100);
-      key === "nrbc"
-        ? setResults((prevState) => handleAddCellNRBC(prevState))
-        : setResults((prevState) => handleAddCellLeuko(prevState, key));
-      setCalcFinished(false);
-    }
-    progress >= 99 && setCalcFinished(true);
-  };
-
-  useEffect(() => {
-    setProgress(Object.values(results.leukogram.relative).reduce(sum));
-  }, [results]);
-
-  useEffect(() => {
-    setResults((prevState) => ({
-      ...prevState,
-      patientId: patient.id,
-    }));
-  }, [patient]);
-
-  const fetchData = async () => {
-    try {
-    } catch (err) {
-      console.warn(err);
-    }
-  };
-
-  const reset = () => {
-    setPatient({ ...patientZero, id: new Date().valueOf() });
-    setProgress(0);
-    setResults({ ...resultsZero, id: new Date().valueOf() });
-    setCalcFinished(false);
-    setResultsToShowArray([]);
-  };
-
-  const handleCalcFinish = () => {
-    setCalcFinished(true);
-  };
-
-  const handleResultsToShowArray = (patientId, resultsToCheck) => {
-    setResultsToShowArray(
-      resultsToCheck.filter((el) => el.patientId === patientId)
-    );
-  };
-
+  const { user, regEx, patient, resultsToShow, calcIsFinished, progress, result } = useSelector((state) => state);
   return (
-    <Router
-      patient={patient}
-      resultsToShowArray={resultsToShowArray}
-      handleResultsToShowArray={handleResultsToShowArray}
-      loading={loading}
-      handleRegister={onRegister}
-      progress={progress}
-      handleAddCell={handleAddCell}
-      results={results}
-      handleCalcFinish={handleCalcFinish}
-      calcFinished={calcFinished}
-      save={save}
-      reset={reset}
-    />
+    <HashRouter>
+      <Header />
+      {(patient.patName !== "" || resultsToShow.length > 0) && (<Icon icon="exit" />)}
+      <Switch>
+        <Route exact path="/">
+          {user ? (<>{regEx && <Icon icon="exit" />}<NewOrHistory /></>) : (<Start />)}
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
+        <Route path="/resetPassword">
+          <ResetPassword />
+        </Route>
+        <Route path="/resetPasswordSucces">
+          <Success message={"Na Twój adres wysłano link do zmiany hasła"} />
+        </Route>
+        <Route path="/history">
+          {resultsToShow ? <HistoricalResults /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/addnewpatient">
+          <AddNewPatient />
+        </Route>
+        <Route path="/leukogram">
+          {patient.patName !== "" ? (
+            <Leukogram />
+          ) : (
+            <Redirect to="/" />
+          )}
+        </Route>
+        <Route path="/results">
+          {result.leukogram.wbc.nominal !== 0 ? (
+            <Results
+              results={result}
+              patient={patient}
+              progress={progress}
+              calcFinished={calcIsFinished}
+            />
+          ) : (<Redirect to="/leukogram" />)}
+        </Route>
+        <Route>
+          <Redirect to="/results" />
+        </Route>
+      </Switch>
+    </HashRouter>
   );
 }
 

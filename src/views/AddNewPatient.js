@@ -70,11 +70,13 @@ const AddNewPatient = () => {
   };
 
   const handleClick = () => {
+    setLoading();
     const { patName, patOwnerName, patOwnerLname } = localPatient;
     patName.length > 0 &&
       patOwnerName.length > 0 &&
       patOwnerLname.length > 0 &&
       confirmPatient(localPatient, matchingPatient);
+      unsetLoading();
   };
 
   return (

@@ -11,6 +11,9 @@ import {
   unsetHistoricalResults,
 } from "./historicalResultsAction";
 import { setPatient, clearPatient } from "./patientAction";
+import { setResultsToShow, clearResultsToShow } from "./resultsToShowAction";
+import { setResult, clearResult } from "./resultAction";
+import { setProgress, clearProgress } from "./progressAction";
 
 export {
   setCalcFinished,
@@ -26,4 +29,10 @@ export {
   unsetHistoricalResults,
   setPatient,
   clearPatient,
+  setResultsToShow,
+  clearResultsToShow,
+  setResult,
+  clearResult,
+  setProgress,
+  clearProgress,
 };

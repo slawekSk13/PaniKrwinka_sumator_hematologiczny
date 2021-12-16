@@ -3,9 +3,18 @@ import { FlexWrapper } from "../components/FlexWrapper/FlexWrapper";
 import { Input } from "../components/Input/Input";
 import { TipText } from "../components/TipText/TipText";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Loading } from "../components/Loading/Loading";
 
-const Register = ({ handleRegister, loading }) => {
+import { useSelector } from "react-redux";
+import { actionCreators, useActions } from "../state";
+
+import { handleRegister } from "../utilities/firebase";
+import { changeLocation } from "../utilities/helpers";
+
+const Register = () => {
+  const { loading } = useSelector((state) => state);
+  const { setLoading, unsetLoading } = useActions(actionCreators);
+
   const [passwordConfirmed, setPasswordConfirmed] = useState(true);
   const [email, setEmail] = useState("");
   const handleEmailChange = (e) => {
@@ -20,12 +29,20 @@ const Register = ({ handleRegister, loading }) => {
     setPasswordConfirm(e.target.value);
   };
 
+  const onRegister = async () => {
+    setLoading();
+    await handleRegister(email, password);
+    unsetLoading();
+    changeLocation();
+  };
+
   const registerButtonHandler = () => {
     password === passwordConfirm
-      ? handleRegister(email, password)
+      ? onRegister(email, password)
       : setPasswordConfirmed(false);
   };
-  return (
+
+  const registerPanel = (
     <FlexWrapper justify="between">
       <FlexWrapper justify={"around"} height="35vh">
         <Input
@@ -48,18 +65,18 @@ const Register = ({ handleRegister, loading }) => {
           value={passwordConfirm}
           type="password"
         />
-        <Link className='link' to='/' >
         <Button
           size="big"
           text="zarejestruj"
           onClick={() => registerButtonHandler()}
-        /></Link>
+        />
       </FlexWrapper>
       {!passwordConfirmed && (
         <TipText text="Hasło w obu polach musi być indentyczne!" />
       )}
     </FlexWrapper>
   );
+  return loading ? <Loading /> : registerPanel;
 };
 
 export { Register };

@@ -5,22 +5,47 @@ import { Table } from "../components/Table/Table";
 import { Center } from "../components/Center/Center";
 import { Input } from "../components/Input/Input";
 import { TipText } from "../components/TipText/TipText";
+import { Loading } from "../components/Loading/Loading";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
-const Leukogram = ({
-  patient,
-  progress,
-  handleAddCell,
-  results,
-  handleCalcFinish,
-  calcFinished,
-}) => {
+import { useSelector } from "react-redux";
+import { actionCreators, useActions } from "../state";
+
+import {
+  changeLocation,
+  handleAddCellWBC,
+  handleAddCellNRBC,
+  handleAddCellLeuko,
+} from "../utilities/helpers";
+
+const Leukogram = () => {
+  const { patient, progress, result, calcIsFinished, loading } = useSelector(
+    (state) => state
+  );
+  const { setCalcFinished, setCalcUnFinished, setResult, setProgress } =
+    useActions(actionCreators);
+
   const [localWbc, setLocalWbc] = useState(
-    results.leukogram.wbc.nominal !== 0
-      ? results.leukogram.wbc.nominal.toString()
+    result.leukogram.wbc.nominal !== 0
+      ? result.leukogram.wbc.nominal.toString()
       : ""
   );
+
+  const handleAddCell = (key, value) => {
+    if (key === "wbc") {
+      setResult(handleAddCellWBC(result, value, progress));
+    } else {
+      navigator.vibrate(100);
+      if (key === "nrbc") {
+        setResult(handleAddCellNRBC(result));
+      } else {
+        setResult(handleAddCellLeuko(result, key));
+        setProgress();
+      }
+      setCalcUnFinished();
+    }
+    progress >= 99 && setCalcFinished();
+  };
 
   const handleLocalWbc = (e) => {
     const newValue = e.target.value;
@@ -34,21 +59,20 @@ const Leukogram = ({
     });
   };
   const handleMultiClick = (e) => {
-    typeof handleAddCell === "function"
-      ? handleAddCell(e.target.innerText.toLowerCase())
-      : console.warn("handleAddCell must be a function");
+    handleAddCell(e.target.innerText.toLowerCase());
   };
   const handleWbcClick = () => {
     const newValue = Number.parseFloat(localWbc.replace(",", "."));
     if (newValue) {
       handleAddCell("wbc", newValue);
-      setLocalWbc(results.leukogram.wbc.nominal);
+      setLocalWbc(result.leukogram.wbc.nominal);
     }
+    changeLocation(localWbc === "" ? "/leukogram" : "/results");
   };
 
-  const leuko = (
+  const leukogramPanel = (
     <>
-      {Object.keys(results.leukogram.relative).map((element, i) => (
+      {Object.keys(result.leukogram.relative).map((element, i) => (
         <Button
           key={i}
           text={element}
@@ -57,39 +81,37 @@ const Leukogram = ({
         />
       ))}
       <Button text="nrbc" name="nrbc" onClick={handleMultiClick} />
-      <Button onClick={handleCalcFinish} text="dalej" size="big" />
+      <Button onClick={setCalcFinished} text="dalej" size="big" />
     </>
   );
 
-  return (
+  const wbcPanel = (
+    <FlexWrapper height="40vh">
+      <Center>
+        <Input
+          onChange={handleLocalWbc}
+          name="wbc"
+          value={localWbc}
+          placeholder="WBC (G/l)"
+          up={true}
+        />
+        <Button onClick={handleWbcClick} text="dalej" size="big" />
+      </Center>
+      <TipText text="Dzięki wprowadzeniu WBC będziemy mogli podać Ci wartość bezwzględną i w razie potrzeby wartość skorygowaną WBC" />
+    </FlexWrapper>
+  );
+
+  return loading ? <Loading /> : (
     <FlexWrapper justify="around">
       <Table
         patient={patient}
-        results={results}
-        calcFinished={calcFinished}
+        results={result}
+        calcFinished={calcIsFinished}
         progress={progress}
       />
       <ProgressBar progress={progress} />
       <Center>
-        {!calcFinished || progress < 1 ? (
-          leuko
-        ) : (
-          <FlexWrapper height="40vh">
-            <Center>
-              <Input
-                onChange={handleLocalWbc}
-                name="wbc"
-                value={localWbc}
-                placeholder="WBC (G/l)"
-                up={true}
-              />
-              <Link className='link' to={localWbc === "" ? "/leukogram" : "/results"}>
-                <Button onClick={handleWbcClick} text="dalej" size="big" />
-              </Link>
-            </Center>
-            <TipText text="Dzięki wprowadzeniu WBC będziemy mogli podać Ci wartość bezwzględną i w razie potrzeby wartość skorygowaną WBC" />
-          </FlexWrapper>
-        )}
+        {(!calcIsFinished || progress < 1 )? leukogramPanel : wbcPanel}
       </Center>
     </FlexWrapper>
   );

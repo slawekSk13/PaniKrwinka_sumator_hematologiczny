@@ -1,11 +1,11 @@
 export const sum = (a, b) => a + b;
 
-export const changeLocation = (newLocation = '') => {
-  window.location.href = `/#/${newLocation}`
-}
+export const changeLocation = (newLocation = "") => {
+  window.location.href = `/#/${newLocation}`;
+};
 
 export const capitalizeFirstLetter = (string) =>
-string.charAt(0).toUpperCase() + string.slice(1);
+  string.charAt(0).toUpperCase() + string.slice(1);
 
 const checkMatch = (el, regEx) => {
   if (
@@ -21,12 +21,7 @@ const findMatchingPatients = (arrayToFilter, regEx) => {
   return arrayToFilter.filter((el) => checkMatch(el, regEx));
 };
 
-export const showHistoricalResults = (
-  historicalPatients,
-  regEx,
-  historicalResults
-) => {
-  const matchingPatients = findMatchingPatients(historicalPatients, regEx);
+const findMatchingResults = (historicalResults, matchingPatients) => {
   if (historicalResults) {
     let matchingResults = [];
     matchingPatients.forEach((matchingPatient) => {
@@ -41,6 +36,15 @@ export const showHistoricalResults = (
     });
     return matchingResults;
   }
+};
+
+export const showHistoricalResults = (
+  historicalPatients,
+  regEx,
+  historicalResults
+) => {
+  const matchingPatients = findMatchingPatients(historicalPatients, regEx);
+  return findMatchingResults(historicalResults, matchingPatients);
 };
 
 export const handleAddCellWBC = (prevState, value, progress) => {
@@ -64,20 +68,20 @@ export const handleAddCellWBC = (prevState, value, progress) => {
 };
 
 export const handleAddCellNRBC = (prevState) => ({
-    ...prevState,
-    leukogram: {
-      ...prevState.leukogram,
-      nrbc: prevState.leukogram.nrbc + 1,
-    },
-  });
+  ...prevState,
+  leukogram: {
+    ...prevState.leukogram,
+    nrbc: prevState.leukogram.nrbc + 1,
+  },
+});
 
-  export const handleAddCellLeuko = (prevState, key) => ({
-    ...prevState,
-    leukogram: {
-      ...prevState.leukogram,
-      relative: {
-        ...prevState.leukogram.relative,
-        [key]: prevState.leukogram.relative[key] + 1,
-      },
-    }
-  });
+export const handleAddCellLeuko = (prevState, key) => ({
+  ...prevState,
+  leukogram: {
+    ...prevState.leukogram,
+    relative: {
+      ...prevState.leukogram.relative,
+      [key]: prevState.leukogram.relative[key] + 1,
+    },
+  },
+});

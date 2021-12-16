@@ -6,15 +6,21 @@ import regExReducer from "./regExReducer";
 import historicalResultsReducer from "./historicalResultsReducer";
 import historicalPatientsReducer from "./historicalPatientsReducer";
 import patientReducer from "./patientReducer";
+import resultsToShowReducer from "./resultsToShowReducer";
+import resultReducer from './resultReducer';
+import progressReducer from './progressReducer'
 
 const reducers = combineReducers({
-  calcIsFinished: calcIsFinishedReducer,
   user: userReducer,
-  loading: loadingReducer,
-  regEx: regExReducer,
+  patient: patientReducer,
+  result: resultReducer,
+  progress: progressReducer,
   historicalPatients: historicalPatientsReducer,
   historicalResults: historicalResultsReducer,
-  patient: patientReducer,
+  regEx: regExReducer,
+  resultsToShow: resultsToShowReducer,
+  calcIsFinished: calcIsFinishedReducer,
+  loading: loadingReducer,
 });
 
 export default reducers;

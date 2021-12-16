@@ -14,7 +14,7 @@ import { handleLogout } from "../utilities/firebase";
 import { useSelector } from "react-redux";
 import { actionCreators, useActions } from "../state";
 
-const NewOrHistory = ({ handleResultsToShowArray }) => {
+const NewOrHistory = () => {
   const [pattern, setPattern] = useState("");
 
   const { regEx, loading, historicalPatients, historicalResults, } = useSelector(
@@ -60,7 +60,7 @@ const NewOrHistory = ({ handleResultsToShowArray }) => {
             name="historySearch"
             onChange={(e) => handlePattern(e.target.value)}
             placeholder="szukaj w historii"
-            value={pattern}
+            value={regEx ? pattern : ''}
           />
           {!regEx && <Button text="wyloguj" size="big" onClick={onLogout} />}
           {regEx && (
@@ -70,7 +70,6 @@ const NewOrHistory = ({ handleResultsToShowArray }) => {
                 regEx,
                 historicalResults
               )}
-              handleClick={handleResultsToShowArray}
               regEx={regEx}
               historicalPatients={historicalPatients}
               historicalResults={historicalResults}
