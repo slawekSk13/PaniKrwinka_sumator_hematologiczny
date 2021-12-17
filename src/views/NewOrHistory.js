@@ -2,65 +2,92 @@ import { FlexWrapper } from "../components/FlexWrapper/FlexWrapper";
 import { Button } from "../components/Button/Button";
 import { Input } from "../components/Input/Input";
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TipText } from "../components/TipText/TipText";
 import { List } from "../components/List/List";
 import { Icon } from "../components/Icon/Icon";
+import { Loading } from "../components/Loading/Loading";
 
-const NewOrHistory = ({
-  showHistoricalResults,
-  handleRegEx,
-  handleResultsToShowArray,
-  handleLogout
-}) => {
-  const [historySearch, setHistorySearch] = useState("");
-  const handleHistorySearch = (e) => {
-    setHistorySearch(e.target.value);
+import { showHistoricalResults } from "../utilities/helpers";
+import { handleLogout } from "../utilities/firebase";
+
+import { useSelector } from "react-redux";
+import { actionCreators, useActions } from "../state";
+
+const NewOrHistory = () => {
+  const [pattern, setPattern] = useState("");
+
+  const { regEx, loading, historicalPatients, historicalResults, } = useSelector(
+    (state) => state
+  );
+  const {
+    unsetUser,
+    unsetHistoricalPatients,
+    unsetHistoricalResults,
+    setLoading,
+    unsetLoading,
+    setRegEx,
+    clearPatient
+  } = useActions(actionCreators);
+
+  const onLogout = () => {
+    setLoading();
+    if (handleLogout()) {
+      unsetUser();
+      unsetHistoricalPatients();
+      unsetHistoricalResults();
+      clearPatient();
+    }
+    unsetLoading();
   };
 
-  useEffect(() => {
-    handleRegEx(historySearch);
-  }, [historySearch]);
+  const handlePattern = (value) => {
+    setPattern(value);
+    setRegEx(value);
+  };
 
-  return (
+  const newOrHistoryPanel = (
     <>
-      {historySearch !== "" && (
-        <Icon icon="exit" onClick={() => setHistorySearch("")} />
-      )}
+      {regEx && <Icon icon="exit" onClick={() => handlePattern("")} />}
       <FlexWrapper>
-        <FlexWrapper
-          justify="start"
-          height={historySearch === "" ? "35vh" : "65vh"}
-        >
-          {historySearch === "" && (
+        <FlexWrapper justify="start" height={regEx === "" ? "35vh" : "65vh"}>
+          {!regEx && (
             <Link className="link" to="/addnewpatient">
               <Button text="nowe badanie" size="big" />
             </Link>
           )}
           <Input
             name="historySearch"
-            onChange={handleHistorySearch}
+            onChange={(e) => handlePattern(e.target.value)}
             placeholder="szukaj w historii"
-            value={historySearch}
+            value={regEx ? pattern : ''}
           />
-          <Button text='wyloguj' size='big' onClick={handleLogout} />
-          {historySearch !== "" && (
+          {!regEx && <Button text="wyloguj" size="big" onClick={onLogout} />}
+          {regEx && (
             <List
-              results={showHistoricalResults()}
-              handleClick={handleResultsToShowArray}
+              results={showHistoricalResults(
+                historicalPatients,
+                regEx,
+                historicalResults
+              )}
+              regEx={regEx}
+              historicalPatients={historicalPatients}
+              historicalResults={historicalResults}
             />
           )}
         </FlexWrapper>
         <TipText
           text={
-            historySearch === ""
-              ? "Zacznij nowe badanie lub szukaj po imieniu pacjenta albo imieniu i nazwisku właściciela"
-              : "Do wyszukiwania możesz użyć imienia pacjenta lub imienia i nazwiska właściciela"
+            regEx
+              ? "Do wyszukiwania możesz użyć imienia pacjenta lub imienia i nazwiska właściciela"
+              : "Zacznij nowe badanie lub szukaj po imieniu pacjenta albo imieniu i nazwisku właściciela"
           }
         />
       </FlexWrapper>
     </>
   );
+
+  return loading ? <Loading /> : newOrHistoryPanel;
 };
 
 export { NewOrHistory };

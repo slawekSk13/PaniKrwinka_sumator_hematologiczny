@@ -7,6 +7,7 @@ const patientZero = {
 }
 
 const resultsZero = {
+    id: new Date().valueOf(),
     date: new Date().toJSON().slice(0, 10).replace(/-/g, '-'),
     patientId: '',
     leukogram: {
