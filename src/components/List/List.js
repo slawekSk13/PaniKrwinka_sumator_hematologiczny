@@ -6,11 +6,11 @@ import { TipText } from "../TipText/TipText";
 
 const List = ({ results }) => {
   
-
+const revResults = [...results].sort((a, b) => a.id > b.id ? -1 : 1);
   
   return results.length > 0 ? (
     <ListStyled>
-      {results.map((result) => (
+      {revResults.map((result) => (
         <Link
           key={result.id}
           style={{ width: "100%", textDecoration: "none" }}

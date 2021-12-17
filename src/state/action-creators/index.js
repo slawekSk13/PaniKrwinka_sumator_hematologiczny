@@ -12,7 +12,7 @@ import {
 } from "./historicalResultsAction";
 import { setPatient, clearPatient } from "./patientAction";
 import { setResultsToShow, clearResultsToShow } from "./resultsToShowAction";
-import { setResult, clearResult } from "./resultAction";
+import { setResultWBC, setResultNRBC, setResultLeuko, setResultPatient, clearResult } from "./resultAction";
 import { setProgress, clearProgress } from "./progressAction";
 
 export {
@@ -31,7 +31,10 @@ export {
   clearPatient,
   setResultsToShow,
   clearResultsToShow,
-  setResult,
+  setResultWBC,
+  setResultNRBC,
+  setResultLeuko,
+  setResultPatient,
   clearResult,
   setProgress,
   clearProgress,

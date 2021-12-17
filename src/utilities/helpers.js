@@ -85,3 +85,7 @@ export const handleAddCellLeuko = (prevState, key) => ({
     },
   },
 });
+export const handleAddPatientToResult = (prevState, patient) => ({
+  ...prevState,
+  patientId: patient.id
+});

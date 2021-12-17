@@ -16,8 +16,8 @@ const AddNewPatient = () => {
   const [localPatient, setLocalPatient] = useState({
     ...patientZero,
   });
-  const { historicalPatients } = useSelector((state) => state);
-  const { setPatient, setHistoricalPatients, setLoading, unsetLoading } =
+  const { historicalPatients, patient } = useSelector((state) => state);
+  const { setPatient, setResultPatient, setHistoricalPatients, setLoading, unsetLoading } =
     useActions(actionCreators);
 
   const [matchingPatient, setMatchingPatient] = useState([]);
@@ -65,6 +65,7 @@ const AddNewPatient = () => {
     } else {
       setPatient(matchingPatient[0]);
     }
+    setResultPatient(patient);
     changeLocation("/leukogram");
     unsetLoading();
   };

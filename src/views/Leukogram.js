@@ -11,19 +11,20 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { actionCreators, useActions } from "../state";
 
-import {
-  changeLocation,
-  handleAddCellWBC,
-  handleAddCellNRBC,
-  handleAddCellLeuko,
-} from "../utilities/helpers";
+import { changeLocation } from "../utilities/helpers";
 
 const Leukogram = () => {
   const { patient, progress, result, calcIsFinished, loading } = useSelector(
     (state) => state
   );
-  const { setCalcFinished, setCalcUnFinished, setResult, setProgress } =
-    useActions(actionCreators);
+  const {
+    setCalcFinished,
+    setCalcUnFinished,
+    setResultWBC,
+    setResultNRBC,
+    setResultLeuko,
+    setProgress,
+  } = useActions(actionCreators);
 
   const [localWbc, setLocalWbc] = useState(
     result.leukogram.wbc.nominal !== 0
@@ -33,16 +34,15 @@ const Leukogram = () => {
 
   const handleAddCell = (key, value) => {
     if (key === "wbc") {
-      setResult(handleAddCellWBC(result, value, progress));
+      setResultWBC({ value, progress });
     } else {
       navigator.vibrate(100);
       if (key === "nrbc") {
-        setResult(handleAddCellNRBC(result));
+        setResultNRBC();
       } else {
-        setResult(handleAddCellLeuko(result, key));
+        setResultLeuko({ key });
         setProgress();
       }
-      setCalcUnFinished();
     }
     progress >= 99 && setCalcFinished();
   };
@@ -101,7 +101,9 @@ const Leukogram = () => {
     </FlexWrapper>
   );
 
-  return loading ? <Loading /> : (
+  return loading ? (
+    <Loading />
+  ) : (
     <FlexWrapper justify="around">
       <Table
         patient={patient}
@@ -111,7 +113,7 @@ const Leukogram = () => {
       />
       <ProgressBar progress={progress} />
       <Center>
-        {(!calcIsFinished || progress < 1 )? leukogramPanel : wbcPanel}
+        {!calcIsFinished || progress < 1 ? leukogramPanel : wbcPanel}
       </Center>
     </FlexWrapper>
   );

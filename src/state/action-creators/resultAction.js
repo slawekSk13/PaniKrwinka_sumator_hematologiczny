@@ -1,14 +1,27 @@
-const setResult = (data) => {
-    return (dispatch) => {
-      dispatch({ type: "UPDATERESULT", payload: data });
-    };
+const setResultWBC = (data) => {
+  return (dispatch) => {
+    dispatch({ type: "UPDATERESULTWBC", payload: data });
   };
-  
-  const clearResult = () => {
-    return (dispatch) => {
-      dispatch({ type: "CLEARRESULT" });
-    };
+};
+const setResultNRBC = () => {
+  return (dispatch) => {
+    dispatch({ type: "UPDATERESULTNRBC" });
   };
-  
-  export { setResult, clearResult };
-  
+};
+const setResultLeuko = (data) => {
+  return (dispatch) => {
+    dispatch({ type: "UPDATERESULTLEUKO", payload: data });
+  };
+};
+const setResultPatient = (data) => {
+  return (dispatch) => {
+    dispatch({ type: "UPDATERESULTPATIENT", payload: data });
+  };
+};
+const clearResult = () => {
+  return (dispatch) => {
+    dispatch({ type: "CLEARRESULT" });
+  };
+};
+
+export { setResultWBC, setResultNRBC, setResultLeuko, setResultPatient, clearResult };
