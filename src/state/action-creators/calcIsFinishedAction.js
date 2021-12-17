@@ -1,12 +1,12 @@
 const setCalcFinished = () => {
     return (dispatch) => {
-      dispatch({ type: "TRUE" });
+      dispatch({ type: "FINISHED" });
     };
   };
   
   const setCalcUnFinished = () => {
     return (dispatch) => {
-      dispatch({ type: "FALSE" });
+      dispatch({ type: "ONGOING" });
     };
   };
 
