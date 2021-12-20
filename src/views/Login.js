@@ -24,11 +24,11 @@ const Login = () => {
 
   const onLogin = async (email, password) => {
     setLoading();
-    setUser((await handleLogin(email, password)) || null);
-    const { pastResults, pastPatients } = await refreshData();
-    setHistoricalPatients(Object.values(pastPatients));
-    setHistoricalResults(Object.values(pastResults));
+    setUser(await handleLogin(email, password));
     unsetLoading();
+    const { pastResults, pastPatients } = await refreshData();
+    pastPatients && setHistoricalPatients(Object.values(pastPatients));
+    pastResults && setHistoricalResults(Object.values(pastResults));
   };
   user && changeLocation();
 

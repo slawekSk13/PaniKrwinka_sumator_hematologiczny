@@ -43,7 +43,7 @@ const handleLogin = async (email, password) => {
       return user;
     }
   } catch (err) {
-    handleUserError(err);
+    return null;
   }
 };
 

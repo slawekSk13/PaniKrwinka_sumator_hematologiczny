@@ -13,7 +13,7 @@ const InputStyled = styled.input.attrs({
   border: 2px solid ${props => props.colors.primaryColor};
   box-shadow: 0 4px 4px ${props => props.colors.shadowColor};
   border-radius: 10px;
-  margin-bottom: 1rem;
+  margin: 1rem;
 
   &::placeholder {
     font-size: 1.3rem;
