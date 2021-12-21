@@ -11,11 +11,11 @@ Current features are:
 2) Saving results in API
 3) Creating and printing PDF file with results
 4) Finding historical results
+5) Creating account, logging in, results assigned to user
 
 Next planned features:
-1) Creating account, logging in, results assigned to user
-2) Retikulogram
-3) Platelets calculation
+1) Retikulogram
+2) Platelets calculation
 
 ## Libraries, frameworks and tools
 
@@ -26,7 +26,7 @@ Next planned features:
 5) pdfMake
 6) lodash
 7) react-responsive-carousel
-8) my-json-server (for local testing)
+8) react-pagination
 9) Firebase
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
