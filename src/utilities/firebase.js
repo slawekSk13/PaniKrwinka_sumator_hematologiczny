@@ -15,20 +15,18 @@ const db = getDatabase();
 const auth = getAuth();
 
 const handleUserError = (err) => {
-  const { code, message } = err;
-  console.warn(`An error occured: ${code}: ${message}`);
+  const errorToReturn = {code: err.code, error: true}
+    return errorToReturn;
 };
 
 const handleRegister = async (email, password) => {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
     sendEmailVerification(auth.currentUser);
-    if (!auth.currentUser.emailVerified) {
       signOut(auth);
-      window.alert("Email not veriefied!");
-    }
+      return {code: 'email-unverified', error: false}
   } catch (err) {
-    handleUserError(err);
+    return handleUserError(err);
   }
 };
 
@@ -38,12 +36,12 @@ const handleLogin = async (email, password) => {
     const user = auth.currentUser;
     if (!auth.currentUser.emailVerified) {
       signOut(auth);
-      window.alert("Email not veriefied!");
+      return {code: 'email-unverified', error: true}
     } else {
       return user;
     }
   } catch (err) {
-    return null;
+    return handleUserError(err);
   }
 };
 
@@ -52,7 +50,7 @@ const handleLogout = async () => {
     await signOut(auth);
     return true;
   } catch (err) {
-    handleUserError(err);
+    return handleUserError(err);
   }
 };
 
@@ -60,7 +58,7 @@ const handleResetPassword = async (email) => {
   try {
     sendPasswordResetEmail(auth, email);
   } catch (err) {
-    handleUserError(err);
+    return handleUserError(err);
   }
 };
 
@@ -70,7 +68,7 @@ const refreshData = async () => {
     const pastPatients = await getFromFirebase("patients");
     return { pastResults, pastPatients };
   } catch (err) {
-    handleUserError(err);
+    return handleUserError(err);
   }
 };
 
@@ -82,7 +80,7 @@ const postToFirebase = async (dataToSave, dataType) => {
     );
     return true;
   } catch (err) {
-    handleUserError(err);
+    return handleUserError(err);
   }
 };
 
@@ -97,7 +95,7 @@ const getFromFirebase = async (dataType, cb) => {
       }
     );
   } catch (err) {
-    handleUserError(err);
+    return handleUserError(err);
   }
 };
 

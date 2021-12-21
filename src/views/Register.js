@@ -15,6 +15,7 @@ const Register = () => {
   const { loading } = useSelector((state) => state);
   const { setLoading, unsetLoading } = useActions(actionCreators);
 
+  const [error, setError] = useState(null);
   const [passwordConfirmed, setPasswordConfirmed] = useState(true);
   const [email, setEmail] = useState("");
   const handleEmailChange = (e) => {
@@ -31,15 +32,18 @@ const Register = () => {
 
   const onRegister = async () => {
     setLoading();
-    await handleRegister(email, password);
+    const registered = await handleRegister(email, password);
+    setError(registered.code);
     unsetLoading();
-    changeLocation();
+    error?.code === "email-unverified" && changeLocation("registerSuccess");
   };
 
   const registerButtonHandler = () => {
-    password === passwordConfirm
-      ? onRegister(email, password)
-      : setPasswordConfirmed(false);
+    if (password.length > 5) {
+      password === passwordConfirm
+        ? onRegister(email, password)
+        : setPasswordConfirmed(false);
+    } else setError('password-short')
   };
 
   const registerPanel = (
@@ -51,13 +55,38 @@ const Register = () => {
           placeholder="adres e-mail"
           value={email}
         />
+        {error === "auth/invalid-email" && (
+          <TipText
+            text={"Podaj poprawny adres e-mail"}
+            onClick={() => setError(null)}
+          />
+        )}
+        {error === "auth/email-already-in-use" && (
+          <TipText
+            text={
+              "Adres jest już używany, przejdź do logowania, by się zalogować lub odzyskać hasło"
+            }
+            onClick={() => setError(null)}
+          />
+        )}
         <Input
           name="password"
           onChange={handlePasswordChange}
           placeholder="hasło"
           value={password}
           type="password"
-        />
+        />{" "}
+        {!passwordConfirmed && (
+          <TipText text="Hasło w obu polach musi być indentyczne!" />
+        )}
+        {error === "password-short" && (
+          <TipText
+            text={
+              "Hasło musi zawierać przynajmniej 6 znaków"
+            }
+            onClick={() => setError(null)}
+          />
+        )}
         <Input
           name="passwordConfirm"
           onChange={handlePasswordConfirmChange}
@@ -69,6 +98,11 @@ const Register = () => {
           size="big"
           text="zarejestruj"
           onClick={() => registerButtonHandler()}
+        />
+        <Button
+          size="big"
+          text="logowanie"
+          onClick={() => changeLocation("login")}
         />
       </FlexWrapper>
       {!passwordConfirmed && (

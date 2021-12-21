@@ -39,6 +39,9 @@ function App() {
         <Route path="/resetPasswordSucces">
           <Success message={"Na Twój adres wysłano link do zmiany hasła"} />
         </Route>
+        <Route path="/registerSuccess">
+          <Success message={"Dziękujemy za rejestrację! Na podany adres mailowy przesłaliśmy link aktywacyjny"} />
+        </Route>
         <Route path="/history">
           {resultsToShow ? <HistoricalResults /> : <Redirect to="/" />}
         </Route>
