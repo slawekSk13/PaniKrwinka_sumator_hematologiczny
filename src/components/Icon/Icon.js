@@ -14,12 +14,12 @@ import { changeLocation } from "../../utilities/helpers";
 
 import { actionCreators, useActions } from "../../state";
 
-const Icon = ({ icon, patient, progress, results }) => {
+const Icon = ({ icon, patient, progress, results, additionalAction }) => {
   const {
     clearPatient,
     setLoading,
     unsetLoading,
-    setCalcFinished,
+    setCalcUnFinished,
     clearResultsToShow,
     setRegEx,
     setHistoricalPatients,
@@ -38,6 +38,7 @@ const Icon = ({ icon, patient, progress, results }) => {
     try {
       setLoading();
       const success = await postToFirebase(results, "results");
+      unsetLoading();
       if (success) {
         const { pastResults, pastPatients } = await refreshData();
         setHistoricalPatients(Object.values(pastPatients));
@@ -55,11 +56,12 @@ const Icon = ({ icon, patient, progress, results }) => {
     clearPatient();
     clearProgress();
     clearResult();
-    setCalcFinished();
+    setCalcUnFinished();
     clearResultsToShow();
     setRegEx("");
     unsetLoading();
     changeLocation();
+    additionalAction && typeof additionalAction === 'function' && additionalAction();
   };
 
   const handleMouseOver = () =>

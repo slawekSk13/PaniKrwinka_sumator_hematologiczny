@@ -3,6 +3,7 @@ import { RadioButtonGroup } from "../components/RadioButtonGroup/RadioButtonGrou
 import { Button } from "../components/Button/Button";
 import { TipText } from "../components/TipText/TipText";
 import { FlexWrapper } from "../components/FlexWrapper/FlexWrapper";
+import { Select } from "../components/Select/Select";
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -16,9 +17,14 @@ const AddNewPatient = () => {
   const [localPatient, setLocalPatient] = useState({
     ...patientZero,
   });
-  const { historicalPatients, patient } = useSelector((state) => state);
-  const { setPatient, setResultPatient, setHistoricalPatients, setLoading, unsetLoading } =
-    useActions(actionCreators);
+  const { historicalPatients } = useSelector((state) => state);
+  const {
+    setPatient,
+    setResultPatient,
+    setHistoricalPatients,
+    setLoading,
+    unsetLoading,
+  } = useActions(actionCreators);
 
   const [matchingPatient, setMatchingPatient] = useState([]);
 
@@ -62,10 +68,11 @@ const AddNewPatient = () => {
       await postToFirebase(newPatient, `patients`);
       const { pastPatients } = await refreshData();
       setHistoricalPatients(Object.values(pastPatients));
+      setResultPatient(newPatient);
     } else {
       setPatient(matchingPatient[0]);
+      setResultPatient(matchingPatient[0]);
     }
-    setResultPatient(patient);
     changeLocation("/leukogram");
     unsetLoading();
   };
@@ -77,12 +84,19 @@ const AddNewPatient = () => {
       patOwnerName.length > 0 &&
       patOwnerLname.length > 0 &&
       confirmPatient(localPatient, matchingPatient);
-      unsetLoading();
+    unsetLoading();
+  };
+
+  const handleSelect = (e) => {
+    const oldPatientId = parseInt(e.target.value);
+    const oldPatient = historicalPatients.filter((el) => el.id === oldPatientId);
+    confirmPatient(null, [...oldPatient]);
   };
 
   return (
     <FlexWrapper>
       <FlexWrapper justify="around" height="65vh">
+        <Select options={historicalPatients} handleSelect={handleSelect} />
         <Input
           onChange={handleLocalPatientChange}
           name={"patName"}

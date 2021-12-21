@@ -19,7 +19,6 @@ const Leukogram = () => {
   );
   const {
     setCalcFinished,
-    setCalcUnFinished,
     setResultWBC,
     setResultNRBC,
     setResultLeuko,

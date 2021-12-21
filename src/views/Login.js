@@ -24,14 +24,16 @@ const Login = () => {
 
   const onLogin = async (email, password) => {
     setLoading();
-    setUser((await handleLogin(email, password)) || null);
-    const { pastResults, pastPatients } = await refreshData();
-    setHistoricalPatients(Object.values(pastPatients));
-    setHistoricalResults(Object.values(pastResults));
+    const logInResponse = await handleLogin(email, password);
+    logInResponse?.error ? setError(logInResponse.code) : setUser(logInResponse);
     unsetLoading();
+    const { pastResults, pastPatients } = await refreshData();
+    pastPatients && setHistoricalPatients(Object.values(pastPatients));
+    pastResults && setHistoricalResults(Object.values(pastResults));
   };
   user && changeLocation();
 
+  const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -47,23 +49,24 @@ const Login = () => {
         <Input
           name="email"
           onChange={handleEmailChange}
-          placeholder="email"
+          placeholder="adres e-mail"
           value={email}
         />
+        {error === 'auth/user-not-found' && <TipText text={'Nie znaleziono użytkownika o tym adresie e-mail'} onClick={()=>setError(null)}/>}
+        {error === 'email-unverified' && <TipText text={'Przejdź do swojej skrzynki e-mail, by potwierdzić adres'} onClick={()=>setError(null)}/>}
         <Input
           name="password"
           onChange={handlePasswordChange}
-          placeholder="password"
+          placeholder="hasło"
           value={password}
           type={"password"}
         />
-        {/* <Link className="link" to="/"> */}
+        {error === 'auth/wrong-password' && <TipText text={'Podano błędne hasło'} onClick={()=>setError(null)}/>}
         <Button
           size="big"
           text="zaloguj"
           onClick={() => onLogin(email, password)}
         />
-        {/* </Link> */}
         <Link className="link" to="resetPassword">
           <TipText text="Zresetuj hasło" />
         </Link>

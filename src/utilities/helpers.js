@@ -47,6 +47,16 @@ export const showHistoricalResults = (
   return findMatchingResults(historicalResults, matchingPatients);
 };
 
+export const addPatientToResults = (historicalResults, historicalPatients) => {
+  const resultsWithPatients = historicalResults.map((result) => {
+    const matchingPatient = historicalPatients.filter(
+      (patient) => patient.id === result.patientId
+    );
+    return { ...result, patient: {...matchingPatient[0]} };
+  });
+  return resultsWithPatients;
+};
+
 export const handleAddCellWBC = (prevState, value, progress) => {
   const corrWbc =
     prevState.leukogram.nrbc < 5
@@ -85,7 +95,8 @@ export const handleAddCellLeuko = (prevState, key) => ({
     },
   },
 });
-export const handleAddPatientToResult = (prevState, patient) => ({
+export const handleAddPatientToResult = (prevState, patient) => {
+  return ({
   ...prevState,
-  patientId: patient.id
-});
+  patientId: patient.id,
+})};

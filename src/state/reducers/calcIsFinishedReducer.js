@@ -1,9 +1,9 @@
 const reducer = (state = false, action) => {
   switch (action.type) {
-    case "FALSE":
-      return false;
-    case "ONGOING":
+    case "FINISHED":
       return true;
+    case "ONGOING":
+      return false;
     default:
       return state;
   }
