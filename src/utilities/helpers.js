@@ -50,7 +50,7 @@ export const showHistoricalResults = (
 export const addPatientToResults = (historicalResults, historicalPatients) => {
   const resultsWithPatients = historicalResults.map((result) => {
     const matchingPatient = historicalPatients.filter(
-      (patient) => patient.id == result.patientId
+      (patient) => patient.id === result.patientId
     );
     return { ...result, patient: {...matchingPatient[0]} };
   });
@@ -96,7 +96,6 @@ export const handleAddCellLeuko = (prevState, key) => ({
   },
 });
 export const handleAddPatientToResult = (prevState, patient) => {
-  console.log(patient)
   return ({
   ...prevState,
   patientId: patient.id,

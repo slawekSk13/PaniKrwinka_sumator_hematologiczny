@@ -1,11 +1,11 @@
 :root {
-  --fontColor: #E5E5E5;
-  --primaryColor: #951B81;
-  --accentColor: #CD1719;
-  --progressBarNegativeColor: #F9F9F9;
+  --fontColor: #e5e5e5;
+  --primaryColor: #951b81;
+  --accentColor: #cd1719;
+  --progressBarNegativeColor: #f9f9f9;
   --placeholderPrimaryColor: rgba(149, 27, 129, 0.5);
   --placeholderAccentColor: rgba(205, 23, 25, 0.5);
-  --shadowColor: rgba(0, 0, 0, .25);
+  --shadowColor: rgba(0, 0, 0, 0.25);
 }
 
 html {
@@ -20,7 +20,7 @@ html {
 }
 
 body {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
@@ -47,7 +47,8 @@ body {
   text-decoration: none;
 }
 
-.carousel.carousel-slider .control-arrow.control-next, .carousel.carousel-slider .control-arrow.control-prev {
+.carousel.carousel-slider .control-arrow.control-next,
+.carousel.carousel-slider .control-arrow.control-prev {
   opacity: 1;
 }
 
@@ -67,11 +68,44 @@ body {
   border-left: 20px solid var(--accentColor);
 }
 
-.carousel.carousel-slider .control-next.control-arrow:hover, .carousel.carousel-slider .control-prev.control-arrow:hover {
+.carousel.carousel-slider .control-next.control-arrow:hover,
+.carousel.carousel-slider .control-prev.control-arrow:hover {
   background-color: transparent;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.pagination {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination li {
+  list-style: none;
+  color: var(--primaryColor);
+  font-size: 1.3rem;
+}
+
+.pagination .next,
+.pagination .previous {
+  position: relative;
+  top: .25rem;
+  font-size: 1rem;
+}
+
+.pagination li:hover {
+  cursor: pointer;
+  color: var(--accentColor);
+}
+
+.pagination .pagination__active {
+  position: relative;
+  top: -.3rem;
+  font-weight: bold;
+  font-size: 1.7rem;
 }

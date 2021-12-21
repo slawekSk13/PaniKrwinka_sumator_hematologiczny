@@ -17,7 +17,7 @@ const AddNewPatient = () => {
   const [localPatient, setLocalPatient] = useState({
     ...patientZero,
   });
-  const { historicalPatients, patient } = useSelector((state) => state);
+  const { historicalPatients } = useSelector((state) => state);
   const {
     setPatient,
     setResultPatient,
@@ -88,8 +88,8 @@ const AddNewPatient = () => {
   };
 
   const handleSelect = (e) => {
-    const oldPatientId = e.target.value;
-    const oldPatient = historicalPatients.filter((el) => el.id == oldPatientId);
+    const oldPatientId = parseInt(e.target.value);
+    const oldPatient = historicalPatients.filter((el) => el.id === oldPatientId);
     confirmPatient(null, [...oldPatient]);
   };
 

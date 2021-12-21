@@ -95,7 +95,7 @@ const NewOrHistory = () => {
 
           {!regEx && !showWholeHistory && <Button text="wyloguj" size="big" onClick={onLogout} />}
           {regEx && (
-            <List
+            <List key={regEx}
               results={showHistoricalResults(
                 historicalPatients,
                 regEx,

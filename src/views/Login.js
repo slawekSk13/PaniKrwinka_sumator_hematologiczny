@@ -47,13 +47,13 @@ const Login = () => {
         <Input
           name="email"
           onChange={handleEmailChange}
-          placeholder="email"
+          placeholder="adres e-mail"
           value={email}
         />
         <Input
           name="password"
           onChange={handlePasswordChange}
-          placeholder="password"
+          placeholder="hasło"
           value={password}
           type={"password"}
         />
