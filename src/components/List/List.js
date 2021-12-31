@@ -23,19 +23,21 @@ const List = ({ results }) => {
     setCurrentPage(selected);
   };
 
+  const paginateElement = pageCount > 1 ? <ReactPaginate
+  pageCount={pageCount}
+  onPageChange={handlePaginate}
+  pageRangeDisplayed={3}
+  marginPagesDisplayed={1}
+  containerClassName={"pagination"}
+  activeClassName={"pagination__active"}
+  nextLabel={">>"}
+  previousLabel={"<<"}
+  forcePage={currentPage}
+/> : null;
+
   return results.length > 0 ? (
     <>
-      <ReactPaginate
-        pageCount={pageCount}
-        onPageChange={handlePaginate}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={1}
-        containerClassName={"pagination"}
-        activeClassName={"pagination__active"}
-        nextLabel={">>"}
-        previousLabel={"<<"}
-        forcePage={currentPage}
-      />
+      {paginateElement}
       <ListStyled>
         {resultsToShow.map((result) => (
           <Link
@@ -47,17 +49,7 @@ const List = ({ results }) => {
           </Link>
         ))}
       </ListStyled>
-      <ReactPaginate
-        pageCount={pageCount}
-        onPageChange={handlePaginate}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={1}
-        containerClassName={"pagination"}
-        activeClassName={"pagination__active"}
-        nextLabel={">>"}
-        previousLabel={"<<"}
-        forcePage={currentPage}
-      />
+      {paginateElement}
     </>
   ) : (
     <TipText text="Brak danych, zmień wyszukiwanie" />

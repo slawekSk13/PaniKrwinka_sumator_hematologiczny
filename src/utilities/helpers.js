@@ -1,7 +1,8 @@
 export const sum = (a, b) => a + b;
 
 export const changeLocation = (newLocation = "") => {
-  window.location.href = `/#/${newLocation}`;
+  window.location.href = `/#/${newLocation}`; // dev
+  //window.location.href = `/sumator/#/${newLocation}`; //production
 };
 
 export const capitalizeFirstLetter = (string) =>
