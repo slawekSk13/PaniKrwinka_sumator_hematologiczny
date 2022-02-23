@@ -14,6 +14,7 @@ import { patientZero } from "../utilities/defaultStates";
 import { postToFirebase, refreshData } from "../utilities/firebase";
 
 const AddNewPatient = () => {
+  const [error, setError] = useState(false);
   const [localPatient, setLocalPatient] = useState({
     ...patientZero,
   });
@@ -80,16 +81,23 @@ const AddNewPatient = () => {
   const handleClick = () => {
     setLoading();
     const { patName, patOwnerName, patOwnerLname } = localPatient;
-    patName.length > 0 &&
+    if (
+      patName.length > 0 &&
       patOwnerName.length > 0 &&
-      patOwnerLname.length > 0 &&
+      patOwnerLname.length > 0
+    ) {
       confirmPatient(localPatient, matchingPatient);
+    } else {
+      setError('not-all-filled');
+    }
     unsetLoading();
   };
 
   const handleSelect = (e) => {
     const oldPatientId = parseInt(e.target.value);
-    const oldPatient = historicalPatients.filter((el) => el.id === oldPatientId);
+    const oldPatient = historicalPatients.filter(
+      (el) => el.id === oldPatientId
+    );
     confirmPatient(null, [...oldPatient]);
   };
 
@@ -97,6 +105,14 @@ const AddNewPatient = () => {
     <FlexWrapper>
       <FlexWrapper justify="around" height="65vh">
         <Select options={historicalPatients} handleSelect={handleSelect} />
+        {error === "not-all-filled" && (
+          <TipText
+            text={
+              "Proszę uzupełnić wszystkie pola"
+            }
+            onClick={() => setError(null)}
+          />
+        )}
         <Input
           onChange={handleLocalPatientChange}
           name={"patName"}

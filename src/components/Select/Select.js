@@ -5,6 +5,8 @@ import { ColorTheme } from "../../utilities/ColorTheme";
 
 const Select = ({ options, handleSelect }) => {
 
+  const sortedOptions = options.sort((a,b) => a.patName > b.patName ? 1 : -1 )
+
   return (
     <ColorTheme.Consumer>
       {(colors) => (
@@ -16,12 +18,12 @@ const Select = ({ options, handleSelect }) => {
           <option value={false}>
             --- wybierz z historii ---
           </option>
-          {options.map((option) => {
+          {sortedOptions.map((option) => {
             const { id, patName, patOwnerName, patOwnerLname, species } =
               option;
             return (
               <option key={id} value={id}>
-                {species} {patName} - {patOwnerName} {patOwnerLname}
+                {patName} - {species} - {patOwnerName} {patOwnerLname}
               </option>
             );
           })}

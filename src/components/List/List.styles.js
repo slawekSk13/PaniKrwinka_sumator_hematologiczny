@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ListStyled = styled.ol`
+const ListStyled = styled.ul`
 margin: 2rem auto 1rem;
   width: 80%;
 `;

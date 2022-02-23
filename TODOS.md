@@ -4,3 +4,5 @@
 <!-- 4. timeouty, jeśli pobieranie wyników historycznych trwa zbyt długo -->
 <!-- 5. ograniczyć czas, przez który jest się zalogowanym -->
 6. obsługa błędów i walidacji w formularzach
+
+menu, cofanie?
